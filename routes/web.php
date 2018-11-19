@@ -15,8 +15,12 @@ Route::get('/example', function () {
     return view('example');
 });
 
-Route::get('/login', function () {
-    return view('page-login');
-});
+Route::get('/login', 'LoginController@login')->name('login');
+
+Route::get('/profile', 'UserController@profile')->name('login');
+
+Route::get('/admin/user-manager', 'AdminController@userManager')->name('admin-user-manager');
+
+Route::get('/admin/survey-questionnaire-manager', 'AdminController@surveyQuestionnaireManager')->name('admin-survey-questionnaire-manager');
 
 Route::get('/admin', 'AdminController@index')->name('admin-index');

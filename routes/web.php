@@ -18,3 +18,5 @@ Route::get('/example', function () {
 Route::get('/login', function () {
     return view('page-login');
 });
+
+Route::get('/admin', 'AdminController@index')->name('admin-index');

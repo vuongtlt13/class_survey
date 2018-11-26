@@ -24,3 +24,19 @@ Route::get('/admin/user-manager', 'AdminController@userManager')->name('admin-us
 Route::get('/admin/survey-questionnaire-manager', 'AdminController@surveyQuestionnaireManager')->name('admin-survey-questionnaire-manager');
 
 Route::get('/admin', 'AdminController@index')->name('admin-index');
+
+Route::get('/student', function () {
+    return view('student');
+});
+
+Route::get('/teacher', function () {
+    return view('teacher');
+});
+
+Route::get('/survey', function () {
+    return view('survey');
+});
+
+Route::get('/result', function () {
+    return view('view_result');
+});

@@ -1,3 +1,12 @@
+html, body{
+}
+
+.primary_content{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .item_subject{
   background: white;
   padding: 10px 10px 10px 10px;

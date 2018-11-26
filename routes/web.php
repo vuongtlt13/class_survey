@@ -29,6 +29,14 @@ Route::get('/student', function () {
     return view('student');
 });
 
+Route::get('/teacher', function () {
+    return view('teacher');
+});
+
 Route::get('/survey', function () {
     return view('survey');
+});
+
+Route::get('/result', function () {
+    return view('view_result');
 });

@@ -6,8 +6,8 @@
             <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>
             <!-- Image Logo here -->
             <!--<a href="index.html" class="logo">-->
-                <!--<i class="icon-c-logo"> <img src="vendor/assets/images/logo_sm.png" height="42"/> </i>-->
-                <!--<span><img src="vendor/assets/images/logo_light.png" height="20"/></span>-->
+                <!--<i class="icon-c-logo"> <img src="/vendor/assets/images/logo_sm.png" height="42"/> </i>-->
+                <!--<span><img src="/vendor/assets/images/logo_light.png" height="20"/></span>-->
             <!--</a>-->
         </div>
     </div>
@@ -132,7 +132,7 @@
                         </ul>
                     </li>
                     <li class="dropdown top-menu-item-xs">
-                        <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="vendor/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+                        <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="../vendor/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                             <li class="divider"></li>

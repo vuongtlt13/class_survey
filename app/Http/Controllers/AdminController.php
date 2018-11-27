@@ -11,10 +11,14 @@ class AdminController extends Controller
     }
 
     function userManager() {
-      return view('admin/admin-manager');
+      return view('admin/user');
     }
 
-    function surveyQuestionnaireManager() {
-      return view('admin/surveyQuestionnaire-manager');
+    function surveyManager() {
+      return view('admin/survey');
+    }
+
+    function surveyTemplateManager() {
+      return view('admin/survey-template');
     }
 }

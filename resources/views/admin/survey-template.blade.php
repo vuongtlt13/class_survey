@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
 @section('css')
-    <link href="vendor/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
+    <link href="/vendor/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
     <!-- DataTables -->
-    <link href="vendor/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="vendor/assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="vendor/assets/plugins/switchery/css/switchery.min.css" rel="stylesheet" />
+    <link href="/vendor/assets/plugins/switchery/css/switchery.min.css" rel="stylesheet" />
 
-    <link href="vendor/assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <link href="vendor/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/vendor/assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/vendor/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
     <style>
         table.myTable.stripe tbody tr.odd,
         table.myTable.display tbody tr.odd {
@@ -123,7 +123,7 @@
         <div class="custom-modal-text">
             <div class="row card-box">
                 <div class="col-sm-5">
-                    <img class="img-circle" src="vendor/assets/images/users/avatar-6.jpg" alt="">
+                    <img class="img-circle" src="/vendor/assets/images/users/avatar-6.jpg" alt="">
                     <h3 id="name_info" class="header-title"><b>Bill Bertz</b></h3>
                     <p id="gender_age_info" class="text-muted">Nam - 26 tuổi</p>
                 </div>
@@ -144,36 +144,36 @@
 @endsection
 
 @section('script')
-    <script src="vendor/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="/vendor/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.bootstrap.js"></script>
 
-    <script src="vendor/assets/plugins/datatables/dataTables.buttons.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/buttons.bootstrap.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/jszip.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/pdfmake.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/vfs_fonts.js"></script>
-    <script src="vendor/assets/plugins/datatables/buttons.html5.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/buttons.print.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.responsive.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.scroller.min.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.colVis.js"></script>
-    <script src="vendor/assets/plugins/datatables/dataTables.fixedColumns.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/jszip.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/pdfmake.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/vfs_fonts.js"></script>
+    <script src="/vendor/assets/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/buttons.print.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.scroller.min.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.colVis.js"></script>
+    <script src="/vendor/assets/plugins/datatables/dataTables.fixedColumns.min.js"></script>
 
-    <script src="vendor/assets/pages/datatables.init.js"></script>
+    <script src="/vendor/assets/pages/datatables.init.js"></script>
 
-    <script src="vendor/assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
-    <script src="vendor/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="/vendor/assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+    <script src="/vendor/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 
-    <script src="vendor/assets/plugins/switchery/js/switchery.min.js"></script>
+    <script src="/vendor/assets/plugins/switchery/js/switchery.min.js"></script>
 
     <script src="/js/admin-manage.js"></script>
 
     <!-- Modal-Effect -->
-    <script src="vendor/assets/plugins/custombox/js/custombox.min.js"></script>
-    <script src="vendor/assets/plugins/custombox/js/legacy.min.js"></script>
+    <script src="/vendor/assets/plugins/custombox/js/custombox.min.js"></script>
+    <script src="/vendor/assets/plugins/custombox/js/legacy.min.js"></script>
 
     <script src="/js/admin-action.js"></script>
 @endsection

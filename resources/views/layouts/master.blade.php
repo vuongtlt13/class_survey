@@ -34,7 +34,7 @@
     <body class="fixed-left">
 
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper" style="background-color:#ceeff3;">
 
             <!-- Top Bar Start -->
             @include('layouts.topbar')
@@ -51,11 +51,9 @@
             <!-- Start right Content here -->
             <!-- ============================================================== -->
 
-            <div class="content-page">
+            <div class="content-page" style="height: 100%">
                 <!-- Start content -->
                 @yield('content')
-
-
             </div>
             <!-- ============================================================== -->
             <!-- End Right content here -->

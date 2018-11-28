@@ -1,20 +1,11 @@
 <div class="topbar">
 
-    <!-- LOGO -->
-    <div class="topbar-left">
-        <div class="text-center">
-            <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>
-            <!-- Image Logo here -->
-            <!--<a href="index.html" class="logo">-->
-                <!--<i class="icon-c-logo"> <img src="/vendor/assets/images/logo_sm.png" height="42"/> </i>-->
-                <!--<span><img src="/vendor/assets/images/logo_light.png" height="20"/></span>-->
-            <!--</a>-->
-        </div>
-    </div>
-
     <!-- Button mobile view to collapse sidebar menu -->
-    <div class="navbar navbar-default" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="background:#2196F3;">
         <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="student" style="color: #fff;">Trường đại học Công nghệ</a>
+            </div>
             <div class="">
                 <div class="pull-left">
                     <button class="button-menu-mobile open-left waves-effect waves-light">

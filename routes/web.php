@@ -15,6 +15,8 @@ Route::get('/example', function () {
     return view('example');
 });
 
+Route::get('/', 'LoginController@index')->name('index');
+
 Route::get('/login', 'LoginController@login')->name('login');
 
 Route::get('/profile', 'UserController@profile')->name('login');

@@ -1,4 +1,4 @@
-@extends('layouts.student_teacher.master')
+@extends('layouts.master')
 @section('css')
         <!--calendar css-->
         <link href="vendor/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />

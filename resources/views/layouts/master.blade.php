@@ -51,7 +51,7 @@
             <!-- Start right Content here -->
             <!-- ============================================================== -->
 
-            <div class="content-page" style="height: 100%">
+            <div class="content-page" style="min-height: 890px;">
                 <!-- Start content -->
                 @yield('content')
             </div>

@@ -1,23 +1,4 @@
 <?php
-
-/**
- * Part of the Sentinel package.
- *
- * NOTICE OF LICENSE
- *
- * Licensed under the 3-clause BSD License.
- *
- * This source file is subject to the 3-clause BSD License that is
- * bundled with this package in the LICENSE file.
- *
- * @package    Sentinel
- * @version    2.0.17
- * @author     Cartalyst LLC
- * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2017, Cartalyst LLC
- * @link       http://cartalyst.com
- */
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -95,16 +76,122 @@ class MigrationCartalystSentinel extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
+            $table->string('username');
             $table->string('password');
+            $table->string('email')->nullable();
             $table->text('permissions')->nullable();
-            $table->timestamp('last_login')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('name')->nullable();
+            $table->string('id_number')->nullable();
+            $table->string('address', 500)->nullable();
+            $table->timestamps();
+            $table->integer('type');
+            $table->boolean('is_active')->default(1);
+            $table->boolean('gender')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('phone')->nullable();
+
+            $table->engine = 'InnoDB';
+
+            $table->unique('email');
+            $table->unique('username');
+            $table->unique('phone');
+        });
+
+        Schema::create('lecturers', function (Blueprint $table) {
+            $table->unsignedInteger('id');
+            $table->string('degree')->nullable();
+
+            $table->engine = 'InnoDB';
+
+            $table->foreign('id')->references('id')->on('users');
+        });
+
+        Schema::create('students', function (Blueprint $table) {
+            $table->unsignedInteger('id');
+            $table->string('khoahoc')->nullable();
+            $table->string('major', 400)->nullable();
+
+            $table->engine = 'InnoDB';
+
+            $table->foreign('id')->references('id')->on('users');
+        });
+
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->string('code');
+            $table->string('name');
+            $table->integer('sotinchi');
+
+            $table->engine = 'InnoDB';
+
+            $table->primary('code');
+        });
+
+        Schema::create('subject_classes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('subject_code');
+            $table->unsignedInteger('lecturer_id');
+            $table->string('school_year');
+            $table->boolean('term');
+
+            $table->engine = 'InnoDB';
+            $table->foreign('subject_code')->references('code')->on('subjects');
+            $table->foreign('lecturer_id')->references('id')->on('lecturers');
+        });
+
+        Schema::create('subject_class_student', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('student_id');
+            $table->unsignedInteger('subject_class_id');
+
+            $table->engine = 'InnoDB';
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('subject_class_id')->references('id')->on('subject_classes');
+        });
+
+        Schema::create('survey_templates', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->boolean('is_default');
             $table->timestamps();
 
             $table->engine = 'InnoDB';
-            $table->unique('email');
+        });
+
+        Schema::create('titles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('content');
+
+            $table->engine = 'InnoDB';
+        });
+
+        Schema::create('questions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('title_id');
+            $table->string('content');
+
+            $table->engine = 'InnoDB';
+            $table->foreign('title_id')->references('id')->on('titles');
+        });
+
+        Schema::create('surveytemplate_question', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('question_id');
+            $table->unsignedInteger('surveytemplate_id');
+
+            $table->engine = 'InnoDB';
+            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('surveytemplate_id')->references('id')->on('survey_templates');
+        });
+
+        Schema::create('surveys', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('subject_class_student_id');
+            $table->unsignedInteger('surveytemplate_question_id');
+            $table->unsignedInteger('score');
+
+            $table->engine = 'InnoDB';
+            $table->foreign('subject_class_student_id')->references('id')->on('subject_class_student');
+            $table->foreign('surveytemplate_question_id')->references('id')->on('surveytemplate_question');
         });
     }
 
@@ -115,12 +202,25 @@ class MigrationCartalystSentinel extends Migration
      */
     public function down()
     {
-        Schema::drop('activations');
-        Schema::drop('persistences');
-        Schema::drop('reminders');
-        Schema::drop('roles');
-        Schema::drop('role_users');
-        Schema::drop('throttle');
-        Schema::drop('users');
+        Schema::dropIfExists('activations');
+        Schema::dropIfExists('persistences');
+        Schema::dropIfExists('reminders');
+        Schema::dropIfExists('roles');
+        Schema::dropIfExists('role_users');
+        Schema::dropIfExists('throttle');
+
+
+        Schema::dropIfExists('surveys');
+        Schema::dropIfExists('surveytemplate_question');
+        Schema::dropIfExists('questions');
+        Schema::dropIfExists('subject_class_student');
+        Schema::dropIfExists('subject_classes');
+        Schema::dropIfExists('students');
+        Schema::dropIfExists('lecturers');
+
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('titles');
+        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('survey_templates');
     }
 }

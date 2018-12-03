@@ -9,4 +9,8 @@ class LoginController extends Controller
     function login() {
       return view('auth/login');
     }
+
+    function index() {
+      return view();
+    }
 }

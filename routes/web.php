@@ -27,6 +27,8 @@ Route::get('/admin/surveytemplate', 'AdminController@surveyTemplateManager')->na
 
 Route::get('/admin/survey', 'AdminController@surveyManager')->name('admin-survey');
 
+Route::get('/admin/question', 'AdminController@questionManager')->name('admin-question');
+
 Route::get('/admin', 'AdminController@index')->name('admin-index');
 
 Route::get('/student', 'StudentController@index')->name('student-index');

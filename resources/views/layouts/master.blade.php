@@ -6,9 +6,9 @@
         <meta name="description" content="">
         <meta name="author" content="vuong">
 
-        <link rel="shortcut icon" href="/vendor/assets/images/favicon_1.ico">
-
-        <title>Class survey</title>
+        <link rel="shortcut icon" href="/images/uet_logo-50x50.png" sizes="32x32" />
+        <link rel="shortcut icon" href="/images/uet_logo.png" sizes="192x192" />
+        <title>Đánh giá khảo sát</title>
 
         @yield('css')
 

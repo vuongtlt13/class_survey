@@ -2,11 +2,10 @@
 
 namespace App;
 
+use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends EloquentUser
 {
     use Notifiable;
 
@@ -16,7 +15,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username',
+        'password',
+        'email',
+        'permissions',
+        'name',
+        'id_number',
+        'address',
+        'type',
+        'is_active',
+        'gender',
+        'dob',
+        'phone',
     ];
 
     /**
@@ -25,6 +35,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password'
     ];
+    protected $table = 'users';
+    protected $loginNames = ['username'];
 }

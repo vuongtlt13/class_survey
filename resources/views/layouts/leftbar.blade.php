@@ -6,7 +6,7 @@
               <!-- Sinh viên -->
               <li class="text-muted menu-title">Sinh viên</li>
               <li class="has_sub">
-                  <a href="{{route('student-index')}}" class="waves-effect"><i class="ti-pencil-alt"></i><span> Đánh giá khảo sát </span></a>
+                  <a href="{{route('index')}}" class="waves-effect"><i class="ti-pencil-alt"></i><span> Đánh giá khảo sát </span></a>
               </li>
               <!-- Giảng viên -->
               <li class="text-muted menu-title">Giảng viên</li>

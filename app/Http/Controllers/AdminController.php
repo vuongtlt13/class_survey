@@ -21,4 +21,8 @@ class AdminController extends Controller
     function surveyTemplateManager() {
       return view('admin/survey-template');
     }
+
+    function questionManager() {
+      echo('quan ly cau hoi');
+    }
 }

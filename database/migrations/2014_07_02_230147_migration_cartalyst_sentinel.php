@@ -89,6 +89,7 @@ class MigrationCartalystSentinel extends Migration
             $table->boolean('gender')->nullable();
             $table->date('dob')->nullable();
             $table->string('phone')->nullable();
+            $table->timestamp('last_login')->nullable();
 
             $table->engine = 'InnoDB';
 
@@ -128,6 +129,7 @@ class MigrationCartalystSentinel extends Migration
 
         Schema::create('subject_classes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('class_code');
             $table->string('subject_code');
             $table->unsignedInteger('lecturer_id');
             $table->string('school_year');

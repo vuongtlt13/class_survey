@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Http\Controllers\UserController;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        UserController::create_admin('admin', '1', 1);
     }
 }

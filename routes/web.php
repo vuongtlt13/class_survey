@@ -11,30 +11,38 @@
 |
 */
 
-Route::get('/example', function () {
-    return view('example');
-});
-
-Route::get('/', 'LoginController@index')->name('index');
-
 Route::get('/login', 'LoginController@login')->name('login');
+Route::post('/login', 'LoginController@authentication')->name('authentication');
 
-Route::get('/profile', 'UserController@profile')->name('login');
+Route::middleware(['userChecker'])->group(function () {
+    Route::get('/profile', 'UserController@profile')->name('profile');
 
-Route::get('/admin/user', 'AdminController@userManager')->name('admin-user');
+    Route::get('/logout', 'LoginController@logout')->name('logout');
 
-Route::get('/admin/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
+    Route::get('/', 'LoginController@index')->name('index');
 
-Route::get('/admin/survey', 'AdminController@surveyManager')->name('admin-survey');
+    Route::middleware(['studentRole'])->group(function () {
+        // Route::get('/student', 'StudentController@index')->name('student-index');
 
-Route::get('/admin/question', 'AdminController@questionManager')->name('admin-question');
+        Route::get('/survey', 'StudentController@survey')->name('student-survey');
 
-Route::get('/admin', 'AdminController@index')->name('admin-index');
+        Route::get('/result', 'SurveyController@result')->name('survey-result');
+    });
 
-Route::get('/student', 'StudentController@index')->name('student-index');
+    Route::middleware(['lecturerRole'])->group(function () {
+        // Route::get('/teacher', 'TeacherController@index')->name('teacher-index');
+    });
 
-Route::get('/teacher', 'TeacherController@index')->name('teacher-index');
+    Route::middleware(['adminRole'])->group(function () {
+      Route::get('/user', 'AdminController@userManager')->name('admin-user');
 
-Route::get('/survey', 'StudentController@survey')->name('student-survey');
+      Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
 
-Route::get('/result', 'SurveyController@result')->name('survey-result');
+      Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');
+
+      Route::get('/question', 'AdminController@questionManager')->name('admin-question');
+
+      // Route::get('/admin', 'AdminController@index')->name('admin-index');
+    });
+
+});

@@ -54,7 +54,7 @@
 
 
         <div class="panel-body">
-            <form class="form-horizontal m-t-20" method="POST" action="{route('authentication')}">
+            <form class="form-horizontal m-t-20" method="POST" action="{{route('authentication')}}">
                 {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
                 {{ csrf_field() }}
                 <div class="form-group ">

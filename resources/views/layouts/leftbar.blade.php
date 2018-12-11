@@ -3,18 +3,25 @@
         <!--- Divider -->
         <div id="sidebar-menu">
             <ul>
+              @if (Sentinel::getUser()->type == 0)
               <!-- Sinh viên -->
               <li class="text-muted menu-title">Sinh viên</li>
               <li class="has_sub">
                   <a href="{{route('index')}}" class="waves-effect"><i class="ti-pencil-alt"></i><span> Đánh giá khảo sát </span></a>
               </li>
+              @endif
+              @if (Sentinel::getUser()->type == 1)
               <!-- Giảng viên -->
               <li class="text-muted menu-title">Giảng viên</li>
+              <li class="has_sub">
+                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-bar-chart"></i> <span> Xem kết quả khảo sát </span></a>
+              </li>
+              @endif
+              @if (Sentinel::getUser()->type == 2)
+              <li class="has_sub">
+                  <a href="{{route('admin-user')}}" class="waves-effect"><i class="ti-user"></i> <span> Trang chu </span></a>
+              </li>
               <!-- Admin -->
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="ti-bar-chart"></i> <span> Xem kết quả khảo sát </span></a>
-                </li>
-
                 <li class="text-muted menu-title">Quản lý</li>
 
                 <li class="has_sub">
@@ -32,6 +39,7 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="ti-bar-chart"></i> <span> Xem kết quả khảo sát </span></a>
                 </li>
+                @endif
             </ul>
             <div class="clearfix"></div>
         </div>

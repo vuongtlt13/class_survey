@@ -25,7 +25,7 @@
         table.myTable.hover tbody tr:hover,
         table.myTable.display tbody tr:hover {
             cursor: pointer;
-            background-color: #aab7d1
+            background-color: #abc9ef
         }
     </style>
 @endsection
@@ -45,24 +45,24 @@
                                     <label for="name">Loại tài khoản</label>
                                     <div class="btn-group bootstrap-select">
                                         <select id="account_type" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                            <option>Tất cả</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="giangvien">Giảng viên</option>
-                                            <option value="sinhvien">Sinh viên</option>
+                                            <option value="all">Tất cả</option>
+                                            <option value="2">Admin</option>
+                                            <option value="1">Giảng viên</option>
+                                            <option value="0">Sinh viên</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Điền tên">
+                                    <label for="keyword">Từ khóa</label>
+                                    <input type="text" class="form-control" id="keyword" placeholder="Điền từ khóa">
                                 </div>
                                 <div class="col-sm-2 form-group">
                                     <label>Giới tính</label>
                                     <div class="btn-group bootstrap-select">
                                         <select id="gender" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                            <option>Tất cả</option>
-                                            <option>Nam</option>
-                                            <option>Nữ</option>
+                                            <option value="all">Tất cả</option>
+                                            <option value="0">Nam</option>
+                                            <option value="1">Nữ</option>
                                         </select>
                                     </div>
                                 </div>
@@ -78,21 +78,32 @@
                 </div>
             </div>
 
+            <div class="row pull-right" style="padding-right: 100px; padding-bottom: 10px;">
+              <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+              <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+              <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Xóa</span> </button>
+              <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Khóa</span> </button>
+              <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
                         <table id="datatable" class="table table-bordered display myTable">
                             <thead>
                             <tr>
-                                <th></th>
+                                <th>
+                                  <div class="checkbox checkbox-primary">
+                                      <input id="checkbox-all" type="checkbox">
+                                      <label for="checkbox-all">
+                                      </label>
+                                  </div>
+                                </th>
                                 <th>Tên</th>
-                                <th>Tuổi</th>
-                                <th>Giới tính</th>
-                                <th>Số điện thoại</th>
+                                <th>Tên đăng nhập</th>
                                 <th>Email</th>
-                                <th>Công việc</th>
+                                <th>Số điện thoại</th>
+                                <th>Loại tài khoản</th>
                                 <th>Trạng thái</th>
-                                <th>Thao tác</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -115,32 +126,82 @@
     </div>
 
     <!-- Modal -->
-    <div id="custom-modal" class="modal-demo">
-        <button type="button" class="close" onclick="Custombox.close();">
-            <span>&times;</span><span class="sr-only">Close</span>
-        </button>
-        <h4 class="custom-modal-title">Thông tin chi tiết</h4>
-        <div class="custom-modal-text">
-            <div class="row card-box">
-                <div class="col-sm-5">
-                    <img class="img-circle" src="/vendor/assets/images/users/avatar-6.jpg" alt="">
-                    <h3 id="name_info" class="header-title"><b>Bill Bertz</b></h3>
-                    <p id="gender_age_info" class="text-muted">Nam - 26 tuổi</p>
+    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 id="form-title" class="modal-title">Tạo tài khoản</h4>
                 </div>
-                <div class="col-sm-7 pull-left" style="padding-right: 5%;padding-top: 3%;">
-                    <div class="form-group" style="text-align: left">
-                        <p><b>Nghề nghiệp: </b><label class="text-muted" id="job_info">Branch manager</label></p>
-                        <p><b>Nơi làm việc: </b><label class="text-muted" id="company_info">ABC company Pvt Ltd.</label></p>
-                        <p><b>Email: </b><label class="text-muted" id="email_info">abc@abc</label></p>
-                        <p><b>Số điện thoại: </b><label class="text-muted" id="phone_info">0123456789</label></p>
-                    </div>
-                </div>
+                <form id="myform" method="post" action="{{route('create-user')}}">
+                  {{csrf_field()}}
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="username" class="control-label">Tên đăng nhập</label>
+                                  <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="name" class="control-label">Họ và tên</label>
+                                  <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-sm-3 form-group">
+                          <label for="account_type">Loại tài khoản</label>
+                          <div class="btn-group bootstrap-select">
+                              <select id="account_type" name="account_type" class="selectpicker" data-style="btn-white" tabindex="-98">
+                                  <option value="admin">Admin</option>
+                                  <option value="giangvien">Giảng viên</option>
+                                  <option value="sinhvien">Sinh viên</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-sm-2 form-group">
+                          <label for="gender">Giới tính</label>
+                          <div class="btn-group bootstrap-select">
+                              <select id="gender" name="gender" class="selectpicker" data-style="btn-white" tabindex="-98">
+                                  <option value=""> </option>
+                                  <option value="male">Nam</option>
+                                  <option value="female">Nữ</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="form-group">
+                                  <label for="email" class="control-label">Email</label>
+                                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                  <label for="phone" class="control-label">Số điện thoại</label>
+                                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                  <label for="address" class="control-label">Địa chỉ</label>
+                                  <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button id="btnSubmit" type="button" class="btn btn-info waves-effect waves-light">Tạo</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
+                  </div>
+                </form>
             </div>
         </div>
-    </div>
-    <div style="display: none" id="myDiv">
-        <a id ="btnModal"  href="#custom-modal" class="btn btn-primary waves-effect waves-light" data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200" data-overlayColor="#36404a">Show Me</a>
-    </div>
+    </div><!-- /.modal -->
 @endsection
 
 @section('script')
@@ -169,11 +230,11 @@
 
     <script src="/vendor/assets/plugins/switchery/js/switchery.min.js"></script>
 
-    <script src="/js/admin-manage.js"></script>
 
     <!-- Modal-Effect -->
     <script src="/vendor/assets/plugins/custombox/js/custombox.min.js"></script>
     <script src="/vendor/assets/plugins/custombox/js/legacy.min.js"></script>
 
-    <script src="/js/admin-action.js"></script>
+    <script src="/js/admin-user.js"></script>
+    <script src="/js/admin-user-ajax.js"></script>
 @endsection

@@ -34,6 +34,10 @@ Route::middleware(['userChecker'])->group(function () {
     });
 
     Route::middleware(['adminRole'])->group(function () {
+      Route::get('/search-user', 'AdminController@searchUser')->name('search-user');
+      
+      Route::post('/create-user', 'AdminController@createUser')->name('create-user');
+
       Route::get('/user', 'AdminController@userManager')->name('admin-user');
 
       Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');

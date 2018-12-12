@@ -22,31 +22,37 @@ Route::middleware(['userChecker'])->group(function () {
     Route::get('/', 'LoginController@index')->name('index');
 
     Route::middleware(['studentRole'])->group(function () {
-        // Route::get('/student', 'StudentController@index')->name('student-index');
-
-        Route::get('/survey', 'StudentController@survey')->name('student-survey');
+        Route::get('/examine', 'StudentController@survey')->name('student-survey');
 
         Route::get('/result', 'SurveyController@result')->name('survey-result');
     });
 
     Route::middleware(['lecturerRole'])->group(function () {
-        // Route::get('/teacher', 'TeacherController@index')->name('teacher-index');
+
     });
 
     Route::middleware(['adminRole'])->group(function () {
-      Route::get('/search-user', 'AdminController@searchUser')->name('search-user');
-      
-      Route::post('/create-user', 'AdminController@createUser')->name('create-user');
+        Route::get('/search-user', 'AdminController@searchUser')->name('search-user');
 
-      Route::get('/user', 'AdminController@userManager')->name('admin-user');
+        Route::post('/create-user', 'AdminController@createUser')->name('create-user');
 
-      Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
+        Route::post('/update-user', 'AdminController@updateUser')->name('update-user');
 
-      Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');
+        Route::post('/delete-user', 'AdminController@deleteUser')->name('delete-user');
 
-      Route::get('/question', 'AdminController@questionManager')->name('admin-question');
+        Route::post('/lock-user', 'AdminController@lockUser')->name('lock-user');
 
-      // Route::get('/admin', 'AdminController@index')->name('admin-index');
+        Route::post('/unlock-user', 'AdminController@unlockUser')->name('unlock-user');
+
+        Route::post('/reset-password', 'AdminController@resetPassword')->name('reset-password');
+
+        Route::get('/user', 'AdminController@userManager')->name('admin-user');
+
+        Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
+
+        Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');
+
+        Route::get('/question', 'AdminController@questionManager')->name('admin-question');
     });
 
 });

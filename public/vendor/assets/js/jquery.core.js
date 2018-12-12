@@ -112,7 +112,7 @@ function($) {
             showAnimation: "show",
             showDuration: 0,
             hideDuration: 0,
-            autoHideDelay: 5000,
+            autoHideDelay: 2500,
             autoHide: true,
             clickToHide: true
         });

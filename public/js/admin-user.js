@@ -1,56 +1,4 @@
-function doAjax(e) {
-    let dataRow = table.row($(e.target.closest('tr'))).data();
-    // console.log('run ajax', dataRow);
-    $.ajax({
-        url: '/admin-manage/changestatus',
-        type: 'post',
-        data: {
-            adminId: dataRow.id,
-        },
-        dataType:'json',
-        error: function (e) {
-            console.log('loi r', e);
-        },
-        success: function (data) {
-            // console.log('thanh cong', typeof data, data);
-            // console.log('status', data.status);
-            dataRow.status = data.status;
-
-            let actionTd = $(e.target.closest('td'));
-            actionTd.empty();
-
-            if (data.status == 0) {
-                actionTd.append('<button class="btnLock btn btn-danger waves-effect waves-light btn-xs">' +
-                    'Lock ' +
-                    '</button> ');
-            } else {
-                actionTd.append('<button class="btnUnlock btn btn-success waves-effect waves-light btn-xs">' +
-                    'Active ' +
-                    '</button>');
-            }
-            /** **/
-            let statusTd = actionTd.prevAll('td:first');
-            statusTd.empty();
-            if (data.status == 0) {
-                statusTd.append('<span class="label label-success">Hoạt động</span>');
-            } else {
-                statusTd.append('<span class="label label-danger">Khóa</span>');
-            }
-
-            $.getScript('/js/admin-user-ajax.js', function () {
-                // console.log('script loaded');
-            });
-        }
-    });
-}
-
-$('.btnLock').on('click', function (e) {
-    doAjax(e);
-});
-
-$('.btnUnlock').on('click', function (e) {
-    doAjax(e);
-});
+var table;
 
 function createQuery(params) {
     let res = "";
@@ -86,27 +34,24 @@ function makeUrl() {
 }
 
 function showModal(data) {
+    changeToUpdateForm(data.id);
     // console.log('Data: ', data);
+    $('#username').val(data.username);
+    $('#name').val(data.name);
+    $('#email').val(data.email);
+    $('#phone').val(data.phone);
+    $('#address').val(data.address);
+    // console.log(data.gender, data.type);
+    if (data.gender == null) {
+        $('select[name=gender]').val("");
+    }
+    else {
+        $('select[name=gender]').val(data.gender);
+    }
+    $('select[name=account_type]').val(data.type);
+    $('.selectpicker').selectpicker('refresh');
 
-    $('#name_info').text(data.name);
-    $.ajax({
-        url: '/getinfo?id=' + data.id,
-        dataType: 'json',
-        error: function () {
-            console.log("Loi r");
-        },
-        success: function (data) {
-            // console.log('admin-info:', data);
-            $('#gender_age_info').text(data.gender + ' - ' + data.age + ' tuổi');
-            $('#job_info').text(data.job);
-            $('#company_info').text(data.workplace);
-
-            $('#email_info').text(data.email);
-            $('#phone_info').text(data.phone);
-
-            $('#btnModal').trigger("click");
-        }
-    });
+    $('#btnShowModal').trigger("click");
 }
 
 function changeToAdditionForm() {
@@ -121,11 +66,10 @@ function changeToAdditionForm() {
   // change two combobox
 }
 
-function changeToUpdateForm() {
-  $('#form-title').text('Sửa tài khoản');
-  $('#myform').attr("action",  "/update-user");
-  $('#btnSubmit').text('Cập nhật');
-  // change two combobox
+function changeToUpdateForm(id) {
+    $('#form-title').text('Sửa tài khoản');
+    $('#myform').attr("action",  "/update-user?id=" + id);
+    $('#btnSubmit').text('Cập nhật');
 }
 
 function changeCheckbox(obj) {
@@ -137,7 +81,193 @@ function changeCheckbox(obj) {
     // console.log('end', $(obj).is(':checked'));
 }
 
+function validateUsername(username) {
+    var illegalChars = /\W/; // allow letters, numbers, and underscores
+
+    if (username === "") {
+        $('#username-error').text("Bạn chưa nhập tên đăng nhập");
+        return false;
+
+    } else if (username.length > 20 || username.length < 5) {
+        $('#username-error').text("Độ dài tên đăng nhập không hợp lệ(từ 5-20 kí tự)");
+        return false;
+
+    } else if (illegalChars.test(username)) {
+        $('#username-error').text("Tên đăng nhập chứa kí tự không hợp lệ");
+        return false;
+
+    }
+    return true;
+}
+function validatePhoneNumber(phone) {
+    var stripped = phone.replace(/[\(\)\.\-\ ]/g, '');
+    if (phone.length == 0) {
+        return true;
+    }
+    else if (isNaN(parseInt(stripped))) {
+        $('#phone-error').text("Số điện thoại chứa kí tự không hợp lệ");
+        return false;
+    } else if (!(stripped.length == 10)) {
+        $('#phone-error').text("Số điện thoại không hợp lệ");
+        return false;
+    }
+    return true;
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.length == 0) {
+        return true;
+    } else if (!re.test(String(email).toLowerCase())) {
+        $('#email-error').text("Email không hợp lệ");
+        return false;
+    }
+    return true;
+}
+
+function validateForm() {
+    // validate user
+    var username = $('#username').val().trim();
+    if (validateUsername(username)) {
+        $('#username').val(username);
+        document.getElementById("username-error").style.display="none";
+    } else {
+        document.getElementById("username-error").style.display="block";
+        return false;
+    }
+    // validate phone
+    var phone = $('#phone').val().trim();
+    if (validatePhoneNumber(phone)) {
+        $('#phone').val(phone);
+        document.getElementById("phone-error").style.display="none";
+    } else {
+        document.getElementById("phone-error").style.display="block";
+        return false;
+    }
+    // validate email
+    var email = $('#email').val().trim().toLowerCase();
+    if (validateEmail(email)) {
+        $('#email').val(email);
+        document.getElementById("email-error").style.display="none";
+    } else {
+        document.getElementById("email-error").style.display="block";
+        return false;
+    }
+    return true;
+}
+
+
+function sendAction(url, msg) {
+    // $('#select-form').attr("action", url);
+    $('#selected_id').val('');
+    var str = "";
+
+    $('#datatable tbody input:checked').each(function() {
+        if (str != "") {
+            str = str + "," + ($(this).attr('id')).split('-')[1];
+        } else {
+            str = str + ($(this).attr('id')).split('-')[1];
+        }
+    });
+
+    $('#selected_id').val(str);
+
+    $('#select-form').ajaxSubmit({
+        url: url,
+        type: 'post',
+        success: function (data) {
+            // console.log(data);
+            if (data.status == 1) {
+                // console.log('dang ky thanh cong');
+                $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', msg);
+                table.ajax.reload();
+            } else {
+                // console.log(data);
+                $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
+            }
+        },
+        error: function (e) {
+            console.log('loi r', e);
+        }
+    });
+}
+
 $(document).ready(function () {
+    table = $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: makeUrl(),
+            error: function (err) {
+                // console.log(makeUrl());
+                console.log('Loi r', err);
+            },
+        },
+        columnDefs: [ {
+            targets: 0,
+            render: function (data, type, row) {
+                // console.log(data);
+                return  '<div class="checkbox checkbox-primary">' +
+                    '<input id="checkbox-' + data + '" type ="checkbox">' +
+                    '<label for="checkbox-' + data + '">' +
+                    '</label>' +
+                    '</div>';
+            }
+        },{
+            targets: -1,
+            render: function (data, type, row) {
+                // console.log(data);
+                return data == 1 ?
+                    '<span class="label label-success">Hoạt động</span>'
+                    :
+                    '<span class="label label-danger">Khóa</span>';
+            }
+        },
+            {
+                targets: -2,
+                render: function (data, type, row) {
+                    // console.log(data);
+                    res = "Sinh viên";
+                    if (data == 2) {
+                        res = "Admin";
+                    }
+                    else if (data == 1){
+                        res = "Giảng viên";
+                    }
+
+                    return res;
+                    // return '<span class="label label-success">' + res + '</span>';
+                }
+            }
+        ],
+        columns: [
+            { data: "id", name: "id", orderable: false, width: "5%"},
+            { data: "name", name: "name"},
+            { data: "username", name: "username"},
+            { data: "email", name: "email"},
+            { data: "phone", name: "phone"},
+            { data: "type", name: "type"},
+            { data: "is_active", name: "is_active"},
+        ],
+        pageLength: 15,
+        searching: false,
+        lengthChange: false,
+        language:{
+            emptyTable:     "Không có dữ liệu trong bảng",
+            info:           "Đang xem từ _START_ đến _END_ trong tổng số _TOTAL_",
+            infoEmpty:      "",
+            loadingRecords: "Đang tải...",
+            processing:     "Đang lấy thông tin từ server...",
+            paginate: {
+                first:      "Trang đầu",
+                last:       "Trang cuối",
+                next:       "Sau",
+                previous:   "Trước"
+            }
+        },
+        order:[[1, 'desc']]
+    });
+
     $('#btnSearch').on('click', function (e) {
         e.preventDefault();
         // console.log("Tim kiem lai");
@@ -155,15 +285,38 @@ $(document).ready(function () {
     $('#btnSubmit').on('click', function (e) {
         // Validate input
         if (validateForm()) {
-          $('#myform').submit();
+            $('#btnHideModal').trigger('click');
+            $('#myform').ajaxSubmit({
+              url: $('#myform').attr('action'),
+              type: 'post',
+              success: function (data) {
+                  // console.log(data);
+                  if (data.status == 0) {
+                      // console.log('dang ky khong thanh cong');
+                      $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
+                  } else {
+                      // console.log('dang ky thanh cong');
+                      $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!','Đã tạo/sửa tài khoản thành công');
+                      table.ajax.reload();
+                  }
+              },
+              error: function (e) {
+                  console.log('loi r', e);
+              }
+            });
         }
     });
 
-    $('#checkbox-all').on('click', function (evt) {
-        var checked = $(evt.target).is(':checked');
+    $('#checkbox-all').change(function (evt){
+        // console.log(evt.target);
+        var checked = $(this).is(':checked');
         // console.log(checked);
-        var table= $(evt.target).closest('table');
-        $('td input:checkbox',table).prop('checked', checked);
+        var table= $(this).closest('table');
+        $('td input:checkbox', table).prop('checked', checked);
+    });
+
+    $('#checkbox-all').on('click', function () {
+        changeCheckbox(this);
     });
 
     $('#datatable thead tr').on('click', function (evt) {
@@ -178,6 +331,10 @@ $(document).ready(function () {
               var cb = $cell.find('[type=checkbox]');
               // console.log('checkbox', cb);
               changeCheckbox(cb);
+              var checked = $(cb).is(':checked');
+              // console.log(checked);
+              var table= $(cb).closest('table');
+              $('td input:checkbox', table).prop('checked', checked);
           }
       }
     });

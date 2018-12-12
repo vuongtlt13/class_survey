@@ -181,6 +181,7 @@
 
         <!-- jQuery  -->
         <script src="/vendor/assets/js/jquery.min.js"></script>
+        <script src="/vendor/assets/plugins/jquery-ajaxform/jquery.form.min.js"></script>
         <script src="/vendor/assets/js/bootstrap.min.js"></script>
         <script src="/vendor/assets/js/detect.js"></script>
         <script src="/vendor/assets/js/fastclick.js"></script>

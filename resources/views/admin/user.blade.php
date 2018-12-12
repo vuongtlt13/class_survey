@@ -79,14 +79,26 @@
             </div>
 
             <div class="row pull-right" style="padding-right: 100px; padding-bottom: 10px;">
-              <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-              <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-              <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Xóa</span> </button>
-              <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Khóa</span> </button>
-              <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>
+                <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                <div class="btn-group dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thao tác<i class="caret"></i></button>
+                    <form style="display: none" id="select-form" method="post" action="">
+                        {{csrf_field()}}
+                        <input id="selected_id" name="selected_id" type="text">
+                    </form>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a id="btnLock" onclick="sendAction('{{route('lock-user')}}', 'Khóa tài khoản thành công!')">Khóa</a></li>
+                        <li><a id="btnUnlock" onclick="sendAction('{{route('unlock-user')}}', 'Mở khóa tài khoản thành công!')">Mở khóa</a></li>
+                        <li><a id="btnResetPassword" onclick="sendAction('{{route('reset-password')}}', 'Reset mật khẩu thành công!')">Reset mật khẩu</a></li>
+                        <li class="divider"></li>
+                        <li><a id="btnDelete" onclick="sendAction('{{route('delete-user')}}', 'Xóa tài khoản thành công!')">Xóa</a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-10 col-sm-offset-1">
                     <div class="card-box table-responsive">
                         <table id="datatable" class="table table-bordered display myTable">
                             <thead>
@@ -107,16 +119,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{--@foreach($courses as $course)--}}
-                            {{--<tr>--}}
-                            {{--<td>{{$course->user_id}}</td>--}}
-                            {{--<td>{{$course->user_id}}</td>--}}
-                            {{--<td>{{$course->user_id}}</td>--}}
-                            {{--<td>{{$course->subject_id}}</td>--}}
-                            {{--<td>{{$course->area_id}}</td>--}}
-                            {{--<td>{{$course->fee}} VNĐ</td>--}}
-                            {{--</tr>--}}
-                            {{--@endforeach--}}
                             </tbody>
                         </table>
                     </div>
@@ -137,66 +139,69 @@
                   {{csrf_field()}}
                   <div class="modal-body">
                       <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-12">
                               <div class="form-group">
                                   <label for="username" class="control-label">Tên đăng nhập</label>
                                   <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
+                                  <span id="username-error" style="color: red; display: none">loi username</span>
                               </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-12">
                               <div class="form-group">
                                   <label for="name" class="control-label">Họ và tên</label>
                                   <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên">
+                                  {{--<span id="name-error" style="color: red">loi name</span>--}}
                               </div>
                           </div>
-                      </div>
-                      <div class="col-sm-3 form-group">
-                          <label for="account_type">Loại tài khoản</label>
-                          <div class="btn-group bootstrap-select">
-                              <select id="account_type" name="account_type" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                  <option value="admin">Admin</option>
-                                  <option value="giangvien">Giảng viên</option>
-                                  <option value="sinhvien">Sinh viên</option>
-                              </select>
+
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label for="account_type">Loại tài khoản</label>
+                                  <select id="account_type" name="account_type" class="selectpicker" data-style="btn-white" tabindex="-98">
+                                      <option value="2">Admin</option>
+                                      <option value="1">Giảng viên</option>
+                                      <option value="0">Sinh viên</option>
+                                  </select>
+                                  {{--<span id="type-error" style="color: red; display: none">loi type</span>--}}
+                              </div>
                           </div>
-                      </div>
-                      <div class="col-sm-2 form-group">
-                          <label for="gender">Giới tính</label>
-                          <div class="btn-group bootstrap-select">
-                              <select id="gender" name="gender" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                  <option value=""> </option>
-                                  <option value="male">Nam</option>
-                                  <option value="female">Nữ</option>
-                              </select>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label for="gender">Giới tính</label>
+                                  <select id="gender" name="gender" class="selectpicker" data-style="btn-white" tabindex="-98">
+                                      <option value=""> </option>
+                                      <option value="0">Nam</option>
+                                      <option value="1">Nữ</option>
+                                  </select>
+                                  {{--<span id="gender-error" style="color: red; display: none">loi gender</span>--}}
+                              </div>
                           </div>
-                      </div>
-                      <div class="row">
                           <div class="col-md-12">
                               <div class="form-group">
                                   <label for="email" class="control-label">Email</label>
                                   <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                  <span id="email-error" style="color: red; display: none">loi email</span>
                               </div>
                           </div>
-                      </div>
-                      <div class="row">
                           <div class="col-md-4">
                               <div class="form-group">
                                   <label for="phone" class="control-label">Số điện thoại</label>
                                   <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
+                                  <span id="phone-error" style="color: red; display: none">loi phone</span>
                               </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-12">
                               <div class="form-group">
                                   <label for="address" class="control-label">Địa chỉ</label>
                                   <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">
+                                  {{--<span id="username-error" style="color: red">loi name</span>--}}
                               </div>
                           </div>
                       </div>
-
                   </div>
                   <div class="modal-footer">
                     <button id="btnSubmit" type="button" class="btn btn-info waves-effect waves-light">Tạo</button>
-                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
+                    <button id="btnHideModal" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
                   </div>
                 </form>
             </div>
@@ -230,11 +235,12 @@
 
     <script src="/vendor/assets/plugins/switchery/js/switchery.min.js"></script>
 
+    <script src="/vendor/assets/plugins/notifyjs/js/notify.js"></script>
+    <script src="/vendor/assets/plugins/notifications/notify-metro.js"></script>
 
     <!-- Modal-Effect -->
     <script src="/vendor/assets/plugins/custombox/js/custombox.min.js"></script>
     <script src="/vendor/assets/plugins/custombox/js/legacy.min.js"></script>
 
     <script src="/js/admin-user.js"></script>
-    <script src="/js/admin-user-ajax.js"></script>
 @endsection

@@ -4,7 +4,7 @@
     <div class="navbar navbar-default" role="navigation" style="background:#2196F3;">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="student" style="color: #fff;">Trường đại học Công nghệ</a>
+                <a class="navbar-brand" href="/" style="color: #fff;">Trường đại học Công nghệ</a>
             </div>
             <div class="">
                 <div class="pull-left">
@@ -125,9 +125,9 @@
                     <li class="dropdown top-menu-item-xs">
                         <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="../vendor/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                            <li><a href="{{route('profile')}}"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:void(0)"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
+                            <li><a href="{{route('logout')}}"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
                         </ul>
                     </li>
                 </ul>

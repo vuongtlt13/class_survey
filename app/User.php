@@ -39,4 +39,37 @@ class User extends EloquentUser
     ];
     protected $table = 'users';
     protected $loginNames = ['username'];
+
+    public function student()
+    {
+        return $this->hasOne('App\Student', 'id');
+    }
+
+    public function lecturer()
+    {
+        return $this->hasOne('App\Lecturer', 'id');
+    }
+
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($user) { // before delete() method call this
+            if ($user->type == 0) {
+                $user->student()->delete();
+            } elseif ($user->type == 1) {
+                $user->lecturer()->delete();
+            }
+        });
+
+        static::created(function($user) { // before delete() method call this
+            if ($user->type == 0) {
+                $student = new Student([]);
+                $user->student()->save($student);
+            } elseif ($user->type == 1) {
+                $lecturer = new Lecturer([]);
+                $user->lecturer()->save($lecturer);
+            }
+        });
+    }
 }

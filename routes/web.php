@@ -32,6 +32,7 @@ Route::middleware(['userChecker'])->group(function () {
     });
 
     Route::middleware(['adminRole'])->group(function () {
+        # User manager
         Route::get('/search-user', 'AdminController@searchUser')->name('search-user');
 
         Route::post('/create-user', 'AdminController@createUser')->name('create-user');
@@ -48,6 +49,10 @@ Route::middleware(['userChecker'])->group(function () {
 
         Route::get('/user', 'AdminController@userManager')->name('admin-user');
 
+        Route::post('/import-student', 'AdminController@importStudent')->name('import-student');
+
+        Route::post('/import-lecturer', 'AdminController@importLecturer')->name('import-lecturer');
+        #
         Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
 
         Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');

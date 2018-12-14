@@ -6,7 +6,8 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
 
-    <link rel="shortcut icon" href="images/edit.png">
+    <link rel="shortcut icon" href="/images/uet_logo-50x50.png" sizes="32x32" />
+    <link rel="shortcut icon" href="/images/uet_logo.png" sizes="192x192" />
 
     <title>Class survey</title>
 

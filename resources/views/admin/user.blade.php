@@ -95,7 +95,23 @@
                         <li><a id="btnDelete" onclick="sendAction('{{route('delete-user')}}', 'Xóa tài khoản thành công!')">Xóa</a></li>
                     </ul>
                 </div>
-                <button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>
+
+                <div class="fileupload btn btn-purple waves-effect waves-light" style="display: none">
+                    <form id="form-upload" method="post" action="" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                        <span><i class="ion-upload m-r-5"></i>Upload</span>
+                        <input id="btnUpload" name="file" type="file" accept=".csv, .xlsx, .xls" class="upload">
+                    </form>
+                </div>
+
+                <div class="btn-group dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thêm từ excel<i class="caret"></i></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a id="upload_student" onclick="importUser('{{route('import-student')}}', 'Khóa tài khoản thành công!')">Sinh viên</a></li>
+                        <li><a id="upload_lecturer" onclick="importUser('{{route('import-lecturer')}}', 'Mở khóa tài khoản thành công!')">Giảng viên</a></li>
+                    </ul>
+                </div>
+                {{--<button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>--}}
             </div>
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">

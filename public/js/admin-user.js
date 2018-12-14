@@ -192,6 +192,18 @@ function sendAction(url, msg) {
     });
 }
 
+function importUser(url) {
+    // if ($('#btnUpload')[0].files.length > 0) {
+    //     console.log('before', $('#btnUpload')[0].files);
+    // } else {
+    //     console.log('before', 'nothing');
+    // }
+    // clear input
+    $('#form-upload').attr("action", url);
+    $('#btnUpload').empty();
+    $('#btnUpload').trigger('click');
+}
+
 $(document).ready(function () {
     table = $('#datatable').DataTable({
         processing: true,
@@ -286,6 +298,7 @@ $(document).ready(function () {
         // Validate input
         if (validateForm()) {
             $('#btnHideModal').trigger('click');
+            // $('#myform').submit();
             $('#myform').ajaxSubmit({
               url: $('#myform').attr('action'),
               type: 'post',
@@ -359,4 +372,10 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#btnUpload').change(function () {
+        // console.log($(this)[0].files);
+        // console.log('after', $(this)[0].files);
+        $('#form-upload').submit();
+    })
 });

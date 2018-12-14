@@ -2,30 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Illuminate\Database\QueryException;
 
 class UserController extends Controller
 {
     static function create_admin($username, $password, $is_active) {
-        try {
-            $credentials = [
-                'username' => $username,
-                'password' => $password,
-                'is_active' => $is_active,
-                'type' => 2,
-            ];
+        $credentials = [
+            'username' => $username,
+            'password' => $password,
+            'is_active' => $is_active,
+            'type' => 2,
+        ];
 
-            $user = Sentinel::registerAndActivate($credentials);
-            return true;
-        } catch (Illuminate\Database\QueryException $e) {
-              // report($e);
-              return false;
-        }
+        UserController::create_user($credentials, []);
+        return true;
     }
 
     function profile() {
         return view('profile');
+    }
+
+    static function validateUser($credentials) {
+        $status = 1;
+        $error = "";
+        # validate username
+        if (array_key_exists('username', $credentials) && !preg_match('/^\w{5,20}$/', $credentials['username'])) {
+//            return 'Tên đăng nhập không hợp lệ';
+            $error = 'Tên đăng nhập không hợp lệ';
+            $status = 0;
+        }
+
+        # validate phone
+        if (array_key_exists('phone', $credentials) && $credentials['phone'] != null && (!preg_match('/^[0-9]{10}$/', $credentials['phone']))) {
+//            return 'Số điện thoại không hợp lệ';
+            $error = 'Số điện thoại không hợp lệ';
+            $status = 0;
+        }
+
+        # validate email
+        if (array_key_exists('email', $credentials) && $credentials['email'] != null && (!filter_var($credentials['email'], FILTER_VALIDATE_EMAIL))) {
+//            return 'Email không hợp lệ';
+            $error = 'Email không hợp lệ';
+            $status = 0;
+        }
+
+        # validate type
+        if (array_key_exists('type', $credentials) && ($credentials['type'] > 2 or $credentials['type'] < 0)) {
+//            return 'Loại tài khoản không hợp lệ';
+            $error = 'Loại tài khoản không hợp lệ';
+            $status = 0;
+        };
+        return array($status, $error);
+    }
+
+    static function create_user($credentials, $other_infor) {
+//        return $credentials;
+        list($status, $error) = UserController::validateUser($credentials);
+        if ($status == 1) {
+            try {
+                $user = Sentinel::registerAndActivate($credentials);
+                switch ($user->type) {
+                    case 0:
+                        if (sizeof($other_infor) > 0) {
+                            $user->student()->update($other_infor);
+                        }
+                        break;
+                    case 1:
+                        if (sizeof($other_infor) > 0) {
+                            $user->lecturer()->update($other_infor);
+                        }
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        return response()
+                            ->json(['status' => 0, 'msg' => 'Loại tài khoản không hợp lệ']);
+                        break;
+                }
+            } catch (QueryException $e) {
+                return response()
+                    ->json(['status' => 0, 'msg' => 'Trùng tên tài khoản, số điện thoại hoặc email']);
+            }
+        }
+        return response()
+            ->json(['status' => $status, 'msg' => $error]);
+//        return redirect()->route('index');
     }
 }

@@ -17,7 +17,7 @@ class StudentImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-//        dd($row);
+        dd($row);
         $username = $row['ma_sinh_vienten_dang_nhap'];
         $password = $row['mat_khau'];
         $name = $row['ho_va_ten'];

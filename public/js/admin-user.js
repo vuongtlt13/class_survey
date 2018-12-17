@@ -200,7 +200,7 @@ function importUser(url) {
     // }
     // clear input
     $('#form-upload').attr("action", url);
-    $('#btnUpload').empty();
+    // $('#btnUpload').empty();
     $('#btnUpload').trigger('click');
 }
 
@@ -314,7 +314,8 @@ $(document).ready(function () {
                   }
               },
               error: function (e) {
-                  console.log('loi r', e);
+                  // console.log('loi r', e);
+                  $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Lỗi từ chối từ server!');
               }
             });
         }
@@ -374,8 +375,35 @@ $(document).ready(function () {
     });
 
     $('#btnUpload').change(function () {
+        if ($('#btnUpload')[0].files.length <= 0) return;
         // console.log($(this)[0].files);
         // console.log('after', $(this)[0].files);
-        $('#form-upload').submit();
+        // $('#form-upload').submit();
+        $('#form-upload').ajaxSubmit({
+            url: $('#form-upload').attr('action'),
+            type: 'post',
+            success: function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    // console.log('dang ky khong thanh cong');
+                    $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
+                } else if (data.status == 1) {
+                    // console.log('dang ky thanh cong');
+                    $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', data.msg);
+                    table.ajax.reload();
+                } else {
+                    $.Notification.autoHideNotify('warning', 'top right', 'Thao tác thành công!', data.msg);
+                    table.ajax.reload();
+                }
+                $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));
+                // console.log($('#btnUpload')[0].files.length);
+            },
+            error: function (e) {
+                // console.log('loi r', e);
+                $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Lỗi từ chối từ server!');
+                $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));
+                // console.log($('#btnUpload')[0].files.length);
+            }
+        });
     })
 });

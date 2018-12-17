@@ -41,7 +41,8 @@ class UserController extends Controller
         }
 
         # validate email
-        if (array_key_exists('email', $credentials) && $credentials['email'] != null && (!filter_var($credentials['email'], FILTER_VALIDATE_EMAIL))) {
+        if (array_key_exists('email', $credentials) && $credentials['email'] != null
+            && (!preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $credentials['email']))) {
 //            return 'Email không hợp lệ';
             $error = 'Email không hợp lệ';
             $status = 0;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Closure;
 
 class StudentChecker
@@ -15,6 +16,13 @@ class StudentChecker
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if ($user = Sentinel::check()) {
+            if ($user->type == 0)
+                return $next($request);
+            else return redirect('/');
+        }
+        else {
+            return redirect()->route('login');
+        }
     }
 }

@@ -38,7 +38,7 @@ class LoginController extends Controller
                 return view('student.index');
                 break;
             case 1:
-                return view('teacher.index');
+                return view('lecturer.index');
                 break;
             case 2:
                 return view('admin.user');

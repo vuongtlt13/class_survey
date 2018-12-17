@@ -101,6 +101,7 @@ class MigrationCartalystSentinel extends Migration
         Schema::create('lecturers', function (Blueprint $table) {
             $table->unsignedInteger('id');
             $table->string('degree')->nullable();
+            $table->string('code')->nullable();
 
             $table->engine = 'InnoDB';
 

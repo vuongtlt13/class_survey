@@ -88,7 +88,7 @@ function validateUsername(username) {
         $('#username-error').text("Bạn chưa nhập tên đăng nhập");
         return false;
 
-    } else if (username.length > 20 || username.length < 5) {
+    } else if (username.length > 20 || username.length < 4) {
         $('#username-error').text("Độ dài tên đăng nhập không hợp lệ(từ 5-20 kí tự)");
         return false;
 

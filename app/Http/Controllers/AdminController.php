@@ -236,6 +236,7 @@ class AdminController extends Controller
     }
 
     function importStudent(Request $request) {
+        ini_set('max_execution_time', 300); //3 minutes
 //        dd($request);
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -253,6 +254,7 @@ class AdminController extends Controller
     }
 
     function importLecturer(Request $request) {
+        ini_set('max_execution_time', 300); //3 minutes
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $path = $file->storeAs('tmp', $file->getClientOriginalName());
@@ -353,6 +355,8 @@ class AdminController extends Controller
             $name = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[3]));
             $email = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[4]));
 
+            $code = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[5]));
+
             if ($username == null) continue;
             $credentials = [
                 'username'    => $username,
@@ -364,13 +368,13 @@ class AdminController extends Controller
                 'phone' => null,
                 'address' => null,
             ];
-            $other_infor = [];
+            $other_infor = ['code' => $code];
 
             list($sta, $err) = UserController::validateUser($credentials);
             if ($sta == 1) {
                 try {
                     $user = Sentinel::registerAndActivate($credentials);
-//                    $user->lecturer()->update($other_infor);
+                    $user->lecturer()->update($other_infor);
                     $no_success++;
                 } catch (QueryException $e) {
 //                    dd($e);

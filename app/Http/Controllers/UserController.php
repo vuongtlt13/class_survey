@@ -27,7 +27,7 @@ class UserController extends Controller
         $status = 1;
         $error = "";
         # validate username
-        if (array_key_exists('username', $credentials) && !preg_match('/^\w{5,20}$/', $credentials['username'])) {
+        if (array_key_exists('username', $credentials) && !preg_match('/^\w{4,20}$/', $credentials['username'])) {
 //            return 'Tên đăng nhập không hợp lệ';
             $error = 'Tên đăng nhập không hợp lệ';
             $status = 0;

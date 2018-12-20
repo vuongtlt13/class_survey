@@ -382,17 +382,24 @@ $(document).ready(function () {
         $('#form-upload').ajaxSubmit({
             url: $('#form-upload').attr('action'),
             type: 'post',
+            beforeSend: function () {
+                $.Notification.autoHideNotify('success', 'top right', 'Đang import dữ liệu...', 'Vui lòng chờ ít phút!', 3000000);
+            },
             success: function (data) {
                 // console.log(data);
                 if (data.status == 0) {
                     // console.log('dang ky khong thanh cong');
                     $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
+                    // console.log($("div:contains('Đang import dữ liệu...')"));
+                    $("div:contains('Đang import dữ liệu...')")[1].remove();
                 } else if (data.status == 1) {
                     // console.log('dang ky thanh cong');
                     $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', data.msg);
+                    $("div:contains('Đang import dữ liệu...')")[1].remove();
                     table.ajax.reload();
                 } else {
                     $.Notification.autoHideNotify('warning', 'top right', 'Thao tác thành công!', data.msg);
+                    $("div:contains('Đang import dữ liệu...')")[1].remove();
                     table.ajax.reload();
                 }
                 $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));

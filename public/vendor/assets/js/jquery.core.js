@@ -86,7 +86,7 @@ function($) {
     },
 
     //auto hide notification
-    Notification.prototype.autoHideNotify = function (style,position, title, text) {
+    Notification.prototype.autoHideNotify = function (style,position, title, text, time=3000) {
         var icon = "fa fa-adjust";
         if(style == "error"){
             icon = "fa fa-exclamation";
@@ -112,7 +112,7 @@ function($) {
             showAnimation: "show",
             showDuration: 0,
             hideDuration: 0,
-            autoHideDelay: 2500,
+            autoHideDelay: time,
             autoHide: true,
             clickToHide: true
         });

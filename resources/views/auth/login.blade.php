@@ -36,14 +36,14 @@
     <div class=" card-box">
         <div class="panel-heading">
             <h3 class="text-center"> <strong class="text-custom">Đăng nhập vào hệ thống</strong> </h3>
-            @if (session('result'))
+            @if (session('wrong'))
                 <div class="alert alert-warning">
                     Tên đăng nhập hoặc mật khẩu không chính xác!
                 </div>
             @endif
-            @if (session('activation'))
+            @if (session('block'))
                 <div class="alert alert-warning">
-                    Tài khoản đang trong thời gian xác nhận!
+                    Tài khoản đã bị khóa, vui lòng liên hệ admin!
                 </div>
             @endif
             @if (session('login-require'))

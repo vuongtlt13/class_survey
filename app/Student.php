@@ -15,6 +15,6 @@ class Student extends Model
     protected $table = "students";
 
     public function user() {
-        $this->belongsTo('App\User', 'id');
+        return $this->belongsTo('App\User', 'id');
     }
 }

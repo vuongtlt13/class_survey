@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
@@ -20,10 +21,14 @@ class LoginController extends Controller
 
         try {
             if ($user = Sentinel::stateless($credentials)) {
-                Sentinel::login($user);
-                return redirect(route('index'));
+                if ($user->is_active) {
+                    Sentinel::login($user);
+                    return redirect(route('index'));
+                } else {
+                    return redirect(route('login')) -> with('block', 'fail');
+                }
             } else {
-                return redirect(route('login')) -> with('result', 'fail');
+                return redirect(route('login')) -> with('wrong', 'fail');
             }
         } catch (NotActivatedException $ex) {
             return redirect(route('login')) -> with('activation', 'fail');

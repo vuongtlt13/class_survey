@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Lecturer;
+use App\Question;
 use App\Student;
+use App\Title;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
@@ -32,7 +34,7 @@ class AdminController extends Controller
     }
 
     function questionManager() {
-        echo('quan ly cau hoi');
+        return view('admin/question');
     }
 
     function updateUser(Request $request) {
@@ -229,7 +231,7 @@ class AdminController extends Controller
         $list_id = explode(",", $request->input('selected_id'));
         foreach ($list_id as $user_id) {
             $user = Sentinel::findById($user_id);
-            $user->delete();
+            if ($user != null) $user->delete();
         }
         return response()
             ->json(['status' => 1, 'msg' => '']);
@@ -398,5 +400,67 @@ class AdminController extends Controller
             }
         }
         return array($status, $error);
+    }
+
+    function createTitle(Request $request) {
+//        dd($request);
+        $content = $request->input('title');
+        list($status, $error) = QuestionController::createTitle($content);
+//        dd($status, $error);
+        return response()
+            ->json(['status' => $status, 'msg' => $error]);
+    }
+
+    function updateTitle(Request $request) {
+//        dd($request);
+        $title_id = $request->input('id');
+        $content = $request->input('title');
+        list($status, $error) = QuestionController::updateTitle($title_id, $content);
+//        dd($status, $error);
+        return response()
+            ->json(['status' => $status, 'msg' => $error]);
+    }
+
+    function deleteTitle(Request $request) {
+//        dd($request);
+        $list_id = explode(",", $request->input('selected_id'));
+        foreach ($list_id as $title_id) {
+            $title = Title::find($title_id);
+            if ($title != null) $title->delete();
+        }
+        return response()
+            ->json(['status' => 1, 'msg' => '']);
+    }
+
+    function createQuestion(Request $request) {
+//        dd($request);
+        $title_id = $request->input('title_id');
+        $content = $request->input('question');
+        list($status, $error) = QuestionController::createQuestion($title_id, $content);
+//        dd($status, $error);
+        return response()
+            ->json(['status' => $status, 'msg' => $error]);
+    }
+
+    function updateQuestion(Request $request) {
+//        dd($request);
+        $question_id = $request->input('id');
+        $title_id = $request->input('title_id');
+        $content = $request->input('question');
+        list($status, $error) = QuestionController::updateQuestion($question_id, $title_id, $content);
+//        dd($status, $error);
+        return response()
+            ->json(['status' => $status, 'msg' => $error]);
+    }
+
+    function deleteQuestion(Request $request) {
+//        dd($request);
+        $list_id = explode(",", $request->input('selected_id'));
+        foreach ($list_id as $question_id) {
+            $question = Question::find($question_id);
+            if ($question != null) $question->delete();
+        }
+        return response()
+            ->json(['status' => 1, 'msg' => '']);
     }
 }

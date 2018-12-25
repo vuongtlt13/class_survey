@@ -52,12 +52,30 @@ Route::middleware(['userChecker'])->group(function () {
         Route::post('/import-student', 'AdminController@importStudent')->name('import-student');
 
         Route::post('/import-lecturer', 'AdminController@importLecturer')->name('import-lecturer');
-        #
+        # Title-Question manager
+        Route::get('/question', 'AdminController@questionManager')->name('admin-question');
+
+        Route::post('/create-title', 'AdminController@createTitle')->name('create-title');
+
+        Route::post('/create-question', 'AdminController@createQuestion')->name('create-question');
+
+        Route::post('/update-title', 'AdminController@updateTitle')->name('update-title');
+
+        Route::post('/update-question', 'AdminController@updateQuestion')->name('update-question');
+
+        Route::post('/delete-title', 'AdminController@deleteTitle')->name('delete-title');
+
+        Route::post('/delete-question', 'AdminController@deleteQuestion')->name('delete-question');
+
+        Route::get('/get-title', 'QuestionController@getTitle')->name('get-title');
+
+        Route::get('/loadtitle', 'QuestionController@loadTitle')->name('load-title');
+
+        Route::get('/get-question', 'QuestionController@getQuestion')->name('get-question');
+
         Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
 
         Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');
-
-        Route::get('/question', 'AdminController@questionManager')->name('admin-question');
     });
 
 });

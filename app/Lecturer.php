@@ -14,6 +14,6 @@ class Lecturer extends Model
     protected $table = "lecturers";
 
     public function user() {
-        $this->belongsTo('App\User', 'id');
+        return $this->belongsTo('App\User', 'id');
     }
 }

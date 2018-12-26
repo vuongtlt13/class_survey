@@ -357,4 +357,6 @@ class AdminController extends Controller
         return response()
             ->json(['status' => 1, 'msg' => '']);
     }
+
+
 }

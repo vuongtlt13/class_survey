@@ -1,38 +1,6 @@
 var title_table;
 var question_table;
 var length_text = 30;
-// function createQuery(params) {
-//     let res = "";
-//     params.forEach((query) => {
-//         if (res === "") res += query;
-//         else res += '&' + query;
-//     });
-//     return res;
-// }
-//
-// function makeUrl() {
-//     let res = "/search-user?";
-//     /** GET NAME */
-//     let word = $('#keyword').val().trim();
-//     // console.log('name : ', name);
-//
-//     /** GET Account type */
-//     let account_type = $('#account_type').val().trim() === "Tất cả" ? "all" : $('#account_type').val().trim();
-//     // console.log('Account type : ', account_type);
-//
-//     /** GET GENDER */
-//     let gender = $('#gender').val().trim() === "Tất cả" ? "all" : $('#gender').val().trim();
-//     // console.log('gender : ', gender);
-//
-//     // console.log('\n\n');
-//     word = 'word=' + word;
-//     gender = 'gender=' + gender;
-//     account_type = 'type=' + account_type;
-//
-//     res += createQuery([word, gender, account_type]);
-//     // console.log('URL :', res);
-//     return res;
-// }
 
 function showModal(data_row, type) {
     // console.log('Data: ', data);
@@ -183,18 +151,6 @@ function sendAction(url, msg) {
             console.log('loi r', e);
         }
     });
-}
-
-function importUser(url) {
-    // if ($('#btnUpload')[0].files.length > 0) {
-    //     console.log('before', $('#btnUpload')[0].files);
-    // } else {
-    //     console.log('before', 'nothing');
-    // }
-    // clear input
-    $('#form-upload').attr("action", url);
-    // $('#btnUpload').empty();
-    $('#btnUpload').trigger('click');
 }
 
 $(document).ready(function () {

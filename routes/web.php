@@ -73,7 +73,26 @@ Route::middleware(['userChecker'])->group(function () {
 
         Route::get('/get-question', 'QuestionController@getQuestion')->name('get-question');
 
+        # Survey template
         Route::get('/surveytemplate', 'AdminController@surveyTemplateManager')->name('admin-survey-template');
+
+        Route::get('/get-template', 'SurveyController@getTemplate')->name('get-template');
+
+        Route::get('/load-template', 'SurveyController@loadTemplate')->name('load-template');
+
+        Route::post('/create-template', 'SurveyController@createTemplate')->name('create-template');
+
+        Route::post('/set-default', 'SurveyController@setDefaultTemplate')->name('set-default-template');
+
+        Route::post('/update-template', 'SurveyController@updateTemplate')->name('update-template');
+
+        Route::post('/delete-template', 'SurveyController@deleteTemplate')->name('delete-template');
+
+        Route::post('/remove-question', 'SurveyController@removeQuestion')->name('remove-question');
+
+        Route::post('/add-question', 'SurveyController@addQuestion')->name('add-question');
+
+        Route::get('/load-question', 'SurveyController@loadQuestion')->name('load-question');
 
         Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');
     });

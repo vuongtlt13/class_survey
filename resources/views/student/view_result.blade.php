@@ -1,7 +1,5 @@
 @extends('layouts.master')
 @section('css')
-        <!--calendar css-->
-        <link href="vendor/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
 @endsection
 @section('content')
         <div class="content">

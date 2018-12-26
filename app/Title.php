@@ -14,17 +14,19 @@ class Title extends Model
     protected $table = "titles";
 
     public function questions() {
-        return $this->hasMany('App\Question', 'id', 'title_id');
+        return $this->hasMany('App\Question', 'title_id', 'id');
     }
 
     public static function boot() {
         parent::boot();
 
         static::deleting(function($title) { // before delete() method call this
-            $questions = $title->questions();
+//            dd($title);
+            $questions = $title->questions()->get();
+//            dd($questions);
             foreach ($questions as $question) {
                 if ($question != null) {
-                    $questions->delete();
+                    $question->delete();
                 }
             }
         });

@@ -12,7 +12,9 @@
     <link href="/vendor/assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/vendor/assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="/vendor/assets/plugins/switchery/css/switchery.min.css" rel="stylesheet" />
+    <link href="/vendor/assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/vendor/assets/plugins/multiselect/css/multi-select.css"  rel="stylesheet" type="text/css" />
+    <link href="/vendor/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
 
     <link href="/vendor/assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="/vendor/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
@@ -25,7 +27,34 @@
         table.myTable.hover tbody tr:hover,
         table.myTable.display tbody tr:hover {
             cursor: pointer;
-            background-color: #aab7d1
+            background-color: #abc9ef
+        }
+
+        table td {
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+        }
+
+        .my-search {
+            width: 70%;
+        }
+
+        table > tbody > tr, table > tbody > tr > td{
+            border-top: 2px solid #e0e0e0;
+        }
+
+        table > thead {
+            border-bottom: 3px solid #e0e0e0;
+        }
+
+        .white-space-normal {
+            white-space: normal;
+        }
+
+        span.removable:hover {
+            display: inline;
+            cursor: pointer;
         }
     </style>
 @endsection
@@ -33,114 +62,138 @@
 @section('content')
     <div class="content">
         <div class="container">
+
             <div class="row">
-                <div class="col-sm-10 col-sm-offset-1">
-                    <div class="panel panel-border panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Tìm kiếm</h2>
+                <div class="col-sm-5" id="title-area">
+                    <div class="row text-center">
+                        <h2>Mẫu khảo sát</h2>
+                        <br>
+                    </div>
+                    <div class="row pull-right" style="padding-right: 50px; padding-bottom: 10px;">
+                        <button id="btnTemplateShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#template-con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                        <button id="btnTemplateAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                        <button id="btnTemplateDelete" class="btn btn-primary waves-effect waves-light">Xóa</button>
+                        <form style="display: none" id="template-select-form" method="post" action="{{route('delete-template')}}">
+                            {{csrf_field()}}
+                            <input id="template-selected_id" name="selected_id" type="text">
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11 col-sm-offset-1">
+                            <div class="card-box table-responsive" >
+                                <table id="template-datatable" class="table table-bordered display myTable">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-primary">
+                                                <input id="template-checkbox-all" type="checkbox">
+                                                <label for="template-checkbox-all">
+                                                </label>
+                                            </div>
+                                        </th>
+                                        <th>Tên</th>
+                                        <th>Trạng thái</th>
+                                        <th>Xem và sửa</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="panel-body">
-                            <div class="row text-center">
-                                <div class="col-sm-3 form-group">
-                                    <label for="name">Loại tài khoản</label>
-                                    <div class="btn-group bootstrap-select">
-                                        <select id="account_type" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                            <option>Tất cả</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="giangvien">Giảng viên</option>
-                                            <option value="sinhvien">Sinh viên</option>
-                                        </select>
-                                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-7" id="preview-area">
+                    <div class="row text-center">
+                        <h2>Xem và sửa</h2>
+                        <br>
+                    </div>
+                    <div id="content_area" style="display: none;">
+                        <div class="row">
+                            <div class="col-sm-6 pull-right" style="padding-right: 50px; padding-bottom: 10px;">
+                                <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#question-con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                                <button id="btnAddQuestion" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm câu hỏi</span> </button>
+                            </div>
+                            <div class="col-sm-3 pull-right">
+                                <h3 id="" class="name_template">Tên mẫu khảo sát</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="card-box col-sm-offset-1 col-sm-11" style="height: 760px;overflow: auto;">
+                                <div class="survey_content">
                                 </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Điền tên">
-                                </div>
-                                <div class="col-sm-2 form-group">
-                                    <label>Giới tính</label>
-                                    <div class="btn-group bootstrap-select">
-                                        <select id="gender" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                            <option>Tất cả</option>
-                                            <option>Nam</option>
-                                            <option>Nữ</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 form-group">
-                                    <span class="input-group-btn" style="padding-top: 10px">
-                                        <button id="btnSearch" type="button" class="btn waves-effect waves-light btn-default btn-md"><i class="fa fa-search m-r-5"></i> Tìm kiếm</button>
-                                    </span>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Template Modal -->
+    <div id="template-con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 id="form-template" class="modal-title">Tạo mẫu mới</h4>
+                </div>
+                <form id="template-form" method="post" action="{{route('create-template')}}">
+                    {{csrf_field()}}
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="template" class="control-label">Tên mẫu</label>
+                                    <input type="text" class="form-control" id="template" name="template" placeholder="Nội dung">
+                                    <span id="template-error" style="color: red; display: none">Chưa nhập tên mẫu</span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card-box table-responsive">
-                        <table id="datatable" class="table table-bordered display myTable">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Tên</th>
-                                <th>Tuổi</th>
-                                <th>Giới tính</th>
-                                <th>Số điện thoại</th>
-                                <th>Email</th>
-                                <th>Công việc</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{--@foreach($courses as $course)--}}
-                            {{--<tr>--}}
-                            {{--<td>{{$course->user_id}}</td>--}}
-                            {{--<td>{{$course->user_id}}</td>--}}
-                            {{--<td>{{$course->user_id}}</td>--}}
-                            {{--<td>{{$course->subject_id}}</td>--}}
-                            {{--<td>{{$course->area_id}}</td>--}}
-                            {{--<td>{{$course->fee}} VNĐ</td>--}}
-                            {{--</tr>--}}
-                            {{--@endforeach--}}
-                            </tbody>
-                        </table>
+                    <div class="modal-footer">
+                        <button id="btnSubmit" type="button" class="btn btn-info waves-effect waves-light">Tạo</button>
+                        <button id="btnHideModal" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </div>
+    </div><!-- /.modal -->
 
-    <!-- Modal -->
-    <div id="custom-modal" class="modal-demo">
-        <button type="button" class="close" onclick="Custombox.close();">
-            <span>&times;</span><span class="sr-only">Close</span>
-        </button>
-        <h4 class="custom-modal-title">Thông tin chi tiết</h4>
-        <div class="custom-modal-text">
-            <div class="row card-box">
-                <div class="col-sm-5">
-                    <img class="img-circle" src="/vendor/assets/images/users/avatar-6.jpg" alt="">
-                    <h3 id="name_info" class="header-title"><b>Bill Bertz</b></h3>
-                    <p id="gender_age_info" class="text-muted">Nam - 26 tuổi</p>
+    <!-- Question Modal -->
+    <div id="question-con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 75%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 id="form-question" class="modal-title">Thêm câu hỏi vào mẫu khảo sát</h4>
                 </div>
-                <div class="col-sm-7 pull-left" style="padding-right: 5%;padding-top: 3%;">
-                    <div class="form-group" style="text-align: left">
-                        <p><b>Nghề nghiệp: </b><label class="text-muted" id="job_info">Branch manager</label></p>
-                        <p><b>Nơi làm việc: </b><label class="text-muted" id="company_info">ABC company Pvt Ltd.</label></p>
-                        <p><b>Email: </b><label class="text-muted" id="email_info">abc@abc</label></p>
-                        <p><b>Số điện thoại: </b><label class="text-muted" id="phone_info">0123456789</label></p>
+                <form id="question-form" method="post" action="{{route('add-question')}}">
+                    {{csrf_field()}}
+                    <div class="modal-body">
+                        <div class="row">
+                            <select name="selected_questions" class="multi-select" multiple="multiple" data-selectable-optgroup="true" id="selected_questions" >
+                                <optgroup label="NFC EAST">
+                                    <option>Dallas Cowboys</option>
+                                    <option>New York Giants</option>
+                                    <option>Philadelphia Eagles</option>
+                                    <option>Washington Redskins</option>
+                                </optgroup>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <button id="btnSubmit" type="button" class="btn btn-info waves-effect waves-light">Thêm</button>
+                        <button id="btnHideModal" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-    <div style="display: none" id="myDiv">
-        <a id ="btnModal"  href="#custom-modal" class="btn btn-primary waves-effect waves-light" data-animation="fadein" data-plugin="custommodal" data-overlaySpeed="200" data-overlayColor="#36404a">Show Me</a>
-    </div>
+    </div><!-- /.modal -->
 @endsection
 
 @section('script')
@@ -169,11 +222,17 @@
 
     <script src="/vendor/assets/plugins/switchery/js/switchery.min.js"></script>
 
-    <script src="/js/admin-manage.js"></script>
+    <script src="/vendor/assets/plugins/notifyjs/js/notify.js"></script>
+    <script src="/vendor/assets/plugins/notifications/notify-metro.js"></script>
 
     <!-- Modal-Effect -->
     <script src="/vendor/assets/plugins/custombox/js/custombox.min.js"></script>
     <script src="/vendor/assets/plugins/custombox/js/legacy.min.js"></script>
+    <script type="text/javascript" src="/vendor/assets/plugins/multiselect/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="/vendor/assets/plugins/jquery-quicksearch/jquery.quicksearch.js"></script>
+    <script src="/vendor/assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+    <script src="/vendor/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 
-    <script src="/js/admin-action.js"></script>
+    <script src="/js/admin-surveytemplate.js"></script>
+    <script type="text/javascript" src="/vendor/assets/pages/jquery.form-advanced.init.js"></script>
 @endsection

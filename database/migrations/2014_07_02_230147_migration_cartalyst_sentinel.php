@@ -184,6 +184,7 @@ class MigrationCartalystSentinel extends Migration
             $table->engine = 'InnoDB';
             $table->foreign('question_id')->references('id')->on('questions');
             $table->foreign('surveytemplate_id')->references('id')->on('survey_templates');
+            $table->unique(array('question_id', 'surveytemplate_id'));
         });
 
         Schema::create('surveys', function (Blueprint $table) {

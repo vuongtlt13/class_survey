@@ -81,7 +81,7 @@
             <div class="row" style="padding-bottom: 10px;">
                 <div class="col-sm-4 pull-right">
                     <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                    <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                    <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="glyphicon glyphicon-plus m-r-5"></i> <span>Thêm</span> </button>
                     <div class="btn-group dropdown">
                         <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thao tác<i class="caret"></i></button>
                         <form style="display: none" id="select-form" method="post" action="">

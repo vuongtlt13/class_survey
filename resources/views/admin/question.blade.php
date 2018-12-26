@@ -45,22 +45,22 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-sm-4" id="title-area">
+                <div class="col-sm-5" id="title-area">
                     <div class="row text-center">
                         <h2>TIÊU ĐỀ</h2>
                         <br>
                     </div>
-                    <div class="row pull-right" style="padding-right: 50px; padding-bottom: 10px;">
+                    <div class="row pull-right" style="padding-right: 10px; padding-bottom: 10px;">
                         <button id="btnTitleShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#title-con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                        <button id="btnTitleAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                        <button id="btnTitleDelete" class="btn btn-primary waves-effect waves-light">Xóa</button>
+                        <button id="btnTitleAdd" class="btn btn-primary waves-effect waves-light"> <i class="glyphicon glyphicon-plus m-r-5"></i> <span>Thêm</span> </button>
+                        <button id="btnTitleDelete" class="btn btn-primary waves-effect waves-light"><i class="glyphicon glyphicon-trash m-r-5"></i>Xóa</button>
                         <form style="display: none" id="title-select-form" method="post" action="{{route('delete-title')}}">
                             {{csrf_field()}}
                             <input id="title-selected_id" name="selected_id" type="text">
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-sm-11 col-sm-offset-1">
+                        <div class="col-sm-12">
                             <div class="card-box table-responsive" >
                                 <table id="title-datatable" class="table table-bordered display myTable">
                                     <thead>
@@ -87,17 +87,17 @@
                         <h2>CÂU HỎI</h2>
                         <br>
                     </div>
-                    <div class="row pull-right" style="padding-right: 50px; padding-bottom: 10px;">
+                    <div class="row pull-right" style="padding-right: 10px; padding-bottom: 10px;">
                         <button id="btnQuestionShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#question-con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                        <button id="btnQuestionAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                        <button id="btnQuestionDelete" class="btn btn-primary waves-effect waves-light">Xóa</button>
+                        <button id="btnQuestionAdd" class="btn btn-primary waves-effect waves-light"> <i class="glyphicon glyphicon-plus m-r-5"></i> <span>Thêm</span> </button>
+                        <button id="btnQuestionDelete" class="btn btn-primary waves-effect waves-light"><i class="glyphicon glyphicon-trash m-r-5"></i>Xóa</button>
                         <form style="display: none" id="question-select-form" method="post" action="{{route('delete-question')}}">
                             {{csrf_field()}}
                             <input id="question-selected_id" name="selected_id" type="text">
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-sm-10 col-sm-offset-1">
+                        <div class="col-sm-11 col-sm-offset-1">
                             <div class="card-box table-responsive">
                                 <table id="question-datatable" class="table table-bordered display myTable">
                                     <thead>

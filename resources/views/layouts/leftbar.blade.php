@@ -19,7 +19,7 @@
               @endif
               @if (Sentinel::getUser()->type == 2)
               <li class="has_sub">
-                  <a href="{{route('admin-user')}}" class="waves-effect"><i class="ti-user"></i> <span> Trang chu </span></a>
+                  <a href="{{route('admin-user')}}" class="waves-effect"><i class="glyphicon glyphicon-home"></i> <span> Trang chu </span></a>
               </li>
               <!-- Admin -->
                 <li class="text-muted menu-title">Quản lý</li>

@@ -30,6 +30,7 @@ class UserController extends Controller
         if (array_key_exists('username', $credentials) && !preg_match('/^\w{4,20}$/', $credentials['username'])) {
 //            return 'Tên đăng nhập không hợp lệ';
             $error = 'Tên đăng nhập không hợp lệ';
+//            $error = $credentials['username'];
             $status = 0;
         }
 

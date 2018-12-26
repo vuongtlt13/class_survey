@@ -78,40 +78,49 @@
                 </div>
             </div>
 
-            <div class="row pull-right" style="padding-right: 100px; padding-bottom: 10px;">
-                <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                <div class="btn-group dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thao tác<i class="caret"></i></button>
-                    <form style="display: none" id="select-form" method="post" action="">
-                        {{csrf_field()}}
-                        <input id="selected_id" name="selected_id" type="text">
-                    </form>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a id="btnLock" onclick="sendAction('{{route('lock-user')}}', 'Khóa tài khoản thành công!')">Khóa</a></li>
-                        <li><a id="btnUnlock" onclick="sendAction('{{route('unlock-user')}}', 'Mở khóa tài khoản thành công!')">Mở khóa</a></li>
-                        <li><a id="btnResetPassword" onclick="sendAction('{{route('reset-password')}}', 'Reset mật khẩu thành công!')">Reset mật khẩu</a></li>
-                        <li class="divider"></li>
-                        <li><a id="btnDelete" onclick="sendAction('{{route('delete-user')}}', 'Xóa tài khoản thành công!')">Xóa</a></li>
-                    </ul>
-                </div>
+            <div class="row" style="padding-bottom: 10px;">
+                <div class="col-sm-4 pull-right">
+                    <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                    <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thao tác<i class="caret"></i></button>
+                        <form style="display: none" id="select-form" method="post" action="">
+                            {{csrf_field()}}
+                            <input id="selected_id" name="selected_id" type="text">
+                        </form>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a id="btnLock" onclick="sendAction('{{route('lock-user')}}', 'Khóa tài khoản thành công!')">Khóa</a></li>
+                            <li><a id="btnUnlock" onclick="sendAction('{{route('unlock-user')}}', 'Mở khóa tài khoản thành công!')">Mở khóa</a></li>
+                            <li><a id="btnResetPassword" onclick="sendAction('{{route('reset-password')}}', 'Reset mật khẩu thành công!')">Reset mật khẩu</a></li>
+                            <li class="divider"></li>
+                            <li><a id="btnDelete" onclick="sendAction('{{route('delete-user')}}', 'Xóa tài khoản thành công!')">Xóa</a></li>
+                        </ul>
+                    </div>
 
-                <div class="fileupload btn btn-purple waves-effect waves-light" style="display: none">
-                    <form id="form-upload" method="post" action="" enctype="multipart/form-data">
-                        {{csrf_field()}}
-                        <span><i class="ion-upload m-r-5"></i>Upload</span>
-                        <input id="btnUpload" name="file" type="file" accept=".csv, .xlsx, .xls" class="upload">
-                    </form>
-                </div>
+                    <div class="fileupload btn btn-purple waves-effect waves-light" style="display: none">
+                        <form id="form-upload" method="post" action="" enctype="multipart/form-data">
+                            {{csrf_field()}}
+                            <span><i class="ion-upload m-r-5"></i>Upload</span>
+                            <input id="btnUpload" name="file" type="file" accept=".csv, .xlsx, .xls" class="upload">
+                        </form>
+                    </div>
 
-                <div class="btn-group dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thêm từ excel<i class="caret"></i></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a id="upload_student" onclick="importUser('{{route('import-student')}}', 'Khóa tài khoản thành công!')">Sinh viên</a></li>
-                        <li><a id="upload_lecturer" onclick="importUser('{{route('import-lecturer')}}', 'Mở khóa tài khoản thành công!')">Giảng viên</a></li>
-                    </ul>
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thêm từ excel<i class="caret"></i></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a id="upload_student" onclick="importUser('student')">Sinh viên</a></li>
+                            <li><a id="upload_lecturer" onclick="importUser('lecturer')">Giảng viên</a></li>
+                        </ul>
+                    </div>
+                    {{--<button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>--}}
                 </div>
-                {{--<button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>--}}
+                <div id="import-progress" class="col-sm-2 pull-right" style="display: none;">
+                    <div class="progress progress-lg m-b-5" style="position: relative">
+                        <div id="progress_value" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" style="width: 96%;">
+                            <div class="row text-center" id="progress-info" style="color: black;position: absolute; width: 100%;left: 15px;"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
@@ -257,6 +266,12 @@
     <!-- Modal-Effect -->
     <script src="/vendor/assets/plugins/custombox/js/custombox.min.js"></script>
     <script src="/vendor/assets/plugins/custombox/js/legacy.min.js"></script>
+
+    <!-- excel -->
+    <script lang="javascript" src="js/shim.min.js"></script>
+    <script lang="javascript" src="js/jszip.js"></script>
+    <script lang="javascript" src="js/xlsx.full.min.js"></script>
+
 
     <script src="/js/admin-user.js"></script>
 @endsection

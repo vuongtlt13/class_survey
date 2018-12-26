@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use function Sodium\crypto_pwhash_scryptsalsa208sha256_str;
 use Yajra\Datatables\Datatables;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
@@ -238,168 +239,61 @@ class AdminController extends Controller
     }
 
     function importStudent(Request $request) {
-        ini_set('max_execution_time', 300); //3 minutes
-//        dd($request);
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $path = $file->storeAs('tmp', $file->getClientOriginalName());
-//            dd($path);
-            $path_full= Storage::disk('local')->path($path);
-//            dd($path_full);
-            list($status, $error) = $this->import_student($path_full);
-            Storage::delete($path);
-            return response()
-                ->json(['status' => $status, 'msg' => $error]);
-        }
-        return response()
-            ->json(['status' => 0, 'msg' => 'File không tồn tại!']);
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $khoahoc = $request->input('khoahoc');
+
+        $username = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($username));
+        $password = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($password));
+        $name = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($name));
+        $email = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($email));
+        $khoahoc = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($khoahoc));
+
+        $credentials = [
+            'username'    => $username,
+            'password' => $password,
+            'name' => $name,
+            'type' => 0,
+            'gender' => null,
+            'email' => $email,
+            'phone' => null,
+            'address' => null,
+        ];
+        $other_infor = ['khoahoc' => $khoahoc];
+//        return dd($credentials);
+        return UserController::create_user($credentials, $other_infor);
     }
 
     function importLecturer(Request $request) {
-        ini_set('max_execution_time', 300); //3 minutes
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $path = $file->storeAs('tmp', $file->getClientOriginalName());
-//            dd($path);
-            $path_full= Storage::disk('local')->path($path);
-//            dd($path_full);
-            list($status, $error) = $this->import_lecturer($path_full);
-            Storage::delete($path);
-            return response()
-                ->json(['status' => $status, 'msg' => $error]);
-        }
-        return response()
-            ->json(['status' => 0, 'msg' => 'File không tồn tại!']);
-    }
+//        dd($request);
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $code = $request->input('code');
 
-    function import_student($file) {
-        $no_success = 0;
-        $no_error = 0;
-        $data=Excel::load($file, function($reader) {})->get();
-//        $count=count($data);
-//        dd($count);
-        //looping out data of excel rows
-        foreach ($data as $key => $value) {
-//            echo $key . ':' . $value . PHP_EOL;
-//            dd($value);
-            # extract a row
-            $row = [];
-            foreach ($value as $col => $val) {
-//                echo $val . PHP_EOL;
-                array_push($row, $val);
-            }
-            # import
-//            dd(str_replace('\n','',$row[1]));
-            $username = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim(((string)$row[1])));
-            $password = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[2]));
-            $name = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[3]));
-            $email = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[4]));
-            $major = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[5]));
+        $username = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($username));
+        $password = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($password));
+        $name = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($name));
+        $email = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($email));
+        $code = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($code));
 
-            if ($username == null) continue;
-            $credentials = [
-                'username'    => $username,
-                'password' => $password,
-                'name' => $name,
-                'type' => 0,
-                'gender' => null,
-                'email' => $email,
-                'phone' => null,
-                'address' => null,
-            ];
-            $other_infor = ['major' => $major];
 
-            list($sta, $err) = UserController::validateUser($credentials);
-            if ($sta == 1) {
-                try {
-                    $user = Sentinel::registerAndActivate($credentials);
-                    $user->student()->update($other_infor);
-                    $no_success++;
-                } catch (QueryException $e) {
-//                    dd($e);
-                    $no_error++;
-                    continue;
-                }
-            } else {
-                $no_error++;
-            }
-        }
-        if ($no_error == 0) {
-            $status = 1;
-            $error = $no_success . " tài khoản đã import thành công!";
-        } else {
-            if ($no_success == 0) {
-                $status = 0;
-                $error = "Import không thành công!";
-            } else {
-                $status = 2;
-                $error = $no_success . " thành công, " . $no_error . " thất bại!";
-            }
-        }
-        return array($status, $error);
-    }
-
-    function import_lecturer($file) {
-        $no_success = 0;
-        $no_error = 0;
-        $data=Excel::load($file, function($reader) {})->get();
-        //looping out data of excel rows
-        foreach ($data as $key => $value) {
-            # extract a row
-            $row = [];
-            foreach ($value as $col => $val) {
-//                echo $val . PHP_EOL;
-                array_push($row, $val);
-            }
-            # import
-            $username = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim(((string)$row[1])));
-            $password = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[2]));
-            $name = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[3]));
-            $email = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[4]));
-
-            $code = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u','', trim($row[5]));
-
-            if ($username == null) continue;
-            $credentials = [
-                'username'    => $username,
-                'password' => $password,
-                'name' => $name,
-                'type' => 1,
-                'gender' => null,
-                'email' => $email,
-                'phone' => null,
-                'address' => null,
-            ];
-            $other_infor = ['code' => $code];
-
-            list($sta, $err) = UserController::validateUser($credentials);
-            if ($sta == 1) {
-                try {
-                    $user = Sentinel::registerAndActivate($credentials);
-                    $user->lecturer()->update($other_infor);
-                    $no_success++;
-                } catch (QueryException $e) {
-//                    dd($e);
-                    $no_error++;
-                    continue;
-                }
-            } else {
-                $no_error++;
-            }
-        }
-        if ($no_error == 0) {
-            $status = 1;
-            $error = $no_success . " tài khoản đã import thành công!";
-        } else {
-            if ($no_success == 0) {
-                $status = 0;
-                $error = "Import không thành công!";
-            } else {
-                $status = 2;
-                $error = $no_success . " thành công, " . $no_error . " thất bại!";
-            }
-        }
-        return array($status, $error);
+        $credentials = [
+            'username'    => $username,
+            'password' => $password,
+            'name' => $name,
+            'type' => 1,
+            'gender' => null,
+            'email' => $email,
+            'phone' => null,
+            'address' => null,
+        ];
+        $other_infor = ['code' => $code];
+//        return dd($credentials->username);
+        return UserController::create_user($credentials, $other_infor);
     }
 
     function createTitle(Request $request) {

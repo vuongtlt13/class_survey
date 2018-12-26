@@ -9,4 +9,8 @@ class TeacherController extends Controller
     function index() {
       return view('teacher');
     }
+
+    function detailResult(Request $request){
+      return view('lecturer.general_survey_result');
+    }
 }

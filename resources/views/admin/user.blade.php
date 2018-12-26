@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2 form-group">
-                                    <span class="input-group-btn" style="padding-top: 10px">
+                                    <span class="input-group-btn" style="padding-top: 20px;">
                                         <button id="btnSearch" type="button" class="btn waves-effect waves-light btn-default btn-md"><i class="fa fa-search m-r-5"></i> Tìm kiếm</button>
                                     </span>
                                 </div>
@@ -78,12 +78,12 @@
                 </div>
             </div>
 
-            <div class="row" style="padding-bottom: 10px;">
-                <div class="col-sm-4 pull-right">
-                    <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
+            <div class="row col-sm-11" style="padding-bottom: 15px;">
+                <div class="row pull-right">
+                    <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i>Thêm</button>
                     <button id="btnAdd" class="btn btn-primary waves-effect waves-light"> <i class="glyphicon glyphicon-plus m-r-5"></i> <span>Thêm</span> </button>
                     <div class="btn-group dropdown">
-                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thao tác<i class="caret"></i></button>
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-tasks m-r-5"></i>Thao tác <i class="caret"></i></button>
                         <form style="display: none" id="select-form" method="post" action="">
                             {{csrf_field()}}
                             <input id="selected_id" name="selected_id" type="text">
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="btn-group dropdown">
-                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Thêm từ excel<i class="caret"></i></button>
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-import m-r-5"></i>Thêm từ excel <i class="caret"></i></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a id="upload_student" onclick="importUser('student')">Sinh viên</a></li>
                             <li><a id="upload_lecturer" onclick="importUser('lecturer')">Giảng viên</a></li>

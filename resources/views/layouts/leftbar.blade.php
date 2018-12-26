@@ -14,12 +14,23 @@
               <!-- Giảng viên -->
               <li class="text-muted menu-title">Giảng viên</li>
               <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-bar-chart"></i> <span> Xem kết quả khảo sát </span></a>
+                  <a href="{{ route('index') }}" class="waves-effect"><i class="ti-bar-chart"></i> <span> Kết quả tổng hợp </span></a>
+              </li>
+              <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect"><i class="ti-view-list"></i> <span> Danh sách lớp môn học </span></a>
+                <ul>
+                  <li>
+                    <a href="{{ route('detail-result', ['idClass' => 1]) }}" class="waves-effect"><span> INT2203 1 </span></a>
+                  </li>
+                  <li>
+                    <a href="{{ route('detail-result', ['idClass' => 2]) }}" class="waves-effect"><span> INT2203 1 </span></a>
+                  </li>
+                </ul>
               </li>
               @endif
               @if (Sentinel::getUser()->type == 2)
               <li class="has_sub">
-                  <a href="{{route('admin-user')}}" class="waves-effect"><i class="glyphicon glyphicon-home"></i> <span> Trang chu </span></a>
+                  <a href="{{route('admin-user')}}" class="waves-effect"><i class="ti ti-home"></i> <span> Trang chủ </span></a>
               </li>
               <!-- Admin -->
                 <li class="text-muted menu-title">Quản lý</li>

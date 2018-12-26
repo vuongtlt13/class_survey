@@ -69,10 +69,10 @@
                         <h2>Mẫu khảo sát</h2>
                         <br>
                     </div>
-                    <div class="row pull-right" style="padding-right: 50px; padding-bottom: 10px;">
+                    <div class="row pull-right" style="padding-right: 10px; padding-bottom: 10px;">
                         <button id="btnTemplateShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#template-con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                        <button id="btnTemplateAdd" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                        <button id="btnTemplateDelete" class="btn btn-primary waves-effect waves-light">Xóa</button>
+                        <button id="btnTemplateAdd" class="btn btn-primary waves-effect waves-light"> <i class="glyphicon glyphicon-plus m-r-5"></i> <span>Thêm</span> </button>
+                        <button id="btnTemplateDelete" class="btn btn-primary waves-effect waves-light"><i class="glyphicon glyphicon-trash m-r-5"></i> Xóa</button>
                         <form style="display: none" id="template-select-form" method="post" action="{{route('delete-template')}}">
                             {{csrf_field()}}
                             <input id="template-selected_id" name="selected_id" type="text">

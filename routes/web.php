@@ -28,7 +28,7 @@ Route::middleware(['userChecker'])->group(function () {
     });
 
     Route::middleware(['lecturerRole'])->group(function () {
-
+      Route::get('/{idClass}', 'TeacherController@detailResult')->name('detail-result');
     });
 
     Route::middleware(['adminRole'])->group(function () {

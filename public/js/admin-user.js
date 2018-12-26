@@ -180,6 +180,7 @@ function sendAction(url, msg) {
             if (data.status == 1) {
                 // console.log('dang ky thanh cong');
                 $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', msg);
+                document.getElementById("checkbox-all").checked = false;
                 table.ajax.reload();
             } else {
                 // console.log(data);

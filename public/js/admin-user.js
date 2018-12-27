@@ -239,7 +239,7 @@ function sendAjax(index, data, type, success, error) {
             name: row[3],
             account_type: 1,
             email: row[4],
-            khoahoc: row[5],
+            code: row[5],
         };
     }
     // console.log(postData);

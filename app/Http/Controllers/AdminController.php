@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes;
 use App\Lecturer;
 use App\Question;
 use App\Student;
@@ -358,5 +359,30 @@ class AdminController extends Controller
             ->json(['status' => 1, 'msg' => '']);
     }
 
+    function searchClass(Request $request) {
+//        dd($request);
+        $word = $request->input('w');
+        if ($word == null) {
+            $word = '';
+        }
+        $year = date('Y');
+        $month = date("m");
+        $term = 0;
+        $school_year = $year . '-' . ($year + 1);
+//        dd($year, $month);
+        if ($month >= 1 and $month <= 6) {
+            $term = 1;
+        }
 
+        $classes = Classes::with(['subject'])
+                    ->where('term', $term)
+                    ->where('school_year', $school_year)
+                    ->whereHas('subject', function ($query) use ($word) {
+                        $query->where('code', 'like', '%' . $word . '%')
+                            ->orWhere('name', 'like', '%' . $word . '%');
+                    });
+//        dd($term, $school_year);
+//        return response()->json($classes->get());
+        return DataTables::of($classes)->make(true);
+    }
 }

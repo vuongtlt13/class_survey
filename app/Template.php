@@ -11,10 +11,14 @@ class Template extends Model
         'is_default'
     ];
 
-    protected $table = "survey_templates";
+    protected $table = "templates";
 
     public function questions() {
-        return $this->belongsToMany('App\Question', 'surveytemplate_question', 'surveytemplate_id', 'question_id');
+        return $this->belongsToMany('App\Question', 'template_question', 'template_id', 'question_id');
+    }
+
+    public function classes() {
+        return $this->hasMany('App\Classes', 'template_id');
     }
 
     public static function boot() {
@@ -22,6 +26,12 @@ class Template extends Model
 
         static::deleting(function($template) { // before delete() method call this
             $template->questions()->detach();
+            $classes = $template->classes;
+            foreach ($classes as $class) {
+                $class->template_id = null;
+                $class->is_done = 0;
+                $class->save();
+            }
         });
     }
 }

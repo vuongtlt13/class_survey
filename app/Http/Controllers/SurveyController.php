@@ -20,6 +20,12 @@ class SurveyController extends Controller
         return Datatables::of($templates)->make(true);
     }
 
+    function getAllTemplate() {
+        $templates = Template::all();
+        return response()
+            ->json($templates);
+    }
+
     function createTemplate(Request $request) {
         $name = $request->input('template');
 
@@ -128,7 +134,7 @@ class SurveyController extends Controller
     function loadQuestion(Request $request) {
         $template_id = $request->input('id');
         $questions = Question::whereDoesntHave('templates', function ($query) use ($template_id) {
-            $query->where('survey_templates.id', $template_id);
+            $query->where('templates.id', $template_id);
         })->with(['title'])->get()->toArray();
 
         usort($questions, array($this, "my_cmp"));

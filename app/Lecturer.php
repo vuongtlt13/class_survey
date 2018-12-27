@@ -16,4 +16,8 @@ class Lecturer extends Model
     public function user() {
         return $this->belongsTo('App\User', 'id');
     }
+
+    public function classes() {
+        return $this->hasMany('App\Classes', 'lecturer_id');
+    }
 }

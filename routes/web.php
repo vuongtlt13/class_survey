@@ -52,6 +52,7 @@ Route::middleware(['userChecker'])->group(function () {
         Route::post('/import-student', 'AdminController@importStudent')->name('import-student');
 
         Route::post('/import-lecturer', 'AdminController@importLecturer')->name('import-lecturer');
+
         # Title-Question manager
         Route::get('/question', 'AdminController@questionManager')->name('admin-question');
 
@@ -78,6 +79,8 @@ Route::middleware(['userChecker'])->group(function () {
 
         Route::get('/get-template', 'SurveyController@getTemplate')->name('get-template');
 
+        Route::get('/getalltemplate', 'SurveyController@getAllTemplate')->name('get-all-template');
+
         Route::get('/load-template', 'SurveyController@loadTemplate')->name('load-template');
 
         Route::post('/create-template', 'SurveyController@createTemplate')->name('create-template');
@@ -95,6 +98,21 @@ Route::middleware(['userChecker'])->group(function () {
         Route::get('/load-question', 'SurveyController@loadQuestion')->name('load-question');
 
         Route::get('/survey', 'AdminController@surveyManager')->name('admin-survey');
+
+        # Survey
+        Route::get('/search-class', 'AdminController@searchClass')->name('search-class');
+
+        Route::post('/import-class', 'ClassController@importClass')->name('import-class');
+
+        Route::post('/delete-class', 'ClassController@deleteClass')->name('delete-class');
+
+        Route::post('/delete-class-all', 'ClassController@deleteAllClass')->name('delete-all');
+        
+        Route::post('/change-template', 'ClassController@changeTemplate')->name('change-template');
+
+        Route::post('/generate-class', 'ClassController@generateClass')->name('generate-class');
+
+        Route::post('/generate-all', 'ClassController@generateAllClass')->name('generate-all');
     });
 
 });

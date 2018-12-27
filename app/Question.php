@@ -19,7 +19,11 @@ class Question extends Model
     }
 
     public function templates() {
-        return $this->belongsToMany('App\Template', 'surveytemplate_question', 'question_id', 'surveytemplate_id');
+        return $this->belongsToMany('App\Template', 'template_question', 'question_id', 'template_id');
+    }
+
+    public function class_students() {
+        return $this->belongsToMany('App\ClassStudent', 'class_student_question', 'question_id', 'class_student_id');
     }
 
     public static function boot() {
@@ -27,6 +31,7 @@ class Question extends Model
 
         static::deleting(function($question) { // before delete() method call this
             $question->templates()->detach();
+            $question->class_students()->detach();
         });
     }
 }

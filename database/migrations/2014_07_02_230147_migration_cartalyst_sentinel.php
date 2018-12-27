@@ -128,31 +128,7 @@ class MigrationCartalystSentinel extends Migration
             $table->primary('code');
         });
 
-        Schema::create('subject_classes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('class_code');
-            $table->string('subject_code');
-            $table->unsignedInteger('lecturer_id');
-            $table->string('school_year');
-            $table->boolean('term');
-
-            $table->engine = 'InnoDB';
-            $table->foreign('subject_code')->references('code')->on('subjects');
-            $table->foreign('lecturer_id')->references('id')->on('lecturers');
-            $table->unique(array('school_year', 'term', 'class_code'));
-        });
-
-        Schema::create('subject_class_student', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('student_id');
-            $table->unsignedInteger('subject_class_id');
-
-            $table->engine = 'InnoDB';
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('subject_class_id')->references('id')->on('subject_classes');
-        });
-
-        Schema::create('survey_templates', function (Blueprint $table) {
+        Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->boolean('is_default');
@@ -177,26 +153,55 @@ class MigrationCartalystSentinel extends Migration
             $table->foreign('title_id')->references('id')->on('titles');
         });
 
-        Schema::create('surveytemplate_question', function (Blueprint $table) {
+        Schema::create('template_question', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('question_id');
-            $table->unsignedInteger('surveytemplate_id');
+            $table->unsignedInteger('template_id');
 
             $table->engine = 'InnoDB';
             $table->foreign('question_id')->references('id')->on('questions');
-            $table->foreign('surveytemplate_id')->references('id')->on('survey_templates');
-            $table->unique(array('question_id', 'surveytemplate_id'));
+            $table->foreign('template_id')->references('id')->on('templates');
+            $table->unique(array('question_id', 'template_id'));
         });
 
-        Schema::create('surveys', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('subject_class_student_id');
-            $table->unsignedInteger('surveytemplate_question_id');
-            $table->unsignedInteger('score');
+            $table->string('class_code');
+            $table->string('subject_code');
+            $table->unsignedInteger('lecturer_id');
+            $table->string('school_year');
+            $table->boolean('term');
+            $table->unsignedInteger('template_id')->nullable();
+            $table->timestamps();
+            $table->string('note', 1000)->nullable();
+            $table->boolean('is_done')->default(0);
 
             $table->engine = 'InnoDB';
-            $table->foreign('subject_class_student_id')->references('id')->on('subject_class_student');
-            $table->foreign('surveytemplate_question_id')->references('id')->on('surveytemplate_question');
+            $table->foreign('subject_code')->references('code')->on('subjects');
+            $table->foreign('lecturer_id')->references('id')->on('lecturers');
+            $table->foreign('template_id')->references('id')->on('templates');
+            $table->unique(array('school_year', 'term', 'class_code'));
+        });
+
+        Schema::create('class_student', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('student_id');
+            $table->unsignedInteger('class_id');
+
+            $table->engine = 'InnoDB';
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('class_id')->references('id')->on('classes');
+        });
+
+        Schema::create('class_student_question', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('class_student_id');
+            $table->unsignedInteger('question_id');
+            $table->unsignedInteger('score')->default(0);
+
+            $table->engine = 'InnoDB';
+            $table->foreign('class_student_id')->references('id')->on('class_student');
+            $table->foreign('question_id')->references('id')->on('questions');
         });
     }
 

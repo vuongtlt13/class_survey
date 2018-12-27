@@ -175,5 +175,5 @@
     <script src="/vendor/assets/plugins/custombox/js/custombox.min.js"></script>
     <script src="/vendor/assets/plugins/custombox/js/legacy.min.js"></script>
 
-    <script src="/js/admin-action.js"></script>
+    <script src="/js/admin-survey.js"></script>
 @endsection

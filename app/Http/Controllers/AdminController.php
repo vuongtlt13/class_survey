@@ -156,7 +156,7 @@ class AdminController extends Controller
     }
 
     function searchUser(Request $request) {
-        // dd($request);
+//         dd($request);
         $word = $request->input('word');
         if ($word == null) {
             $word = "";

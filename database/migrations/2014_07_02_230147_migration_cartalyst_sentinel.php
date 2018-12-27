@@ -139,6 +139,7 @@ class MigrationCartalystSentinel extends Migration
             $table->engine = 'InnoDB';
             $table->foreign('subject_code')->references('code')->on('subjects');
             $table->foreign('lecturer_id')->references('id')->on('lecturers');
+            $table->unique(array('school_year', 'term', 'class_code'));
         });
 
         Schema::create('subject_class_student', function (Blueprint $table) {

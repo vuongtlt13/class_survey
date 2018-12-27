@@ -22,7 +22,7 @@ Route::middleware(['userChecker'])->group(function () {
     Route::get('/', 'LoginController@index')->name('index');
 
     Route::middleware(['studentRole'])->group(function () {
-        Route::get('/examine', 'StudentController@survey')->name('student-survey');
+        Route::get('/examine/{class_id}', 'StudentController@survey')->name('student-survey');
 
         Route::get('/result', 'SurveyController@result')->name('survey-result');
     });

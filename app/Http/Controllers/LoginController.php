@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes;
+use App\Student;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
@@ -35,12 +37,21 @@ class LoginController extends Controller
         }
     }
 
+    function goToStudentIndex() {
+        $user = Sentinel::check();
+//        dd($user->id);
+        // get all classes of user
+        $classes = Student::find($user->id)->classes()->where('classes.template_id', '<>', null)->with(['subject'])->orderBy('is_done')->get();
+//        return response()->json($classes);
+        return view('student.index', ['classes' => $classes]);
+    }
+
     function index() {
         $user = Sentinel::check();
         // echo($user->type);
         switch ($user->type) {
             case 0:
-                return view('student.index');
+                return $this->goToStudentIndex();
                 break;
             case 1:
                 return view('lecturer.index');

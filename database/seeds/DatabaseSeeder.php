@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
         QuestionController::createQuestion(2, "Giảng đường đáp ứng yêu cầu của môn học");
         QuestionController::createQuestion(2, "Các trang thiết bị tại giảng đường đáp ứng yêu cầu giảng dạy và học tập");
 
-        QuestionController::createQuestion(3, "Giảng viên đã thiết kế, tổ chức HP và sử dụng thời gian một cách khoa học, hợp lí");
+        QuestionController::createQuestion(3, "Giảng viên đã thiết kế, tổ chức học phần và sử dụng thời gian một cách khoa học, hợp lí");
         QuestionController::createQuestion(3, "Giảng viên đến lớp khi đã chuẩn bị tốt bài giảng");
         QuestionController::createQuestion(3, "Tôi cảm thấy hứng thú trong giờ học");
         QuestionController::createQuestion(3, "Bạn được hỗ trợ kịp thời trong quá trình học môn này");
         QuestionController::createQuestion(3, "Giảng viên đã tạo cơ hội cho sinh viên ứng dụng kiến thức lĩnh hội được");
-        QuestionController::createQuestion(3, "Giảng viên đã hướng dẫn hiệu quả và thúc đẩy việc tự học của SV");
+        QuestionController::createQuestion(3, "Giảng viên đã hướng dẫn hiệu quả và thúc đẩy việc tự học của sinh viên");
         QuestionController::createQuestion(3, "Giảng viên khuyến khích sinh viên nêu câu hỏi và bày tỏ quan điểm riêng về các vấn đề của HP");
         QuestionController::createQuestion(3, "Giảng viên thường nêu vấn đề để sinh viên suy nghĩ, tranh luận");
         QuestionController::createQuestion(3, "Giảng viên quan tâm tổ chức cho sinh viên tham gia hoạt động nhóm, thảo luận để giải quyết các nhiệm vụ học tập");

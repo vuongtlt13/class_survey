@@ -41,30 +41,9 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="form-phone" class="col-sm-4 control-label">Điện thoại</label>
-                        <div class="col-sm-7">
-                          <input type="text" name="phone" value="{{$userInfo->phone}}" class="form-control" id="form-phone" disabled>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="form-address" class="col-sm-4 control-label">Địa chỉ</label>
-                        <div class="col-sm-7">
-                          <input type="text" disabled id="form-address" name="address" class="form-control" value="{{ $userInfo->address }}">
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-6 row">
-                      <div class="form-group">
                         <label for="form-username" class="col-sm-4 control-label"><span style="color: red;">* </span>Tên đăng nhập</label>
                         <div class="col-sm-7">
                           <input type="text" disabled id="form-username" name="username" class="form-control" value="{{ $userInfo->username }}" required>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="form-gender" class="col-sm-4 control-label">Giới tính</label>
-                        <div class="col-sm-7">
-                          <input type="text" disabled id="form-gender" name="gender" class="form-control" value="{{ $userInfo->gender }}">
                         </div>
                       </div>
                       <div class="form-group">
@@ -79,6 +58,50 @@
                           <input type="password" id="form-confirm-pass" name="password" class="form-control" value="" required>
                         </div>
                       </div>
+
+                    </div>
+
+                    <div class="col-sm-6 row">
+                      <div class="form-group">
+                        <label for="form-phone" class="col-sm-4 control-label">Điện thoại</label>
+                        <div class="col-sm-7">
+                          <input type="text" name="phone" value="{{$userInfo->phone}}" class="form-control" id="form-phone" disabled>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="form-address" class="col-sm-4 control-label">Địa chỉ</label>
+                        <div class="col-sm-7">
+                          <input type="text" disabled id="form-address" name="address" class="form-control" value="{{ $userInfo->address }}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="form-gender" class="col-sm-4 control-label">Giới tính</label>
+                        <div class="col-sm-7">
+                          <input type="text" disabled id="form-gender" name="gender" class="form-control" value="{{ $userInfo->gender }}">
+                        </div>
+                      </div>
+                      @if($userInfo->type == 0)
+                        <div class="form-group">
+                          <label for="form-course" class="col-sm-4 control-label">Khóa học</label>
+                          <div class="col-sm-7">
+                            <input type="text" disabled id="form-course" name="course" class="form-control" value="{{ $userInfo->khoahoc }}">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="form-major" class="col-sm-4 control-label">Ngành học</label>
+                          <div class="col-sm-7">
+                            <input type="text" disabled id="form-major" name="major" class="form-control" value="{{ $userInfo->major }}">
+                          </div>
+                        </div>
+                      @elseif($userInfo->type == 1)
+                        <div class="form-group">
+                          <label for="form-degree" class="col-sm-4 control-label">Bằng cấp</label>
+                          <div class="col-sm-7">
+                            <input type="text" disabled id="form-degree" name="degree" class="form-control" value="{{ $userInfo->degree }}">
+                          </div>
+                        </div>
+                      @endif
+
                     </div>
                   </div>
                   <br>

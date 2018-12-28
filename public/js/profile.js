@@ -14,6 +14,9 @@ $('#btn-edit').on('click', function (e) {
         $('#form-gender').prop("disabled", false);
         $('#confirm-pass').prop("hidden", false);
         $('#btn-edit').text('Hủy');
+        $('#form-course').prop("disabled", false);
+        $('#form-major').prop("disabled", false);
+        $('#form-degree').prop("disabled", false);
     } else {
         $('#form-name').prop("disabled", true);
         $('#form-phone').prop("disabled", true);
@@ -26,6 +29,9 @@ $('#btn-edit').on('click', function (e) {
         $('#form-username').prop("disabled", true);
         $('#form-gender').prop("disabled", true);
         $('#confirm-pass').prop("hidden", true);
+        $('#form-course').prop("disabled", true);
+        $('#form-major').prop("disabled", true);
+        $('#form-degree').prop("disabled", true);
 
     }
 });

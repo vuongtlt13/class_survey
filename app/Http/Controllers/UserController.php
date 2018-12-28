@@ -20,7 +20,8 @@ class UserController extends Controller
     }
 
     function profile() {
-        return view('profile');
+      $user = Sentinel::check();
+        return view('profile', ['userInfo' => $user]);
     }
 
     static function validateUser($credentials) {

@@ -9,6 +9,10 @@ $('#btn-edit').on('click', function (e) {
         $('#form-password').val('');
         $('#form-password').prop("disabled", false);
         $('#btn-save').prop("disabled", false);
+        $('#form-address').prop("disabled", false);
+        $('#form-username').prop("disabled", false);
+        $('#form-gender').prop("disabled", false);
+        $('#confirm-pass').prop("hidden", false);
         $('#btn-edit').text('Hủy');
     } else {
         $('#form-name').prop("disabled", true);
@@ -18,6 +22,11 @@ $('#btn-edit').on('click', function (e) {
         $('#form-password').prop("disabled", true);
         $('#btn-save').prop("disabled", true);
         $('#btn-edit').text('Thay đổi thông tin');
+        $('#form-address').prop("disabled", true);
+        $('#form-username').prop("disabled", true);
+        $('#form-gender').prop("disabled", true);
+        $('#confirm-pass').prop("hidden", true);
+
     }
 });
 

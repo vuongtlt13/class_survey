@@ -200,7 +200,7 @@ class AdminController extends Controller
             $user = Sentinel::update($user, $credentials);
         }
         return response()
-            ->json(['status' => 1, 'msg' => '']);
+            ->json(['status' => 1, 'msg' => 'Khóa tài khoản thành công!']);
     }
 
     function unlockUser(Request $request) {
@@ -213,7 +213,7 @@ class AdminController extends Controller
             $user = Sentinel::update($user, $credentials);
         }
         return response()
-            ->json(['status' => 1, 'msg' => '']);
+            ->json(['status' => 1, 'msg' => 'Mở khóa tài khoản thành công!']);
     }
 
     function resetPassword(Request $request) {
@@ -226,7 +226,7 @@ class AdminController extends Controller
             $user = Sentinel::update($user, $credentials);
         }
         return response()
-            ->json(['status' => 1, 'msg' => '']);
+            ->json(['status' => 1, 'msg' => 'Reset mật khẩu thành công!']);
     }
 
     function deleteUser(Request $request) {
@@ -236,7 +236,7 @@ class AdminController extends Controller
             if ($user != null) $user->delete();
         }
         return response()
-            ->json(['status' => 1, 'msg' => '']);
+            ->json(['status' => 1, 'msg' => 'Xóa tài khoản thành công!']);
     }
 
     function importStudent(Request $request) {
@@ -361,7 +361,7 @@ class AdminController extends Controller
 
     function searchClass(Request $request) {
 //        dd($request);
-        $word = $request->input('w');
+        $word = $request->input('word');
         if ($word == null) {
             $word = '';
         }
@@ -384,5 +384,14 @@ class AdminController extends Controller
 //        dd($term, $school_year);
 //        return response()->json($classes->get());
         return DataTables::of($classes)->make(true);
+    }
+
+    function deleteAllUser() {
+        $users = User::where('type', '<>', 2)->get();
+        foreach ($users as $user) {
+            $user->delete();
+        }
+        return response()
+            ->json(['status' => 1, 'msg' => 'Xóa tất cả tài khoản thành công!']);
     }
 }

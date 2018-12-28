@@ -41,6 +41,8 @@ Route::middleware(['userChecker'])->group(function () {
 
         Route::post('/delete-user', 'AdminController@deleteUser')->name('delete-user');
 
+        Route::post('/delete--user', 'AdminController@deleteAllUser')->name('delete-all-user');
+
         Route::post('/lock-user', 'AdminController@lockUser')->name('lock-user');
 
         Route::post('/unlock-user', 'AdminController@unlockUser')->name('unlock-user');
@@ -107,7 +109,7 @@ Route::middleware(['userChecker'])->group(function () {
         Route::post('/delete-class', 'ClassController@deleteClass')->name('delete-class');
 
         Route::post('/delete-class-all', 'ClassController@deleteAllClass')->name('delete-all');
-        
+
         Route::post('/change-template', 'ClassController@changeTemplate')->name('change-template');
 
         Route::post('/generate-class', 'ClassController@generateClass')->name('generate-class');

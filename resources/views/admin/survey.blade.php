@@ -133,6 +133,8 @@
                                 </th>
                                 <th>Mã lớp</th>
                                 <th>Lớp môn học</th>
+                                <th>Ngày mở khảo sát</th>
+                                <th>Ngày đóng khảo sát </th>
                                 <th>Ngày tạo</th>
                                 <th>Ngày cập nhật</th>
                                 <th>Trạng thái</th>

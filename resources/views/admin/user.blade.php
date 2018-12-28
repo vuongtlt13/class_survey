@@ -89,11 +89,12 @@
                             <input id="selected_id" name="selected_id" type="text">
                         </form>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a id="btnLock" onclick="sendAction('{{route('lock-user')}}', 'Khóa tài khoản thành công!')">Khóa</a></li>
-                            <li><a id="btnUnlock" onclick="sendAction('{{route('unlock-user')}}', 'Mở khóa tài khoản thành công!')">Mở khóa</a></li>
-                            <li><a id="btnResetPassword" onclick="sendAction('{{route('reset-password')}}', 'Reset mật khẩu thành công!')">Reset mật khẩu</a></li>
+                            <li><a id="btnLock" onclick="sendAction('{{route('lock-user')}}')">Khóa</a></li>
+                            <li><a id="btnUnlock" onclick="sendAction('{{route('unlock-user')}}')">Mở khóa</a></li>
+                            <li><a id="btnResetPassword" onclick="sendAction('{{route('reset-password')}}')">Reset mật khẩu</a></li>
                             <li class="divider"></li>
-                            <li><a id="btnDelete" onclick="sendAction('{{route('delete-user')}}', 'Xóa tài khoản thành công!')">Xóa</a></li>
+                            <li><a id="btnDelete" onclick="sendAction('{{route('delete-user')}}')">Xóa</a></li>
+                            <li><a id="btnDeleteAll" onclick="sendAction('{{route('delete-all-user')}}')">Xóa tất cả</a></li>
                         </ul>
                     </div>
 
@@ -116,7 +117,7 @@
                 </div>
                 <div id="import-progress" class="col-sm-2 pull-right" style="display: none;">
                     <div class="progress progress-lg m-b-5" style="position: relative">
-                        <div id="progress_value" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" style="width: 96%;">
+                        <div id="progress_value" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;">
                             <div class="row text-center" id="progress-info" style="color: black;position: absolute; width: 100%;left: 15px;"> </div>
                         </div>
                     </div>

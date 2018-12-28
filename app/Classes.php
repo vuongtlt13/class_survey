@@ -14,7 +14,9 @@ class Classes extends Model
         'term',
         'template_id',
         'note',
-        'is_done'
+        'is_done',
+        'start_date',
+        'end_date'
     ];
 
     protected $table = "classes";

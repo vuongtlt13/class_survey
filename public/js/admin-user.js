@@ -1,4 +1,6 @@
 var table;
+var is_importing = false;
+var queue = [];
 
 function createQuery(params) {
     let res = "";
@@ -157,7 +159,7 @@ function validateForm() {
 }
 
 
-function sendAction(url, msg) {
+function sendAction(url) {
     // $('#select-form').attr("action", url);
     $('#selected_id').val('');
     var str = "";
@@ -179,7 +181,7 @@ function sendAction(url, msg) {
             // console.log(data);
             if (data.status == 1) {
                 // console.log('dang ky thanh cong');
-                $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', msg);
+                $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', data.msg);
                 document.getElementById("checkbox-all").checked = false;
                 table.ajax.reload();
             } else {
@@ -206,7 +208,7 @@ function importUser(type) {
 }
 
 function sendAjax(index, data, type, success, error) {
-    if (index >= data.length) {
+    if (index >= data.length || data[index].length === 0) {
         if (error === 0) {
             $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', 'Tất cả đã import thành công!');
         } else {
@@ -219,10 +221,17 @@ function sendAjax(index, data, type, success, error) {
         }
         document.getElementById("import-progress").style.display="none";
         table.ajax.reload();
+        is_importing = false;
         return;
     }
     var postData;
     var row = data[index];
+    // console.log(row);
+    // if (index > 50) {
+    //     index = data.length;
+    //     sendAjax(index, data, type, success, error);
+    // }
+
     if (type == 'student') {
         postData = {
             username: row[1],
@@ -256,20 +265,24 @@ function sendAjax(index, data, type, success, error) {
                 error++;
             }
             var progress = $('#progress_value');
-            progress.attr('aria-valuenow', index);
-            var percent = index / (data.length - 1) * 100;
+            var current_val = progress.attr('aria-valuenow');
+            current_val++;
+            progress.attr('aria-valuenow', current_val);
+            var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
             progress.css('width', Math.floor(percent).toString() + '%');
-            $('#progress-info').text((index).toString() + '/' + (data.length - 1).toString());
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
             sendAjax(index + 1, data, type, success, error);
         },
         error: function (e) {
             // console.log(e);
             error++;
             var progress = $('#progress_value');
-            progress.attr('aria-valuenow', index);
-            var percent = index / (data.length - 1) * 100;
+            var current_val = progress.attr('aria-valuenow');
+            current_val++;
+            progress.attr('aria-valuenow', current_val);
+            var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
             progress.css('width', Math.floor(percent).toString() + '%');
-            $('#progress-info').text((index).toString() + '/' + (data.length - 1).toString());
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
             sendAjax(index + 1, data, type, success, error);
         }
     });
@@ -447,61 +460,39 @@ $(document).ready(function () {
 
     $('#btnUpload').change(function () {
         if ($('#btnUpload')[0].files.length <= 0) return;
+        if (is_importing) {
+            $.Notification.autoHideNotify('warning', 'top right', 'Đang import dữ liệu khác!', 'Vui lòng import lại sau...');
+            $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));
+            return;
+        }
         // console.log($(this)[0].files);
         // console.log('after', $(this)[0].files);
         // $('#form-upload').submit();
         var file = $('#btnUpload')[0].files[0];
+        $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));
+        $.Notification.autoHideNotify('success', 'top right', 'Đang tải file lên...', 'Vui lòng chờ giây lát!');
         var reader = new FileReader();
+        // console.log('wtf');
         reader.readAsArrayBuffer(file);
         reader.onload = function(e) {
             var data = new Uint8Array(reader.result);
             var wb = XLSX.read(data,{type:'array'});
             var sheet = wb.Sheets[wb.SheetNames[0]];
             var rows = XLSX.utils.sheet_to_json(sheet, {header:1});
+            rows = rows.filter(function (el) {
+                return el != null && el.length !== 0;
+            });
             // console.log(rows.length);
             var progress = $('#progress_value');
             progress.attr('aria-valuemax', rows.length - 1);
             progress.attr('aria-valuenow', 0);
             progress.css('width', '0%');
-            $('#progress-info').text((0).toString() + '/' + (rows.length - 1).toString());
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
             document.getElementById("import-progress").style.display="block";
             var type = $('#form-upload').attr("action");
             // console.log(type);
+            is_importing = true;
             sendAjax(1, rows, type, 0, 0);
         }
-
-        // $('#form-upload').ajaxSubmit({
-        //     url: $('#form-upload').attr('action'),
-        //     type: 'post',
-        //     beforeSend: function () {
-        //         $.Notification.autoHideNotify('success', 'top right', 'Đang import dữ liệu...', 'Vui lòng chờ ít phút!', 3000000);
-        //     },
-        //     success: function (data) {
-        //         // console.log(data);
-        //         if (data.status == 0) {
-        //             // console.log('dang ky khong thanh cong');
-        //             $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
-        //             // console.log($("div:contains('Đang import dữ liệu...')"));
-        //             $("div:contains('Đang import dữ liệu...')")[1].remove();
-        //         } else if (data.status == 1) {
-        //             // console.log('dang ky thanh cong');
-        //             $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', data.msg);
-        //             $("div:contains('Đang import dữ liệu...')")[1].remove();
-        //             table.ajax.reload();
-        //         } else {
-        //             $.Notification.autoHideNotify('warning', 'top right', 'Thao tác thành công!', data.msg);
-        //             $("div:contains('Đang import dữ liệu...')")[1].remove();
-        //             table.ajax.reload();
-        //         }
-        //         $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));
-        //         // console.log($('#btnUpload')[0].files.length);
-        //     },
-        //     error: function (e) {
-        //         // console.log('loi r', e);
-        //         $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Lỗi từ chối từ server!');
-        //         $("#btnUpload").replaceWith($("#btnUpload").val('').clone(true));
-        //         // console.log($('#btnUpload')[0].files.length);
-        //     }
-        // });
     })
 });

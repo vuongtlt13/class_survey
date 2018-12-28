@@ -29,6 +29,13 @@ class Template extends Model
             $classes = $template->classes;
             foreach ($classes as $class) {
                 $class->template_id = null;
+                // remove old questions
+                // delete old questions
+                $class_students = $class->class_students;
+//                dd($class_students);
+                foreach ($class_students as $class_student) {
+                    $class_student->questions()->detach();
+                }
                 $class->is_done = 0;
                 $class->save();
             }

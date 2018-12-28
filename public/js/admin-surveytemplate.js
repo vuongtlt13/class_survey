@@ -312,7 +312,7 @@ $(document).ready(function () {
         lengthChange: false,
         language:{
             emptyTable:     "Không có dữ liệu trong bảng",
-            info:           "Đang xem từ _START_ đến _END_ trong tổng số _TOTAL_",
+            info:           "_START_ đến _END_ trong tổng số _TOTAL_",
             infoEmpty:      "",
             loadingRecords: "Đang tải...",
             processing:     "Đang lấy thông tin từ server...",

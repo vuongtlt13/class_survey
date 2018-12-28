@@ -86,7 +86,7 @@ class SurveyController extends Controller
     }
 
     function deleteTemplate(Request $request) {
-//        dd($request);
+       // dd($request);
         $list_id = explode(",", $request->input('selected_id'));
         foreach ($list_id as $template_id) {
             $template = Template::find($template_id);

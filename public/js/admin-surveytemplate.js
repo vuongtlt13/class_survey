@@ -430,6 +430,7 @@ $(document).ready(function () {
                 // console.log(data);
                 if (data.status == 1) {
                     $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', 'Đã xóa tiêu đề thành công!');
+                    document.getElementById("template-checkbox-all").checked = false;
                     template_table.ajax.reload();
                 } else {
                     // console.log(data);

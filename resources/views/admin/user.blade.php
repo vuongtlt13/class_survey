@@ -115,7 +115,7 @@
                     </div>
                     {{--<button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>--}}
                 </div>
-                <div id="import-progress" class="col-sm-2 pull-right" style="display: none;">
+                <div id="import-progress" class="col-sm-2 pull-right" style="display: none; margin-right: 5px; margin-top: 5px;">
                     <div class="progress progress-lg m-b-5" style="position: relative">
                         <div id="progress_value" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;">
                             <div class="row text-center" id="progress-info" style="color: black;position: absolute; width: 100%;left: 15px;"> </div>

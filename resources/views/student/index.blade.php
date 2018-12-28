@@ -15,11 +15,11 @@
                 @foreach($classes as $class)
                     <!-- a subject -->
                     <div class="item_subject col-sm-8">
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <a href="{{route('student-survey', $class->id)}}"><h3 class="subject_name">{{$class->subject->name}}</h3>
                             </a>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3" style="text-align: right;">
                             @if($class->is_done == 0)
                                 <span class="label label-danger"> Chưa đánh giá</span>
                             @else

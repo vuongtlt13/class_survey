@@ -56,20 +56,20 @@
                                         <tbody>
                                         <tr>
                                             <td class="white-space-normal" id="{{$questions[$i]['id']}}">{{$questions[$i]['content']}}</td>
-                                            <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                            <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                            <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                            <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                            <td class="white-space-normal"><input type="radio" name="rate"></td>
+                                            <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                            <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                            <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                            <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                            <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
                                         </tr>
                         @else
                             <tr>
                                 <td class="white-space-normal" id="{{$questions[$i]['id']}}">{{$questions[$i]['content']}}</td>
-                                <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                <td class="white-space-normal"><input type="radio" name="rate"></td>
-                                <td class="white-space-normal"><input type="radio" name="rate"></td>
+                                <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
+                                <td class="white-space-normal"><input type="radio" name="rate{{ $questions[$i]['id'] }}"></td>
                             </tr>
                         @endif
 

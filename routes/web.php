@@ -28,7 +28,7 @@ Route::middleware(['userChecker'])->group(function () {
     });
 
     Route::middleware(['lecturerRole'])->group(function () {
-//        Route::get('/{idClass}', 'TeacherController@detailResult')->name('detail-result');
+       Route::get('/view/{idClass}', 'TeacherController@detailResult')->name('detail-result');
     });
 
     Route::middleware(['adminRole'])->group(function () {
@@ -107,7 +107,7 @@ Route::middleware(['userChecker'])->group(function () {
         Route::post('/delete-class', 'ClassController@deleteClass')->name('delete-class');
 
         Route::post('/delete-class-all', 'ClassController@deleteAllClass')->name('delete-all');
-        
+
         Route::post('/change-template', 'ClassController@changeTemplate')->name('change-template');
 
         Route::post('/generate-class', 'ClassController@generateClass')->name('generate-class');

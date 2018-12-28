@@ -87,8 +87,7 @@
                                         <th>
                                             <div class="checkbox checkbox-primary">
                                                 <input id="template-checkbox-all" type="checkbox">
-                                                <label for="template-checkbox-all">
-                                                </label>
+                                                <label for="template-checkbox-all"></label>
                                             </div>
                                         </th>
                                         <th>Tên</th>
@@ -112,7 +111,7 @@
                         <div class="row">
                             <div class="col-sm-6 pull-right" style="padding-right: 50px; padding-bottom: 10px;">
                                 <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#question-con-close-modal"> <i class="fa fa-heart m-r-5"></i> <span>Thêm</span> </button>
-                                <button id="btnAddQuestion" class="btn btn-primary waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm câu hỏi</span> </button>
+                                <button id="btnAddQuestion" class="btn btn-primary waves-effect waves-light"> <i class="glyphicon glyphicon-plus m-r-5"></i> <span>Thêm câu hỏi</span> </button>
                             </div>
                             <div class="col-sm-3 pull-right">
                                 <h3 id="" class="name_template">Tên mẫu khảo sát</h3>

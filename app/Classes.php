@@ -44,6 +44,11 @@ class Classes extends Model
     public static function boot() {
         parent::boot();
         static::deleting(function($class) { // before delete() method call this
+            $class_students = $class->class_students;
+//                dd($class_students);
+            foreach ($class_students as $class_student) {
+                $class_student->questions()->detach();
+            }
             $class->students()->detach();
         });
     }

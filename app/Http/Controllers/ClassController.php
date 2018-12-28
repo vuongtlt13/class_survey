@@ -116,8 +116,10 @@ class ClassController extends Controller
             try {
                 $class->delete();
             } catch (QueryException $e) {
+                return $e;
                 continue;
             } catch (\Exception $e) {
+                return $e;
                 continue;
             }
         }
@@ -193,24 +195,22 @@ class ClassController extends Controller
             ->json(['status' => 1, 'msg' => 'Generate cuộc khảo sát thành công!']);
     }
 
-    function generateAllClass(Request $request) {
-        // get default template
-        $template = Template::where('is_default', 1)->first();
-        if ($template == null) {
-            return response()
-                ->json(['status' => 0, 'msg' => 'Không có template mặc định!']);
+    function getAllClass() {
+        $year = date('Y');
+        $month = date("m");
+        $term = 0;
+        $school_year = $year . '-' . ($year + 1);
+//        dd($year, $month);
+        if ($month >= 1 and $month <= 6) {
+            $term = 1;
         }
 
-        $classes = Classes::all();
-        try {
-            foreach ($classes as $class) {
-                $this->change_template($class->id, $template->id);
-            }
-        } catch (QueryException $e) {
-            return response()
-                ->json(['status' => 0, 'msg' => $e]);
-        }
+        $classes = Classes::where('term', $term)
+            ->where('school_year', $school_year)
+            ->select('id')
+            ->get()
+            ->toArray();
         return response()
-            ->json(['status' => 1, 'msg' => 'Generate cuộc khảo sát thành công!']);
+            ->json($classes);
     }
 }

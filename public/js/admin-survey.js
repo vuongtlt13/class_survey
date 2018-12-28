@@ -32,20 +32,15 @@ function changeCheckbox(obj) {
     // console.log('end', $(obj).is(':checked'));
 }
 
-function validateForm() {
+function get_selected_classes() {
     $('#class_ids').val('');
-    var str = "";
+    var class_ids = [];
 
     $('#datatable tbody input:checked').each(function() {
-        if (str != "") {
-            str = str + "," + ($(this).attr('id')).split('-')[1];
-        } else {
-            str = str + ($(this).attr('id')).split('-')[1];
-        }
+        class_ids.push(($(this).attr('id')).split('-')[1]);
     });
 
-    $('#class_ids').val(str);
-    return true;
+    return class_ids;
 }
 
 
@@ -75,7 +70,7 @@ function sendAction(url) {
                 document.getElementById("checkbox-all").checked = false;
                 table.ajax.reload();
             } else {
-                // console.log(data);
+                console.log(data.msg);
                 $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
             }
         },
@@ -118,6 +113,102 @@ function extractInfo(rows) {
     }
 }
 
+function generate_template(index, class_ids, success, error) {
+    if (index >= class_ids.length) {
+        // console.log(success, error);
+        if (error === 0) {
+            $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', 'Generate khảo sát thành công!');
+        } else {
+            if (success === 0) {
+                $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Generate khảo sát thất bại!');
+            } else {
+                $.Notification.autoHideNotify('warning', 'top right', 'Thao tác thành công!',
+                    success.toString() + ' thành công, ' + error.toString() + ' thất bại!');
+            }
+        }
+        document.getElementById("import-progress").style.display="none";
+        table.ajax.reload();
+        return;
+    }
+    var class_id = class_ids[index];
+    $('#class_ids').val(class_id);
+    // $('#myform').submit();
+    $.ajax({
+        url: '/generate-class',
+        type: 'post',
+        data: {
+            'selected_id': class_id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            // console.log(data);
+            if (data.status == 1) {
+                success++;
+            } else {
+                error++;
+                // console.log(data.msg);
+            }
+            var progress = $('#progress_value');
+            var current_val = progress.attr('aria-valuenow');
+            current_val++;
+            progress.attr('aria-valuenow', current_val);
+            var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
+            progress.css('width', Math.floor(percent).toString() + '%');
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+            generate_class(index + 1, class_ids, success, error);
+        },
+        error: function (e) {
+            // console.log(e);
+            error++;
+            var progress = $('#progress_value');
+            var current_val = progress.attr('aria-valuenow');
+            current_val++;
+            progress.attr('aria-valuenow', current_val);
+            var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
+            progress.css('width', Math.floor(percent).toString() + '%');
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+            generate_class(index + 1, class_ids, success, error);
+        }
+    });
+}
+
+function generateTemplate(type) {
+    if (type == 'selected')  {
+        var class_ids = get_selected_classes();
+        var progress = $('#progress_value');
+        progress.attr('aria-valuemax', class_ids.length);
+        progress.attr('aria-valuenow', 0);
+        progress.css('width', '0%');
+        $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+        document.getElementById("import-progress").style.display="block";
+        generate_template(0, class_ids, 0, 0);
+    } else if (type == 'all') {
+        $.ajax({
+            url: '/getallclasses',
+            dataType: 'json',
+            success: function (data) {
+                // console.log(data);
+                var class_ids = [];
+                for (var i in data) {
+                    class_ids.push(data[i].id);
+                }
+                // console.log(class_ids);
+                var progress = $('#progress_value');
+                progress.attr('aria-valuemax', class_ids.length);
+                progress.attr('aria-valuenow', 0);
+                progress.css('width', '0%');
+                $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+                document.getElementById("import-progress").style.display="block";
+                generate_template(0, class_ids, 0, 0);
+            },
+            error: function (e) {
+                $.Notification.autoHideNotify('error', 'top right', 'Thao tác thất bại!',
+                    'Không thể lấy danh sách lớp học');
+            }
+        });
+    }
+}
+
 function sendAjax(index, files, success, error) {
     if (index >= files.length) {
         if (error === 0) {
@@ -130,7 +221,7 @@ function sendAjax(index, files, success, error) {
                     success.toString() + ' thành công, ' + error.toString() + ' thất bại!');
             }
         }
-        // document.getElementById("import-progress").style.display="none";
+        document.getElementById("import-progress").style.display="none";
         table.ajax.reload();
         return;
     }
@@ -158,12 +249,27 @@ function sendAjax(index, files, success, error) {
                 } else {
                     success++;
                 }
+
+                var progress = $('#progress_value');
+                var current_val = progress.attr('aria-valuenow');
+                current_val++;
+                progress.attr('aria-valuenow', current_val);
+                var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
+                progress.css('width', Math.floor(percent).toString() + '%');
+                $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
                 sendAjax(index + 1, files, success, error);
 
             },
             error: function (e) {
                 console.log(e);
                 error++;
+                var progress = $('#progress_value');
+                var current_val = progress.attr('aria-valuenow');
+                current_val++;
+                progress.attr('aria-valuenow', current_val);
+                var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
+                progress.css('width', Math.floor(percent).toString() + '%');
+                $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
                 sendAjax(index + 1, files, success, error);
             }
         });
@@ -172,6 +278,59 @@ function sendAjax(index, files, success, error) {
 
 function preview(class_id) {
     console.log('preview class', class_id);
+}
+
+function generate_class(index, class_ids, success, error) {
+    if (index >= class_ids.length) {
+        // console.log(success, error);
+        if (error === 0) {
+            $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', 'Generate khảo sát thành công!');
+        } else {
+            if (success === 0) {
+                $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Generate khảo sát thất bại!');
+            } else {
+                $.Notification.autoHideNotify('warning', 'top right', 'Thao tác thành công!',
+                    success.toString() + ' thành công, ' + error.toString() + ' thất bại!');
+            }
+        }
+        document.getElementById("import-progress").style.display="none";
+        table.ajax.reload();
+        return;
+    }
+    var class_id = class_ids[index];
+    $('#class_ids').val(class_id);
+    // $('#myform').submit();
+    $('#myform').ajaxSubmit({
+        url: $('#myform').attr('action'),
+        type: 'post',
+        success: function (data) {
+            // console.log(data);
+            if (data.status == 1) {
+                success++;
+            } else {
+                error++;
+            }
+            var progress = $('#progress_value');
+            var current_val = progress.attr('aria-valuenow');
+            current_val++;
+            progress.attr('aria-valuenow', current_val);
+            var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
+            progress.css('width', Math.floor(percent).toString() + '%');
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+            generate_class(index + 1, class_ids, success, error);
+        },
+        error: function (e) {
+            error++;
+            var progress = $('#progress_value');
+            var current_val = progress.attr('aria-valuenow');
+            current_val++;
+            progress.attr('aria-valuenow', current_val);
+            var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
+            progress.css('width', Math.floor(percent).toString() + '%');
+            $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+            generate_class(index + 1, class_ids, success, error);
+        }
+    });
 }
 
 $(document).ready(function () {
@@ -196,7 +355,7 @@ $(document).ready(function () {
                     '</div>';
             }
         },{
-            targets: -2,
+            targets: -1,
             render: function (data, type, row) {
                 // console.log(data);
                 if (data == null) {
@@ -210,12 +369,9 @@ $(document).ready(function () {
             { data: "id", name: "id", orderable: false, width: "5%"},
             { data: "class_code", name: "class_code"},
             { data: "subject.name", name: "subject.name"},
-            { data: "start_date", name: "start_date"},
-            { data: "end_date", name: "end_date "},
             { data: "created_at", name: "created_at"},
             { data: "updated_at", name: "updated_at"},
             { data: "template_id", name: "template_id"},
-            { data: "id", name: "id"},
         ],
         pageLength: 15,
         searching: false,
@@ -246,29 +402,15 @@ $(document).ready(function () {
 
     $('#btnSubmit').on('click', function (e) {
         // Validate input
-        if (validateForm()) {
-            $('#btnHideModal').trigger('click');
-            // $('#myform').submit();
-            $('#myform').ajaxSubmit({
-              url: $('#myform').attr('action'),
-              type: 'post',
-              success: function (data) {
-                  // console.log(data);
-                  if (data.status == 0) {
-                      // console.log('dang ky khong thanh cong');
-                      $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', data.msg);
-                  } else {
-                      // console.log('dang ky thanh cong');
-                      $.Notification.autoHideNotify('success', 'top right', 'Thao tác thành công!', data.msg);
-                      table.ajax.reload();
-                  }
-              },
-              error: function (e) {
-                  // console.log('loi r', e);
-                  $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Lỗi từ chối từ server!');
-              }
-            });
-        }
+        var class_ids = get_selected_classes();
+        $('#btnHideModal').trigger('click');
+        var progress = $('#progress_value');
+        progress.attr('aria-valuemax', class_ids.length);
+        progress.attr('aria-valuenow', 0);
+        progress.css('width', '0%');
+        $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+        document.getElementById("import-progress").style.display="block";
+        generate_class(0, class_ids, 0, 0);
     });
 
     $('#checkbox-all').change(function (evt){
@@ -354,6 +496,17 @@ $(document).ready(function () {
         // $('#form-upload').submit();
         var files = $('#btnUpload')[0].files;
         // console.log(files);
+        var progress = $('#progress_value');
+        progress.attr('aria-valuemax', files.length);
+        progress.attr('aria-valuenow', 0);
+        progress.css('width', '0%');
+        $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
+        document.getElementById("import-progress").style.display="block";
         sendAjax(0, files, 0, 0);
     })
+
+    $('#keyword').on("keyup", function(evt) {
+        // console.log($(this).val());
+        $('#btnSearch').trigger('click');
+    });
 });

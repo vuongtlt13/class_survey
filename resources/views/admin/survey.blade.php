@@ -52,8 +52,8 @@
                                         {{--</select>--}}
                                     {{--</div>--}}
                                 </div>
-                                <div class="col-sm-4 form-group">
-                                    <label for="keyword">Name</label>
+                                <div class="col-sm-5 form-group">
+                                    <label for="keyword">Từ khóa</label>
                                     <input type="text" class="form-control" id="keyword" placeholder="Từ khóa...">
                                 </div>
                                 <div class="col-sm-2 form-group">
@@ -66,7 +66,7 @@
                                         {{--</select>--}}
                                     {{--</div>--}}
                                 </div>
-                                <div class="col-sm-2 form-group">
+                                <div class="col-sm-2 form-group" style="display: none">
                                     <span class="input-group-btn" style="padding-top: 10px">
                                         <button id="btnSearch" type="button" class="btn waves-effect waves-light btn-default btn-md"><i class="fa fa-search m-r-5"></i> Tìm kiếm</button>
                                     </span>
@@ -104,8 +104,8 @@
                     <div class="btn-group dropdown">
                         <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-import m-r-5"></i>Generate khảo sát <i class="caret"></i></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a onclick="sendAction('{{route('generate-class')}}')">Lớp đã chọn</a></li>
-                            <li><a onclick="sendAction('{{route('generate-all')}}')">Tất cả</a></li>
+                            <li><a onclick="generateTemplate('selected')">Lớp đã chọn</a></li>
+                            <li><a onclick="generateTemplate('all')">Tất cả</a></li>
                         </ul>
                     </div>
                     {{--<button class="btn btn-default waves-effect waves-light"> <i class="fa fa-heart m-r-5"></i> <span>Thêm từ excel</span> </button>--}}
@@ -133,12 +133,9 @@
                                 </th>
                                 <th>Mã lớp</th>
                                 <th>Lớp môn học</th>
-                                <th>Ngày mở khảo sát</th>
-                                <th>Ngày đóng khảo sát </th>
                                 <th>Ngày tạo</th>
                                 <th>Ngày cập nhật</th>
                                 <th>Trạng thái</th>
-                                <th>Thao tác</th>
                             </tr>
                             </thead>
                             <tbody>

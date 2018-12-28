@@ -175,8 +175,6 @@ class MigrationCartalystSentinel extends Migration
             $table->timestamps();
             $table->string('note', 1000)->nullable();
             $table->boolean('is_done')->default(0);
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
 
             $table->engine = 'InnoDB';
             $table->foreign('subject_code')->references('code')->on('subjects');
@@ -204,6 +202,16 @@ class MigrationCartalystSentinel extends Migration
             $table->engine = 'InnoDB';
             $table->foreign('class_student_id')->references('id')->on('class_student');
             $table->foreign('question_id')->references('id')->on('questions');
+        });
+
+        Schema::create('settings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->date('start_date_1')->nullable();
+            $table->date('start_date_2')->nullable();
+            $table->date('end_date_1')->nullable();
+            $table->date('end_date_2')->nullable();
+
+            $table->engine = 'InnoDB';
         });
     }
 

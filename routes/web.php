@@ -114,7 +114,7 @@ Route::middleware(['userChecker'])->group(function () {
 
         Route::post('/generate-class', 'ClassController@generateClass')->name('generate-class');
 
-        Route::post('/generate-all', 'ClassController@generateAllClass')->name('generate-all');
+        Route::get('/getallclasses', 'ClassController@getAllClass')->name('get-all-class');
     });
 
 });

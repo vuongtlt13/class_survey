@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $fillable = [
+        'id',
         'khoahoc',
         'major',
     ];
@@ -24,5 +25,14 @@ class Student extends Model
 
     public function class_students() {
         return $this->hasMany('App\ClassStudent', 'student_id', 'id');
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($student) { // before delete() method call this
+//            dd($student);
+            $student->classes()->detach();
+        });
     }
 }

@@ -14,6 +14,11 @@ class StudentController extends Controller
         return strcasecmp($b['question']['title']['content'], $a['question']['title']['content']);
     }
 
+    function my_cmp1($a, $b){
+//        dd($b['title']['content'], $a['title']['content'], strcasecmp($b['title']['content'], $a['title']['content']));
+        return strcasecmp($b['title']['content'], $a['title']['content']);
+    }
+
     function survey($class_id) {
 //        dd($class_id);
         $user = Sentinel::check();
@@ -35,7 +40,7 @@ class StudentController extends Controller
         $class_student = $class_student[0];
         $questions = $class_student->questions()->with(['title'])->get()->toArray();
 //        dd($questions);
-        usort($questions, array($this, "my_cmp"));
+        usort($questions, array($this, "my_cmp1"));
 
 //        dd($questions);
 //        dd(count($questions));

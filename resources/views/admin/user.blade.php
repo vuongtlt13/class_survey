@@ -210,24 +210,6 @@
                               </div>
                           </div>
 
-                          <script>
-                            function changeType(){
-                              type = document.getElementById("account_type_user").value;
-                              console.log(type);
-                              if (type == 1) {
-                                $('#code_div').prop("hidden", false);
-                              }else {
-                                $('#code_div').prop("hidden", true);
-                              }
-                            }
-                          </script>
-                          <div class="col-sm-6" id="code_div" hidden>
-                              <div class="form-group">
-                                <label for="teacher_code" class="control-label">Mã giảng viên</label>
-                                <input type="text" class="form-control" id="teacher_code" name="code" placeholder="Mã giảng viên">
-                                <span id="code-error" style="color: red; display: none">loi code</span>
-                              </div>
-                          </div>
                           <div class="col-sm-6">
                               <div class="form-group">
                                 <label for="phone" class="control-label">Số điện thoại</label>
@@ -236,7 +218,16 @@
                               </div>
                           </div>
 
-                          <div class="col-md-12">
+                          <div class="col-sm-6" id="code_div" hidden>
+                              <div class="form-group">
+                                  <label for="teacher_code" class="control-label">Mã giảng viên</label>
+                                  <input type="text" class="form-control" id="teacher_code" name="code" placeholder="Mã giảng viên">
+                                  <span id="code-error" style="color: red; display: none">loi code</span>
+                              </div>
+                          </div>
+
+                          <div class="col-sm-12">
+                              <br>
                               <div class="form-group">
                                   <label for="address" class="control-label">Địa chỉ</label>
                                   <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">

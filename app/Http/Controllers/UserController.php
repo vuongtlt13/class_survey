@@ -60,8 +60,16 @@ class UserController extends Controller
     }
 
     static function create_user($credentials, $other_infor) {
-//        return $credentials;
+//        dd($credentials, $other_infor);
         list($status, $error) = UserController::validateUser($credentials);
+        if ($credentials['type'] == 1) {
+            # validate phone
+            if (array_key_exists('code', $other_infor) && $other_infor['code'] != null && (!preg_match('/^[0-9]{7,9}$/', $other_infor['code']))) {
+//            return 'Số điện thoại không hợp lệ';
+                $error = 'Mã giảng viên không hợp lệ';
+                $status = 0;
+            }
+        }
         if ($status == 1) {
             try {
                 $user = Sentinel::registerAndActivate($credentials);
@@ -84,6 +92,7 @@ class UserController extends Controller
                         break;
                 }
             } catch (QueryException $e) {
+//                dd($e);
                 return response()
                     ->json(['status' => 0, 'msg' => 'Trùng tên tài khoản, số điện thoại hoặc email']);
             }

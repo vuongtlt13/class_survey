@@ -43,6 +43,14 @@ function showModal(data) {
     $('#email').val(data.email);
     $('#phone').val(data.phone);
     $('#address').val(data.address);
+    // console.log(data.type == 1);
+    if (data.type == 1) {
+        $('#teacher_code').val(data.lecturer.code);
+        $('#code_div').prop("hidden", false);
+    } else {
+        $('#teacher_code').val('');
+        $('#code_div').prop("hidden", true);
+    }
     // console.log(data.gender, data.type);
     if (data.gender == null) {
         $('select[name=gender]').val("");
@@ -64,6 +72,8 @@ function changeToAdditionForm() {
   $('#email').val('');
   $('#phone').val('');
   $('#address').val('');
+  $('#teacher_code').val('');
+  $('#code_div').prop("hidden", true);
   $('#btnSubmit').text('Tạo');
   // change two combobox
 }
@@ -127,6 +137,14 @@ function validateEmail(email) {
     return true;
 }
 
+function validateCode(code) {
+    if (code.length == 0 || isNaN(parseInt(code))) {
+        $('#code-error').text("Mã giảng viên không hợp lệ");
+        return false;
+    }
+    return true;
+}
+
 function validateForm() {
     // validate user
     var username = $('#username').val().trim();
@@ -155,6 +173,20 @@ function validateForm() {
         document.getElementById("email-error").style.display="block";
         return false;
     }
+
+    // validate lecturer_code
+    var type = document.getElementById("account_type_user").value;
+    var code = $('#teacher_code').val().trim();
+    // console.log(type);
+    if (type == 1) {
+        if (validateCode(code)) {
+            $('#teacher_code').val(code);
+            document.getElementById("code-error").style.display="none";
+        }else {
+            document.getElementById("code-error").style.display="block";
+            return false;
+        }
+    }
     return true;
 }
 
@@ -173,7 +205,8 @@ function sendAction(url) {
     });
 
     $('#selected_id').val(str);
-
+    // $('#select-form').attr('action', url);
+    // $('#select-form').submit();
     $('#select-form').ajaxSubmit({
         url: url,
         type: 'post',
@@ -288,6 +321,16 @@ function sendAjax(index, data, type, success, error) {
     });
 }
 
+function changeType(){
+    var type = document.getElementById("account_type_user").value;
+    // console.log(type);
+    if (type == 1) {
+        $('#code_div').prop("hidden", false);
+    }else {
+        $('#code_div').prop("hidden", true);
+    }
+}
+
 $(document).ready(function () {
     table = $('#datatable').DataTable({
         processing: true,
@@ -398,7 +441,7 @@ $(document).ready(function () {
                   }
               },
               error: function (e) {
-                  // console.log('loi r', e);
+                  console.log('loi r', e);
                   $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Lỗi từ chối từ server!');
               }
             });

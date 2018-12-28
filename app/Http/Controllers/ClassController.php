@@ -65,9 +65,9 @@ class ClassController extends Controller
                 $class->lecturer_id = $lecturer->id;
                 $class->school_year = $school_year;
                 $class->term = $term;
-                $class->is_done = 0;
                 $class->save();
             } catch (QueryException $e) {
+//                return $e;
                 return response()
                     ->json(['status' => 0, 'msg' => 'Lớp môn học đã tồn tại!']);
             }

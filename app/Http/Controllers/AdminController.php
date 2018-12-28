@@ -7,6 +7,7 @@ use App\Lecturer;
 use App\Question;
 use App\Student;
 use App\Title;
+use function Complex\add;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
@@ -40,6 +41,7 @@ class AdminController extends Controller
     }
 
     function updateUser(Request $request) {
+//        dd($request);
         $status = 1;
         $error = "";
         $user_id = $request->query('id');
@@ -51,6 +53,8 @@ class AdminController extends Controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $address = $request->input('address');
+        $code = null;
+        $code = $request->input('code');
 //        # validate username
 //        if (!preg_match('/^\w{5,20}$/', $username)) {
 //            return 'Tên đăng nhập không hợp lệ';
@@ -74,61 +78,72 @@ class AdminController extends Controller
             $status = 0;
         };
 
-        $user = Sentinel::findById($user_id);
-        switch ($user->type) {
-            case 0:
-                if ($user->student != null) {
-                    $user->student()->delete();
-                }
-                break;
-            case 1:
-                if ($user->lecturer != null) {
-                    $user->lecturer()->delete();
-                }
-                break;
-            case 2:
-                break;
-            default:
-                return response()
-                    ->json(['status' => 0, 'msg' => 'Loại tài khoản không hợp lệ']);
-                break;
+        if ($account_type == 1) {
+            # validate phone
+            if ($code == null || !preg_match('/^[0-9]{7,9}$/', $code)) {
+//            return 'Số điện thoại không hợp lệ';
+                $error = 'Mã giảng viên không hợp lệ!';
+                $status = 0;
+            }
         }
-        try {
-            $credentials = [
-//                'username'    => $username,
-                'name' => $name,
-                'type' => $account_type,
-                'gender' => $gender,
-                'email' => $email,
-                'phone' => $phone,
-                'address' => $address,
-            ];
 
-            $user = Sentinel::update($user, $credentials);
+        $user = Sentinel::findById($user_id);
+//        dd($user);
+//        dd($user->lecturer);
+//        var_dump($user->lecturer === null);
+        if ($user->type != $account_type) {
             switch ($user->type) {
                 case 0:
-                    if ($user->student === null) {
-                        $student = new Student([]);
-                        $user->student()->save($student);
+                    if ($user->student != null) {
+                        $user->student()->delete();
                     }
                     break;
                 case 1:
-                    if ($user->lecturer === null) {
-                        $lecturer = new Lecturer([]);
-                        $user->lecturer()->save($lecturer);
+                    if ($user->lecturer != null) {
+                        $user->lecturer()->delete();
                     }
                     break;
                 case 2:
                     break;
                 default:
                     return response()
-                        ->json(['status' => 0, 'msg' => 'Loại tài khoản không hợp lệ']);
+                        ->json(['status' => 0, 'msg' => 'Loại tài khoản không hợp lệ!']);
                     break;
             }
-        } catch (QueryException $e) {
-            return response()
-                ->json(['status' => 0, 'msg' => 'Trùng tên tài khoản, số điện thoại hoặc email']);
         }
+
+        // update info
+        $user->name = $name;
+        $user->type = $account_type;
+        $user->gender = $gender;
+        $user->phone = $phone;
+        $user->address = $address;
+        $user->email = $email;
+        $user->save();
+
+        switch ($user->type) {
+            case 0:
+                if ($user->student === null) {
+                    $student = new Student();
+                    $user->student()->save($student);
+                }
+                break;
+            case 1:
+                if ($user->lecturer === null) {
+                    $lecturer = new Lecturer(['code' => $code]);
+                    $user->lecturer()->save($lecturer);
+                } else {
+                    $user->lecturer()->update(['code'=> $code]);
+                }
+                break;
+            case 2:
+                break;
+            default:
+                return response()
+                    ->json(['status' => 0, 'msg' => 'Loại tài khoản không hợp lệ!']);
+                break;
+        }
+//        var_dump($user->lecturer === null);
         return response()
             ->json(['status' => $status, 'msg' => $error]);
     }
@@ -141,6 +156,10 @@ class AdminController extends Controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $address = $request->input('address');
+        $code = null;
+        if ($account_type == 1) {
+            $code = $request->input('code');
+        }
 
         $credentials = [
             'username'    => $username,
@@ -152,8 +171,9 @@ class AdminController extends Controller
             'phone' => $phone,
             'address' => $address,
         ];
+        $other_info = ['code' => $code];
 //        return dd($credentials);
-        return UserController::create_user($credentials, []);
+        return UserController::create_user($credentials, $other_info);
     }
 
     function searchUser(Request $request) {
@@ -182,7 +202,7 @@ class AdminController extends Controller
                     ->orWhere('id_number', 'like', '%' . $word . '%')
                     ->orWhere('phone', 'like', '%' . $word . '%')
                     ->orWhere('email', 'like', '%' . $word . '%');
-            })
+            })->with('lecturer', 'student')
             ->select('*');
         // ->get();
         // dd($users);

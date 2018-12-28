@@ -106,6 +106,7 @@ class MigrationCartalystSentinel extends Migration
             $table->engine = 'InnoDB';
 
             $table->foreign('id')->references('id')->on('users');
+            $table->primary('id');
         });
 
         Schema::create('students', function (Blueprint $table) {
@@ -116,6 +117,7 @@ class MigrationCartalystSentinel extends Migration
             $table->engine = 'InnoDB';
 
             $table->foreign('id')->references('id')->on('users');
+            $table->primary('id');
         });
 
         Schema::create('subjects', function (Blueprint $table) {

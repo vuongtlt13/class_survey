@@ -56,8 +56,20 @@ class User extends EloquentUser
 
         static::deleting(function($user) { // before delete() method call this
             if ($user->type == 0) {
+                $class_students = $user->student->class_students;
+                foreach ($class_students as $class_student) {
+//                    dd($class_student->questions);
+                    $class_student->questions()->detach();
+                    $class_student->delete();
+                }
                 $user->student()->delete();
             } elseif ($user->type == 1) {
+                $classes = $user->lecturer->classes;
+//                dd($classes);
+                foreach ($classes as $class) {
+//                    dd($class->questions);
+                    $class->delete();
+                }
                 $user->lecturer()->delete();
             }
         });

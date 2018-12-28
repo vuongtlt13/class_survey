@@ -9,7 +9,14 @@ $('#btn-edit').on('click', function (e) {
         $('#form-password').val('');
         $('#form-password').prop("disabled", false);
         $('#btn-save').prop("disabled", false);
+        $('#form-address').prop("disabled", false);
+        $('#form-username').prop("disabled", false);
+        $('#form-gender').prop("disabled", false);
+        $('#confirm-pass').prop("hidden", false);
         $('#btn-edit').text('Hủy');
+        $('#form-course').prop("disabled", false);
+        $('#form-major').prop("disabled", false);
+        $('#form-degree').prop("disabled", false);
     } else {
         $('#form-name').prop("disabled", true);
         $('#form-phone').prop("disabled", true);
@@ -18,6 +25,14 @@ $('#btn-edit').on('click', function (e) {
         $('#form-password').prop("disabled", true);
         $('#btn-save').prop("disabled", true);
         $('#btn-edit').text('Thay đổi thông tin');
+        $('#form-address').prop("disabled", true);
+        $('#form-username').prop("disabled", true);
+        $('#form-gender').prop("disabled", true);
+        $('#confirm-pass').prop("hidden", true);
+        $('#form-course').prop("disabled", true);
+        $('#form-major').prop("disabled", true);
+        $('#form-degree').prop("disabled", true);
+
     }
 });
 

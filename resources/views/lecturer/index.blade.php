@@ -37,12 +37,19 @@
                 </div>
                 <br>
                 <div class="" style="background: white; padding: 10px;">
-                  <div class="subject_info" style="padding-left: 20px;">
-                    <h4><b>Tên học phần:</b> Phat trien web</h4>
-                    <h4><b>Tên giảng viên:</b> Le Dinh Thanh</h4>
-                    <h4><b>Số sinh viên đánh giá:</b> 100</h4>
-                    <h4><b>Số giảng viên tham gia dạy học phần Phat trien web:</b> 3</h4>
-                    <h4><b>Số lượng môn học giảng viên tham gia dạy:</b> 2</h4>
+                  <div class="subject_info" style="padding-left: 20px; color: black;">
+                    <h4 style="color: black"><b>Tên học phần:</b> Phat trien web</h4>
+                    <h4 style="color: black"><b>Tên giảng viên:</b> Le Dinh Thanh</h4>
+                    <h4 style="color: black"><b>Số sinh viên đánh giá:</b> 100</h4>
+                    <h4 style="color: black"><b>Số giảng viên tham gia dạy học phần Phat trien web:</b> 3</h4>
+                    <h4 style="color: black"><b>Số lượng môn học giảng viên tham gia dạy:</b> 2</h4>
+                    <p><b>Ghi chú:</b></p>
+                    <p>M: giá trị trung bình của các tiêu chí theo lớp học phần</p>
+                    <p>STD: độ lệch chuẩn của các tiêu chí theo lớp học phần</p>
+                    <p>M1: giá trị trung bình các tiêu chí dựa trên dữ liệu phản hồi của sinh cho các giảng viện dạy cùng môn học với thầy/cô</p>
+                    <p>STD1: độ lệch chuẩn của các tiêu chí dựa trên ý kiến phản hồi của sinh viên cho các giảng viên dạy cùng môn học với thầy/cô</p>
+                    <p>M2: giá trị trung bình của các tiêu chí dựa trên ý kiến phản hồi của sinh viên về các môn học mà thầy/cô đã thực hiện giảng dạy</p>
+                    <p>STD2: độ lệch chuẩn của các tiêu chí dựa trên ý kiến phản hồi của sinh viên về các môn học mà thầy/cô đã thực hiện giảng dạy</p>
                   </div>
                   <br>
                   <table class="table table-bordered display myTable">

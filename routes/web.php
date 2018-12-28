@@ -17,6 +17,8 @@ Route::post('/login', 'LoginController@authentication')->name('authentication');
 Route::middleware(['userChecker'])->group(function () {
     Route::get('/profile', 'UserController@profile')->name('profile');
 
+    Route::post('/profile/update', 'UserController@updateProfile')->name('update-profile');
+
     Route::get('/logout', 'LoginController@logout')->name('logout');
 
     Route::get('/', 'LoginController@index')->name('index');

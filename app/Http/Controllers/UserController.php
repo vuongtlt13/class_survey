@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -100,5 +102,22 @@ class UserController extends Controller
         return response()
             ->json(['status' => $status, 'msg' => $error]);
 //        return redirect()->route('index');
+    }
+
+    function updateProfile(Request $request) {
+//        dd($request);
+        $user = User::find($request->input('user_id'));
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $password = $request->input('password');
+        if ($password != null and $password != "") {
+            $user->password = bcrypt($password);
+        }
+        $user->phone = $request->input('phone');
+        $user->address = $request->input('address');
+        $user->gender = $request->input('gender');
+        $user->save();
+        return redirect()->route('profile');
     }
 }

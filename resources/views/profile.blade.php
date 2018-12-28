@@ -40,6 +40,16 @@
                           <input type="text" name="email" value="{{$userInfo->email}}" class="form-control" id="form-email" required disabled>
                         </div>
                       </div>
+
+                      @if($userInfo->type == 1)
+                      <div class="form-group">
+                        <label for="form-code" class="col-sm-4 control-label"><span style="color: red;">* </span>Mã giảng viên</label>
+                        <div class="col-sm-7">
+                          <input type="text" name="code" value="{{$userInfo->code}}" class="form-control" id="form-code" required disabled>
+                        </div>
+                      </div>
+                      @endif
+                      
                       <div class="form-group">
                         <label for="form-username" class="col-sm-4 control-label"><span style="color: red;">* </span>Tên đăng nhập</label>
                         <div class="col-sm-7">

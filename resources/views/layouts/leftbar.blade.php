@@ -14,7 +14,15 @@
               <!-- Giảng viên -->
               <li class="text-muted menu-title">Giảng viên</li>
               <li class="has_sub">
-                  <a href="{{ route('index') }}" class="waves-effect"><i class="ti-bar-chart"></i> <span> Kết quả tổng hợp </span></a>
+                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-bar-chart"></i> <span> Phản hồi theo học phần </span></a>
+                  <ul>
+                    <li>
+                      <a href="{{ route('subject-result', ['idSubject' => 1]) }}" class="waves-effect"><span> INT2203 </span></a>
+                    </li>
+                    <li>
+                      <a href="{{ route('subject-result', ['idSubject' => 2]) }}" class="waves-effect"><span> INT2205 </span></a>
+                    </li>
+                  </ul>
               </li>
               <li class="has_sub">
                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-view-list"></i> <span> Danh sách lớp môn học </span></a>

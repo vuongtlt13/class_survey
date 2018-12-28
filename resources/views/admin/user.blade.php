@@ -182,8 +182,8 @@
 
                           <div class="col-sm-6">
                               <div class="form-group">
-                                  <label for="account_type">Loại tài khoản</label>
-                                  <select id="account_type" name="account_type" class="selectpicker" data-style="btn-white" tabindex="-98">
+                                  <label for="account_type_user">Loại tài khoản</label>
+                                  <select id="account_type_user" name="account_type" class="selectpicker" data-style="btn-white" tabindex="-98" onchange="changeType();">
                                       <option value="2">Admin</option>
                                       <option value="1">Giảng viên</option>
                                       <option value="0">Sinh viên</option>
@@ -209,13 +209,33 @@
                                   <span id="email-error" style="color: red; display: none">loi email</span>
                               </div>
                           </div>
-                          <div class="col-md-4">
+
+                          <script>
+                            function changeType(){
+                              type = document.getElementById("account_type_user").value;
+                              console.log(type);
+                              if (type == 1) {
+                                $('#code_div').prop("hidden", false);
+                              }else {
+                                $('#code_div').prop("hidden", true);
+                              }
+                            }
+                          </script>
+                          <div class="col-sm-6" id="code_div" hidden>
                               <div class="form-group">
-                                  <label for="phone" class="control-label">Số điện thoại</label>
-                                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
-                                  <span id="phone-error" style="color: red; display: none">loi phone</span>
+                                <label for="teacher_code" class="control-label">Mã giảng viên</label>
+                                <input type="text" class="form-control" id="teacher_code" name="code" placeholder="Mã giảng viên">
+                                <span id="code-error" style="color: red; display: none">loi code</span>
                               </div>
                           </div>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                <label for="phone" class="control-label">Số điện thoại</label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
+                                <span id="phone-error" style="color: red; display: none">loi phone</span>
+                              </div>
+                          </div>
+
                           <div class="col-md-12">
                               <div class="form-group">
                                   <label for="address" class="control-label">Địa chỉ</label>

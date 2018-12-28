@@ -210,6 +210,8 @@ $(document).ready(function () {
             { data: "id", name: "id", orderable: false, width: "5%"},
             { data: "class_code", name: "class_code"},
             { data: "subject.name", name: "subject.name"},
+            { data: "start_date", name: "start_date"},
+            { data: "end_date", name: "end_date "},
             { data: "created_at", name: "created_at"},
             { data: "updated_at", name: "updated_at"},
             { data: "template_id", name: "template_id"},

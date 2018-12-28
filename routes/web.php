@@ -41,6 +41,8 @@ Route::middleware(['userChecker'])->group(function () {
 
         Route::post('/delete-user', 'AdminController@deleteUser')->name('delete-user');
 
+        Route::post('/delete--user', 'AdminController@deleteAllUser')->name('delete-all-user');
+
         Route::post('/lock-user', 'AdminController@lockUser')->name('lock-user');
 
         Route::post('/unlock-user', 'AdminController@unlockUser')->name('unlock-user');

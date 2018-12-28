@@ -175,6 +175,8 @@ class MigrationCartalystSentinel extends Migration
             $table->timestamps();
             $table->string('note', 1000)->nullable();
             $table->boolean('is_done')->default(0);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
 
             $table->engine = 'InnoDB';
             $table->foreign('subject_code')->references('code')->on('subjects');

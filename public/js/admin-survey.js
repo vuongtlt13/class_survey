@@ -155,7 +155,7 @@ function generate_template(index, class_ids, success, error) {
             var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
             progress.css('width', Math.floor(percent).toString() + '%');
             $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
-            generate_class(index + 1, class_ids, success, error);
+            generate_template(index + 1, class_ids, success, error);
         },
         error: function (e) {
             // console.log(e);
@@ -167,7 +167,7 @@ function generate_template(index, class_ids, success, error) {
             var percent = progress.attr('aria-valuenow') / progress.attr('aria-valuemax') * 100;
             progress.css('width', Math.floor(percent).toString() + '%');
             $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
-            generate_class(index + 1, class_ids, success, error);
+            generate_template(index + 1, class_ids, success, error);
         }
     });
 }
@@ -181,6 +181,7 @@ function generateTemplate(type) {
         progress.css('width', '0%');
         $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
         document.getElementById("import-progress").style.display="block";
+        $.Notification.autoHideNotify('success', 'top right', 'Đang generate khảo sát...', 'Vui lòng đợi!');
         generate_template(0, class_ids, 0, 0);
     } else if (type == 'all') {
         $.ajax({
@@ -199,6 +200,7 @@ function generateTemplate(type) {
                 progress.css('width', '0%');
                 $('#progress-info').text((progress.attr('aria-valuenow')).toString() + '/' + (progress.attr('aria-valuemax')).toString());
                 document.getElementById("import-progress").style.display="block";
+                $.Notification.autoHideNotify('success', 'top right', 'Đang generate khảo sát...', 'Vui lòng đợi!');
                 generate_template(0, class_ids, 0, 0);
             },
             error: function (e) {
@@ -309,6 +311,7 @@ function generate_class(index, class_ids, success, error) {
                 success++;
             } else {
                 error++;
+                console.log(data.msg);
             }
             var progress = $('#progress_value');
             var current_val = progress.attr('aria-valuenow');
@@ -321,6 +324,7 @@ function generate_class(index, class_ids, success, error) {
         },
         error: function (e) {
             error++;
+            console.log(e);
             var progress = $('#progress_value');
             var current_val = progress.attr('aria-valuenow');
             current_val++;

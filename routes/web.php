@@ -24,7 +24,9 @@ Route::middleware(['userChecker'])->group(function () {
     Route::middleware(['studentRole'])->group(function () {
         Route::get('/examine/{class_id}', 'StudentController@survey')->name('student-survey');
 
-        Route::get('/result', 'SurveyController@result')->name('survey-result');
+        Route::post('/sendsurvey', 'StudentController@sendSurvey')->name('send-survey');
+
+        Route::get('/result/{class_id}', 'StudentController@result')->name('view-survey');
     });
 
     Route::middleware(['lecturerRole'])->group(function () {

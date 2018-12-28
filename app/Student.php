@@ -21,4 +21,8 @@ class Student extends Model
     public function classes() {
         return $this->belongsToMany('App\Classes', 'class_student','student_id', 'class_id');
     }
+
+    public function class_students() {
+        return $this->hasMany('App\ClassStudent', 'student_id', 'id');
+    }
 }

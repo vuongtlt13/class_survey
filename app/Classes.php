@@ -13,10 +13,6 @@ class Classes extends Model
         'school_year',
         'term',
         'template_id',
-        'note',
-        'is_done',
-        'start_date',
-        'end_date'
     ];
 
     protected $table = "classes";

@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class ClassStudent extends Model
 {
     protected $fillable = [
-        'class_code',
-        'subject_code',
-        'lecturer_id',
-        'school_year',
-        'term',
-        'template_id'
+        'student_id',
+        'class_id',
+        'is_done',
+        'note',
     ];
 
     protected $table = "class_student";
@@ -20,6 +18,10 @@ class ClassStudent extends Model
 
     public function questions() {
         return $this->belongsToMany('App\Question', 'class_student_question', 'class_student_id', 'question_id');
+    }
+
+    public function question_scores() {
+        return $this->hasMany('App\QuestionScore', 'class_student_id', 'id');
     }
 
     public function classes() {

@@ -11,10 +11,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SurveyController extends Controller
 {
-    function result() {
-      return view('view_result');
-    }
-
     function getTemplate() {
         $templates = Template::all();
         return Datatables::of($templates)->make(true);

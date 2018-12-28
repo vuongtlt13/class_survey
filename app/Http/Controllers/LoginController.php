@@ -41,8 +41,17 @@ class LoginController extends Controller
         $user = Sentinel::check();
 //        dd($user->id);
         // get all classes of user
-        $classes = Student::find($user->id)->classes()->where('classes.template_id', '<>', null)->with(['subject'])->orderBy('is_done')->get();
+        $classes = Student::find($user->id)
+            ->class_students()
+            ->whereHas('classes', function ($query) {
+                $query->where('template_id', '<>', null);
+            })
+            ->orderBy('is_done')
+            ->with(['classes.subject'])
+            ->get();
+//        ->classes()->where('classes.template_id', '<>', null)->with(['subject'])->orderBy('is_done')->get();
 //        return response()->json($classes);
+//        dd($classes);
         return view('student.index', ['classes' => $classes]);
     }
 

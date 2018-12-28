@@ -173,8 +173,6 @@ class MigrationCartalystSentinel extends Migration
             $table->boolean('term');
             $table->unsignedInteger('template_id')->nullable();
             $table->timestamps();
-            $table->string('note', 1000)->nullable();
-            $table->boolean('is_done')->default(0);
 
             $table->engine = 'InnoDB';
             $table->foreign('subject_code')->references('code')->on('subjects');
@@ -187,6 +185,8 @@ class MigrationCartalystSentinel extends Migration
             $table->increments('id');
             $table->unsignedInteger('student_id');
             $table->unsignedInteger('class_id');
+            $table->boolean('is_done')->default(0);
+            $table->string('note', 1000)->nullable();
 
             $table->engine = 'InnoDB';
             $table->foreign('student_id')->references('id')->on('students');

@@ -16,8 +16,11 @@
                     <!-- a subject -->
                     <div class="item_subject col-sm-8">
                         <div class="col-sm-9">
-                            <a href="{{route('student-survey', $class->id)}}"><h3 class="subject_name">{{$class->subject->name}}</h3>
-                            </a>
+                            @if($class->is_done == 0)
+                                <a href="{{route('student-survey', $class->class_id)}}"><h3 class="subject_name">{{$class->classes->subject->name}}</h3></a>
+                            @else
+                                <a href="{{route('view-survey', $class->class_id)}}"><h3 class="subject_name">{{$class->classes->subject->name}}</h3></a>
+                            @endif
                         </div>
                         <div class="col-sm-3" style="text-align: right;">
                             @if($class->is_done == 0)

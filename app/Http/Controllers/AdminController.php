@@ -553,7 +553,7 @@ left join questions
         DB::statement($raw_query);
 //        dd($questions);
 
-        return view('lecturer.class_result', [
+        return view('admin.class_result', [
             'subject_name'=> $subject->name,
             'student_done' => $student_done,
             'student' => $student,

@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="btn-group dropdown">
-                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-import m-r-5"></i>Generate khảo sát <i class="caret"></i></button>
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-list-alt m-r-5"></i>Generate khảo sát <i class="caret"></i></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a onclick="generateTemplate('selected')">Lớp đã chọn</a></li>
                             <li><a onclick="generateTemplate('all')">Tất cả</a></li>

@@ -13,6 +13,16 @@
         table > thead {
             border-bottom: 3px solid #e0e0e0;
         }
+
+        .table > tbody > tr > td{
+          text-align: center;
+          vertical-align: middle;
+        }
+        .table > thead > tr > th{
+          text-align: center;
+          vertical-align: middle;
+        }
+
     </style>
 @endsection
 @section('content')
@@ -60,7 +70,7 @@
                                             </tr></thead>
                                             <tbody>
                                             <tr>
-                                                <td class="white-space-normal">{{$questions[$i]['question']['content']}}</td>
+                                                <td class="white-space-normal" style="text-align: left">{{$questions[$i]['question']['content']}}</td>
                                                 @if ($questions[$i]['score'] == 1)
                                                     <td class="white-space-normal"><input type="radio" value="1" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                     <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
@@ -95,7 +105,7 @@
                                             </tr>
                                             @else
                                                 <tr>
-                                                    <td class="white-space-normal">{{$questions[$i]['question']['content']}}</td>
+                                                    <td class="white-space-normal" style="text-align: left">{{$questions[$i]['question']['content']}}</td>
                                                     @if ($questions[$i]['score'] == 1)
                                                         <td class="white-space-normal"><input type="radio" value="1" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                         <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>

@@ -13,6 +13,14 @@
         table > thead {
             border-bottom: 3px solid #e0e0e0;
         }
+        .table > tbody > tr > td{
+          text-align: center;
+          vertical-align: middle;
+        }
+        .table > thead > tr > th{
+          text-align: center;
+          vertical-align: middle;
+        }
     </style>
 @endsection
 @section('content')
@@ -42,7 +50,7 @@
                                         <h4><span style="color: red;">* </span>{{$questions[$i]['title']['content']}}</h4>
                                     </div>
                                     <div class="question_area" style="padding-left: 20px">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" id="question_table">
                                             <colgroup>
                                                 <col style="width:70%">
                                                 <col style="width:6%">
@@ -60,8 +68,8 @@
                                             </tr></thead>
                                             <tbody>
                                             <tr>
-                                                <td class="white-space-normal" id="{{$questions[$i]['id']}}">{{$questions[$i]['content']}}</td>
-                                                <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['id'] }}"></td>
+                                                <td class="white-space-normal" id="{{$questions[$i]['id']}}" style="text-align: left;">{{$questions[$i]['content']}}</td>
+                                                <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['id'] }}" valign="center"></td>
                                                 <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['id'] }}"></td>
                                                 <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['id'] }}"></td>
                                                 <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['id'] }}"></td>
@@ -69,8 +77,8 @@
                                             </tr>
                                             @else
                                                 <tr>
-                                                    <td class="white-space-normal" id="{{$questions[$i]['id']}}">{{$questions[$i]['content']}}</td>
-                                                    <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['id'] }}"></td>
+                                                    <td class="white-space-normal" id="{{$questions[$i]['id']}}" style="text-align: left;">{{$questions[$i]['content']}}</td>
+                                                    <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['id'] }}" valign="center"></td>
                                                     <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['id'] }}"></td>
                                                     <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['id'] }}"></td>
                                                     <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['id'] }}"></td>

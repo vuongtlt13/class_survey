@@ -127,6 +127,7 @@ function generate_template(index, class_ids, success, error) {
             }
         }
         document.getElementById("import-progress").style.display="none";
+        document.getElementById("checkbox-all").checked = false;
         table.ajax.reload();
         return;
     }
@@ -553,7 +554,7 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     $('#btnChange').on('click', function (evt) {
         $.ajax({
             url: '/getalltemplate',
@@ -574,9 +575,9 @@ $(document).ready(function () {
             error: function (e) {
                 console.log(e);
             }
-        })    
+        })
     });
-    
+
     $('#btnUpload').change(function () {
         if ($('#btnUpload')[0].files.length <= 0) return;
         // console.log($(this)[0].files);

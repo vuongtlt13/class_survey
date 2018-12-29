@@ -75,6 +75,7 @@ class StudentController extends Controller
         }
 
         $class_student->is_done = 1;
+        $class_student->note = $request->input('note');;
         $class_student->save();
         return redirect()->route('index');
     }
@@ -93,6 +94,7 @@ class StudentController extends Controller
 
 //        dd($questions);
 //        dd(count($questions));
+//        dd($class_student);
         return view('student.view_result', [
             'note' => $class_student->note,
             'student_id' => $class_student->student_id,

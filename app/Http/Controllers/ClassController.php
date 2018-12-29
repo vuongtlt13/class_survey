@@ -16,7 +16,9 @@ class ClassController extends Controller
 {
     function importClass(Request $request) {
 //        dd($request);
-        $lecturer = Lecturer::where('code', $request->input('lecturer_code'))->first();
+        $lecturer = Lecturer::where('code', (int)$request->input('lecturer_code'))->first();
+//        dd($request->input('lecturer_code'));
+//        dd($lecturer);
         if ($lecturer == null) {
             return response()
                 ->json(['status' => 0, 'msg' => 'Mã giảng viên không tồn tại!']);

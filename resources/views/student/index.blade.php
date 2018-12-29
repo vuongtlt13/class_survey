@@ -19,7 +19,7 @@
                             @if($class->is_done == 0)
                                 <a href="{{route('student-survey', $class->class_id)}}"><h3 class="subject_name">{{$class->classes->subject->name}}</h3></a>
                             @else
-                                <a href="{{route('view-survey', $class->class_id)}}"><h3 class="subject_name">{{$class->classes->subject->name}}</h3></a>
+                                <a href="{{route('view-survey', $class->id)}}"><h3 class="subject_name">{{$class->classes->subject->name}}</h3></a>
                             @endif
                         </div>
                         <div class="col-sm-3" style="text-align: right;">

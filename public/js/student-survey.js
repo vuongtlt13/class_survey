@@ -21,6 +21,16 @@ function validateForm(questions) {
     return is_ok;
 }
 
+function changeCheckbox(obj) {
+    // console.log('checkbox', obj);
+    // console.log('start', $(obj).is(':checked'));
+    var res = !$(obj).is(':checked');
+    // console.log(res);
+    $(obj).prop('checked', res);
+    // console.log('end', $(obj).is(':checked'));
+}
+
+
 $(document).ready(function () {
     // console.log($(questions));
     var ques = $(questions);
@@ -29,6 +39,19 @@ $(document).ready(function () {
         evt.preventDefault();
         if (validateForm(ques)) {
             $('#survey-form').submit();
+        }
+    });
+
+    $('#question_table tbody').on('click', "tr", function (evt) {
+        var obj = evt.target;
+        // console.log('target:', obj);
+        // console.log('attr:', $(obj).is(':checkbox'));
+
+        if (!$(obj).is(':radio')) {
+            var $cell=$(obj).closest('td');
+            var cb = $cell.find('[type=radio]');
+            // console.log('checkbox', cb);
+            changeCheckbox(cb);
         }
     });
 });

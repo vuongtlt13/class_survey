@@ -138,6 +138,8 @@ class ClassController extends Controller
 //                dd($class_students);
             foreach ($class_students as $class_student) {
                 $class_student->questions()->detach();
+                $class_student->is_done = 0;
+                $class_student->save();
             }
 
             // assign template_id

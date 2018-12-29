@@ -32,9 +32,11 @@ Route::middleware(['userChecker'])->group(function () {
     });
 
     Route::middleware(['lecturerRole'])->group(function () {
-       Route::get('/view/{idClass}', 'TeacherController@detailResult')->name('detail-result');
+       Route::get('/view/class/{class_id}', 'TeacherController@classResult')->name('class-result');
 
-       Route::get('/view/subject/{idSubject}', 'TeacherController@subjectResult')->name('subject-result');
+       Route::get('/view/subject/{subject_code}', 'TeacherController@subjectResult')->name('subject-result');
+
+       Route::get('/view/class', 'TeacherController@viewClass')->name('view-by-class');
     });
 
     Route::middleware(['adminRole'])->group(function () {
@@ -123,6 +125,11 @@ Route::middleware(['userChecker'])->group(function () {
         Route::post('/generate-class', 'ClassController@generateClass')->name('generate-class');
 
         Route::get('/getallclasses', 'ClassController@getAllClass')->name('get-all-class');
+
+        # view result
+        Route::get('/admin/view/class/{class_id}', 'AdminController@classResult')->name('admin-class-result');
+
+        Route::get('/admin/view/class', 'AdminController@viewClass')->name('admin-view-by-class');
     });
 
 });

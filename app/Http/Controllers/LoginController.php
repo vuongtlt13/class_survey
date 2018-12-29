@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes;
+use App\Lecturer;
 use App\Student;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Illuminate\Http\Request;
@@ -55,6 +56,27 @@ class LoginController extends Controller
         return view('student.index', ['classes' => $classes]);
     }
 
+    function goToLecturerIndex() {
+        $user = Sentinel::check();
+        $year = date('Y');
+        $month = date("m");
+        $term = 0;
+        $school_year = $year . '-' . ($year + 1);
+//        dd($year, $month);
+        if ($month >= 1 and $month <= 6) {
+            $term = 1;
+        }
+        $classes = Lecturer::find($user->id)
+            ->classes()->leftJoin('subjects', 'subjects.code', 'classes.subject_code')
+            ->groupBy('classes.subject_code')
+            ->where('classes.term', $term)
+            ->where('classes.school_year', $school_year)
+            ->select('subjects.code', 'subjects.name')
+            ->get();
+//        dd($classes);
+        return view('lecturer.view_by_subject', ['classes' => $classes]);
+    }
+
     function index() {
         $user = Sentinel::check();
         // echo($user->type);
@@ -63,7 +85,7 @@ class LoginController extends Controller
                 return $this->goToStudentIndex();
                 break;
             case 1:
-                return view('lecturer.index');
+                return $this->gotoLecturerIndex();
                 break;
             case 2:
                 return view('admin.user');

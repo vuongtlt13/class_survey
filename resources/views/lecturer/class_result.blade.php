@@ -30,64 +30,69 @@
 @section('content')
     <div class="content">
         <div class="container">
-            <div class="primary_content justify-content-center row">
-              <div class="col-sm-11">
-                <div class="" style="text-align: center;">
-                  <h2 style="color: blue;">Lop phat trien web INT2203 1</h2>
-                  <br>
-                </div>
-                <div class="row" style="background: white; padding: 10px;">
-                  <div class="info" style="padding-left: 10px;">
-                    <p><b>Ghi chú:</b> </p>
-                    <div class="col-sm-6">
-                      <p>1: Hoàn toàn không tán thành</p>
-                      <p>2: Tương đối không tán thành</p>
-                      <p>3: Phân vân</p>
+            <div class="justify-content-center row primary_content">
+                <div class="col-sm-11">
+                    <div style="text-align: center;">
+                        <h2 style="color: blue;">Kết quả phản hồi về học phần {{$subject_name}}</h2>
                     </div>
-                    <div class="col-sm-6">
-                      <p>4: Tương đối tán thành</p>
-                      <p>5: Hoàn toàn tán thành</p>
-                    </div>                    
-                  </div>
-                  <table class="table table-bordered display myTable">
-                    <thead>
-                      <tr>
-                        <th style="width: 5%">STT</th>
-                        <th style="width: 50%">Tiêu chí</th>
-                        <th style="width: 7%">1</th>
-                        <th style="width: 7%">2</th>
-                        <th style="width: 7%">3</th>
-                        <th style="width: 7%">4</th>
-                        <th style="width: 7%">5</th>
-                        <th style="width: 10%">Trung bình</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td style="text-align: left;">tieu chi 1</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td style="text-align: left;">tieu chi 1</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <br>
+                    <div class="" style="background: white; padding: 10px;">
+                        <div class="subject_info" style="padding-left: 20px; color: black;">
+                            <div class="row" style="font-size: 120%">
+                                <div class="row">
+                                    <p><b>Tên giảng viên:</b> {{\Cartalyst\Sentinel\Laravel\Facades\Sentinel::check()->name}}</p>
+                                </div>
+                                <div class="row">
+                                    <p><b>Số sinh viên đã đánh giá:</b> {{$student_done}} / {{$student}} </p>
+                                </div>
+                                <div class="row">
+                                    <p><b>Số giảng viên tham gia dạy học phần:</b> {{$lecturer}}</p>
+                                </div>
+                            </div>
+                            <p><b>Ghi chú:</b></p>
+                            <p>M: giá trị trung bình của các tiêu chí theo lớp môn học</p>
+                            <p>STD: độ lệch chuẩn của các tiêu chí theo lớp môn học</p>
+                            <p>M1: giá trị trung bình các tiêu chí dựa trên dữ liệu phản hồi của sinh cho các giảng viện
+                                dạy cùng môn học với thầy/cô</p>
+                            <p>STD1: độ lệch chuẩn của các tiêu chí dựa trên ý kiến phản hồi của sinh viên cho các giảng
+                                viên dạy cùng môn học với thầy/cô</p>
+                            <p>M2: giá trị trung bình của các tiêu chí dựa trên ý kiến phản hồi của sinh viên về các môn
+                                học mà thầy/cô đã thực hiện giảng dạy</p>
+                            <p>STD2: độ lệch chuẩn của các tiêu chí dựa trên ý kiến phản hồi của sinh viên về các môn
+                                học mà thầy/cô đã thực hiện giảng dạy</p>
+                        </div>
+                        <br>
+                        <table class="table table-bordered display myTable">
+                            <thead>
+                            <tr>
+                                <th style="width: 5%">STT</th>
+                                <th style="width: 53%">Tiêu chí</th>
+                                <th style="width: 7%">M</th>
+                                <th style="width: 7%">STD</th>
+                                <th style="width: 7%">M1</th>
+                                <th style="width: 7%">STD1</th>
+                                <th style="width: 7%">M2</th>
+                                <th style="width: 7%">STD2</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @for($i = 0; $i < count($questions); $i++)
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td style="text-align: left;">{{$questions[$i]->content}}</td>
+                                    <td>{{$questions[$i]->M}}</td>
+                                    <td>{{$questions[$i]->STD}}</td>
+                                    <td>{{$questions[$i]->M1}}</td>
+                                    <td>{{$questions[$i]->STD1}}</td>
+                                    <td>{{$questions[$i]->M2}}</td>
+                                    <td>{{$questions[$i]->STD2}}</td>
+                                </tr>
+                            @endfor
+                            </tbody>
+                        </table>
 
+                    </div>
                 </div>
-              </div>
             </div>
         </div>
     </div>

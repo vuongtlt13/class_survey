@@ -33,6 +33,7 @@ Route::middleware(['userChecker'])->group(function () {
 
     Route::middleware(['lecturerRole'])->group(function () {
        Route::get('/view/{idClass}', 'TeacherController@detailResult')->name('detail-result');
+
        Route::get('/view/subject/{idSubject}', 'TeacherController@subjectResult')->name('subject-result');
     });
 
@@ -87,6 +88,8 @@ Route::middleware(['userChecker'])->group(function () {
         Route::get('/get-template', 'SurveyController@getTemplate')->name('get-template');
 
         Route::get('/getalltemplate', 'SurveyController@getAllTemplate')->name('get-all-template');
+
+        Route::get('/load-template', 'SurveyController@loadTemplate')->name('load-template');
 
         Route::get('/load-template', 'SurveyController@loadTemplate')->name('load-template');
 

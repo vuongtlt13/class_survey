@@ -179,6 +179,40 @@
         </div>
     </div><!-- /.modal -->
 
+    <button id="btnPreviewClass" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#preview-con-close-modal"> <i class="fa fa-heart m-r-5"></i>Thêm</button>
+    <!-- Preview Modal -->
+    <div id="preview-con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 80%">
+            <div class="modal-content" style="background-color: #cfeff4;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 id="form-title" class="modal-title">Xem khảo sát</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content_area" style="display: block;">
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <h3 class="subject_name">Tên mẫu khảo sát</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="card-box col-sm-offset-1 col-sm-10" style="height: 760px;overflow: auto;">
+                                <div class="survey_content">
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
     <div style="display: none">
         <button id="btnShowModal" style="display:none" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"> <i class="fa fa-heart m-r-5"></i>Thêm</button>
     </div>

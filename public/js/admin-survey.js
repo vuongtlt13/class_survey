@@ -278,8 +278,92 @@ function sendAjax(index, files, success, error) {
     };
 }
 
-function preview(class_id) {
-    console.log('preview class', class_id);
+function loadTemplate(template_id, class_name) {
+    $.ajax({
+        url: '/load-template?id=' + template_id,
+        dataType: 'json',
+        success: function (data) {
+            var survey_content = $('.survey_content');
+            // remove old view
+            survey_content.empty();
+            // draw preview
+            // console.log(data);
+            var oldTitle = -1;
+            $(".subject_name").text(class_name);
+            $(".subject_name").attr('id', template_id);
+            for (var index in data) {
+                // console.log(data[index]);
+                var question = data[index];
+                if (question.title.id !== oldTitle) {
+                    // create new single content div
+                    var single_content = '<div id="content_' + question.title.id + '" class="row single_content"></div>';
+                    survey_content.append(single_content);
+                    single_content = $('#content_' + question.title.id);
+                    // console.log(single_content);
+                    // add title area
+                    var title_area = '<div class="" style="padding-left: 10px">\n' +
+                        '                 <h4 id="' + question.title.id + '"><span style="color: red;">* </span>' + question.title.content + '</h4>\n' +
+                        '            </div>';
+                    single_content.append(title_area);
+
+                    // add question area
+                    var question_area = '<div class="question_area" style="padding-left: 20px">\n' +
+                        '                                            <table class="table table-bordered">\n' +
+                        '                                                <colgroup>\n' +
+                        '    <col style="width:60%">\n' +
+                        '    <col style="width:8%">\n' +
+                        '    <col style="width:8%">\n' +
+                        '    <col style="width:8%">\n' +
+                        '    <col style="width:8%">\n' +
+                        '    <col style="width:8%">\n' +
+                        '  </colgroup><thead>\n' +
+                        '                                                <th></th>\n' +
+                        '                                                <th>1</th>\n' +
+                        '                                                <th>2</th>\n' +
+                        '                                                <th>3</th>\n' +
+                        '                                                <th>4</th>\n' +
+                        '                                                <th>5</th>\n' +
+                        '                                                </thead>\n' +
+                        '                                                <tbody>\n' +
+                        '                                                </tbody>\n' +
+                        '                                            </table>\n' +
+                        '                                            <br>\n' +
+                        '                                        </div>';
+                    single_content.append(question_area);
+                    // update oldTitle
+                    oldTitle = question.title.id;
+                }
+
+                single_content = $('#content_' + question.title.id);
+                var tbody_table = single_content.find('.question_area table tbody');
+                // console.log(tbody_table[0]);
+                // add question to tbody
+                var new_tr = '<tr>\n' +
+                    '                                                    <td class="white-space-normal" id="' + question.id + '">' + question.content +
+                    '                                                    <td class="white-space-normal"><input type="radio" name="rate"/></td>\n' +
+                    '                                                    <td class="white-space-normal"><input type="radio" name="rate"/></td>\n' +
+                    '                                                    <td class="white-space-normal"><input type="radio" name="rate"/></td>\n' +
+                    '                                                    <td class="white-space-normal"><input type="radio" name="rate"/></td>\n' +
+                    '                                                    <td class="white-space-normal"><input type="radio" name="rate"/></td>\n' +
+                    '                                                </tr>';
+                tbody_table.append(new_tr);
+            }
+            // show preview
+            document.getElementById("content_area").style.display="block";
+        },
+        error: function (e) {
+            // console.log('loi r', e);
+            $.Notification.autoHideNotify('error', 'top right', 'Có lỗi xảy ra!', 'Lỗi từ chối từ server!');
+        }
+    });
+}
+
+function preview(data) {
+    // console.log(data);
+    // console.log('preview class', class_id);
+    loadTemplate(data.template_id, data.subject.name);
+    $('#btnPreviewClass').trigger('click');
+
 }
 
 function generate_class(index, class_ids, success, error) {
@@ -461,7 +545,7 @@ $(document).ready(function () {
                 var row = $($cell).closest('tr');
                 // console.log('click to row with course_id: ', table.row($(row)).data().id);
                 var table = $('#datatable').DataTable();
-                preview(table.row($(row)).data().id);
+                preview(table.row($(row)).data());
             } else {
                 var cb = $cell.find('[type=checkbox]');
                 // console.log('checkbox', cb);

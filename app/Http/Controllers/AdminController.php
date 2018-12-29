@@ -22,24 +22,62 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class AdminController extends Controller
 {
-    function index() {
-        return view('admin/index');
+    public static function index() {
+        $year = date('Y');
+        $month = date("m");
+        $term = 0;
+        $school_year = $year . '-' . ($year + 1);
+//        dd($year, $month);
+        if ($month >= 1 and $month <= 6) {
+            $term = 1;
+        }
+
+        $query = Classes::where('classes.term', $term)
+            ->where('classes.school_year', $school_year);
+
+        $classes = (clone $query)->count('classes.id');
+
+        $subject = (clone $query)
+                ->leftJoin('subjects', 'subjects.code', 'classes.subject_code')
+                ->groupBy('subject_code')
+                ->select('subject_code')
+                ->get()->count();
+//                ->count();
+//        dd($subject);
+        $query = $query->where('template_id', '<>', null)
+            ->leftJoin('class_student', 'classes.id', 'class_student.class_id');
+
+        $survey = (clone $query)->count('class_student.id');
+
+        $complete_survey = (clone $query)->where('class_student.is_done', 1)->count('class_student.id');
+
+        $lecturer = Lecturer::all()->count();
+        $student = Student::all()->count();
+
+        return view('admin.index', [
+            'survey' => $survey,
+            'complete_survey' => $complete_survey,
+            'subject' => $subject,
+            'classes' => $classes,
+            'lecturer' => $lecturer,
+            'student' => $student,
+        ]);
     }
 
     function userManager() {
-        return view('admin/user');
+        return view('admin.user');
     }
 
     function surveyManager() {
-        return view('admin/survey');
+        return view('admin.survey');
     }
 
     function surveyTemplateManager() {
-        return view('admin/survey-template');
+        return view('admin.survey-template');
     }
 
     function questionManager() {
-        return view('admin/question');
+        return view('admin.question');
     }
 
     function updateUser(Request $request) {

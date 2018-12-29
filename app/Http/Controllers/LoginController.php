@@ -88,7 +88,7 @@ class LoginController extends Controller
                 return $this->gotoLecturerIndex();
                 break;
             case 2:
-                return view('admin.user');
+                return AdminController::index();
                 break;
             default:
                 echo('Permission denied!');

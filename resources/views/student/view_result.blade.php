@@ -72,70 +72,70 @@
                                             <tr>
                                                 <td class="white-space-normal" style="text-align: left">{{$questions[$i]['question']['content']}}</td>
                                                 @if ($questions[$i]['score'] == 1)
-                                                    <td class="white-space-normal"><input type="radio" value="1" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="1" checked disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                 @elseif ($questions[$i]['score'] == 2)
-                                                    <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="2" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="2" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                 @elseif ($questions[$i]['score'] == 3)
-                                                    <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="3" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="3" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                 @elseif ($questions[$i]['score'] == 4)
-                                                    <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="4" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="4" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                 @elseif ($questions[$i]['score'] == 5)
-                                                    <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                    <td class="white-space-normal"><input type="radio" value="5" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                    <td class="white-space-normal"><input type="radio" value="5" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                 @endif
                                             </tr>
                                             @else
                                                 <tr>
                                                     <td class="white-space-normal" style="text-align: left">{{$questions[$i]['question']['content']}}</td>
                                                     @if ($questions[$i]['score'] == 1)
-                                                        <td class="white-space-normal"><input type="radio" value="1" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="1" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                     @elseif ($questions[$i]['score'] == 2)
-                                                        <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="2" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="2" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                     @elseif ($questions[$i]['score'] == 3)
-                                                        <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="3" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="3" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                     @elseif ($questions[$i]['score'] == 4)
-                                                        <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="4" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="5" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="4" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="5" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                     @elseif ($questions[$i]['score'] == 5)
-                                                        <td class="white-space-normal"><input type="radio" value="1" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="2" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="3" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="4" name="rate-{{ $questions[$i]['question']['id'] }}"></td>
-                                                        <td class="white-space-normal"><input type="radio" value="5" checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="1" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="2" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="3" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="4" disabled name="rate-{{ $questions[$i]['question']['id'] }}"></td>
+                                                        <td class="white-space-normal"><input type="radio" value="5" disabled checked name="rate-{{ $questions[$i]['question']['id'] }}"></td>
                                                     @endif
                                                 </tr>
                                             @endif
@@ -147,7 +147,7 @@
                                             <h4><span style="color: red;"></span>Ý kiến đóng góp khác</h4>
                                         </div>
                                         <div class="">
-                                            <textarea class="col-sm-10" name="note" rows="5">{{$note}}</textarea>
+                                            <textarea  disabled class="col-sm-10" name="note" rows="5">{{$note}}</textarea>
                                         </div>
                                     </div>
                                 </div>
